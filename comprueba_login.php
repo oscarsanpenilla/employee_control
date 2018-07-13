@@ -12,7 +12,17 @@
     if($numero_registro)
     {
         $consulta = $conexion_db->ConsultaSQL($sql);
-        $employee = new Employee($consulta->user,$consulta->id,$consulta->password,$consulta->name,$consulta->employee_rate,$consulta->ocupation,$consulta->type_of_payment,$consulta->payment_week, $consulta->active);
+        $employee = new Employee($consulta->user,
+                                  $consulta->id,
+                                  $consulta->password,
+                                  $consulta->name,
+                                  $consulta->employee_rate,
+                                  $consulta->ocupation,
+                                  $consulta->pay_week,
+                                  $consulta->active,
+                                  $consulta->bank_info,
+                                  $consulta->phone,
+                                  $consulta->paid_by);
         session_start();
         $_SESSION['employee'] = $employee;
         if ($_SESSION['employee']->name == "admin")

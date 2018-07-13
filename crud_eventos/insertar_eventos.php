@@ -8,9 +8,6 @@
 
     $employee = $_SESSION['employee'];
     $id = $employee->id;
-    $paid_by = $employee->paid_by;
-    $bank_info = $employee->bank_info;
-    $phone = $employee->phone;
     $sql= "SELECT * FROM users WHERE id= '$id'";
     $consulta =  $conexion_db->ConsultaSQL($sql);
 
@@ -26,10 +23,15 @@
     $name=$employee->name;
     $employee_rate=$employee->employee_rate;
     $ocupation=$employee->ocupation;
-    $payment_week=$employee->pay_week;
+    $pay_week=$employee->pay_week;
+    $bank_info = $employee->bank_info;
+    $phone = $employee->phone;
+    $paid_by = $employee->paid_by;
+
     $total_day = $hours_day * $employee_rate;
 
-    $sql= "INSERT INTO `events` (`id`, `paid_by`, `site`, `ocupation`, `name`, `date`, `hours_day`, `total_day`,`employee_rate`,`bank_info`,`phone`,`note`) VALUES ('$id','$paid_by', '$site', '$ocupation', '$name','$date','$hours_day','$total_day','$employee_rate','$bank_info','$phone','$note')";
+    $sql= "INSERT INTO `events` (`id`, `paid_by`, `site`, `ocupation`, `name`, `date`, `hours_day`, `total_day`,`employee_rate`,`bank_info`,`phone`,`note`) ";
+    $sql.= "VALUES ('$id','$paid_by','$site','$ocupation','$name','$date','$hours_day','$total_day','$employee_rate','$bank_info','$phone','$note')";
 
     $conexion_db->Prepare($sql);
 

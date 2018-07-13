@@ -1,21 +1,19 @@
 <?php
 			class Employee
 			{
-				var $user;
 				var $id;
 				var $paid_by;
+				var $user;
 				var $password;
 				var $name;
 				var $employee_rate;
 				var $ocupation;
-				var $type_of_payment;
-				var $payment_week;
-				var $active;
 				var $pay_week;
+				var $active;
 				var $bank_info;
 				var $phone;
 
-				function __construct($user,$id,$password,$name,$employee_rate,$ocupationt,$pay_week,$active)
+				function __construct($user,$id,$password,$name,$employee_rate,$ocupation,$pay_week,$active,$bank_info,$phone,$paid_by)
 				{
 					$this->user = $user;
 					$this->id = $id;
@@ -23,9 +21,11 @@
 					$this->name = $name;
 					$this->employee_rate = $employee_rate;
 					$this->ocupation = $ocupation;
-					$this->type_of_payment;
-					$this->pay_week;
+					$this->pay_week = $pay_week;
 					$this->active = $active;
+					$this->bank_info = $bank_info;
+					$this->phone = $phone;
+					$this->paid_by = $paid_by;
 				}
 			}
 ?>
