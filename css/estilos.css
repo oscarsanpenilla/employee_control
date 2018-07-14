@@ -3,15 +3,15 @@
     padding: 0;
     font-family: sans-serif;
     box-sizing: border-box;
-    
+
 }
 
 body {
-    
+
     background: #FFFFFF;
     display: flex;
     min-height: 100vh;
-    
+
 }
 
 label {
@@ -21,7 +21,7 @@ label {
     background: linear-gradient(#FFDA63, #FFB940);
     padding: 30px;
     border: 1px solid rgba(0,0,0,0.2);
-    
+
 }
 
 form {
@@ -31,7 +31,7 @@ form {
     background: #F3F3F3;
     padding: 30px;
     border: 1px solid rgba(0,0,0,0.2);
-    
+
 }
 
 h2 {
@@ -59,12 +59,14 @@ input {
 
 
 input[type="submit"] {
-    background: linear-gradient(#FFDA63, #FFB940);
+    background: white;
     border: 0;
-    color: brown;
+    color: green;
     opacity: 0.8;
     cursor: pointer;
     border-radius: 20px;
+    border-style: solid;
+    border-color: green;
     margin-bottom: 0;
 }
 
@@ -73,18 +75,18 @@ a {
 }
 
 a input {
-    
-    background: linear-gradient(#FE642E, #FA8258);
+
+    background: white;
     border: 0;
-    color: red;
+    color: black;
     opacity: 0.8;
     cursor: pointer;
     border-radius: 20px;
     margin-bottom: 0;
     margin-top: 10px;
     width: 100%;
-    
-    
+
+
 }
 
 table thead tr td{
@@ -105,14 +107,14 @@ table tbody tr td{
 
 table{
 	border:0;
-    
+
 
 }
 
 select {
-    
+
     padding: 15px;
-    
+
 }
 
 
@@ -126,7 +128,7 @@ input[type="button"]:active {
 
 input[type="submit"]:hover {
     opacity: 1;
-    
+
 }
 
 input[type="submit"]:active {

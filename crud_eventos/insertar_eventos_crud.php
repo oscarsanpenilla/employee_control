@@ -17,16 +17,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1">
 <title>Sanvan Contracting</title>
-<link rel="stylesheet" href="../css/estilos.css">
+<link rel="stylesheet" href="../css/events.css">
 </head>
 <body>
 <form action="">
     <section>
     <center>
       <!-- Imprime el nombre del trabajador -->
-      <?php echo "<h2> Bienvenido: " . $employee->name . "</h2>"; ?>
+      <h2 class="title">Bienvenido</h2>
+      <?php echo "<h3> $employee->name </h3>"; ?>
        <a href="registro_horas.php"><input  type='button' value='Nuevo Registro'></a>
-  <table width="80%" align="center">
+  <table width="100%" align="center">
     <tr >
       <td colspan="8" width="100%" class="primera_fila">Registros</td>
     </tr>
@@ -45,14 +46,14 @@
             <td> <?php echo $elemento->hours_day ?></td>
             <td> <?php echo $elemento->employee_rate ?></td>
             <td> <?php echo $elemento->total_day ?></td>
-            <td width="100px"><a  href="crud_borrar_evento.php?num=<?php echo $elemento->event_id ?>"><input type='button' name='borrar' id='id_empleado' value='Delete'></td></a>
+            <td class="td_btn" width="100px"><a  href="crud_borrar_evento.php?num=<?php echo $elemento->event_id ?>"><input type='button' name='borrar' id='id_empleado' value='Borrar'></td></a>
     </tr>
     <?php endforeach ?>
   </table>
   </center>
   <center>
         <a href="../cerrar_session.php"><input id="logout" type='button' value='Salir'></a>
-        <a href="formulario_cambiar_contra.php"><input type='button' value='Cambiar Contraseña'></a>
+        <a href="../cambiar_password/formulario_cambiar_contra.php"><input type='button' value='Cambiar Contraseña'></a>
     </center>
    </section>
 </body>

@@ -2,8 +2,8 @@
 
 
 
-    include("funtions.php");
-    include("validar_inicio_sesion.php");
+    include("../funtions.php");
+    include("../validar_inicio_sesion.php");
     $conexion_db = new ConexionDB();
 
     $event_id = $_GET['num'];
@@ -14,7 +14,7 @@
 
     $conexion_db->Prepare($sql);
 
-    
+
 
     header("Location:insertar_eventos_crud.php");
 
