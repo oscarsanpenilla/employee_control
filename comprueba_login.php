@@ -1,7 +1,7 @@
 <?php
-
     include("funtions.php");
     include("employee.php");
+
     $conexion_db = new ConexionDB();
     $user= addslashes($_POST['user']);
     $password= addslashes($_POST['password']);
@@ -22,12 +22,13 @@
                                   $consulta->active,
                                   $consulta->bank_info,
                                   $consulta->phone,
-                                  $consulta->paid_by);
+                                  $consulta->paid_by,
+                                  $consulta->admin);
         session_start();
         $_SESSION['employee'] = $employee;
-        if ($_SESSION['employee']->name == "admin")
+        if ($_SESSION['employee']->admin == 1)
         {
-            header("location:main_admin.php");
+            header("location:admin/main_admin.php");
         }else{header("location:crud_eventos/insertar_eventos_crud.php");}
     }else{header("location:index.php"); }
 

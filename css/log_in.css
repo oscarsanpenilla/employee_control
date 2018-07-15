@@ -80,8 +80,9 @@ a {
   border-radius: 8px;
 }
 
-.submit{
+input.submit{
   color: white;
   background-color: black;
   border-color: black;
+  margin-bottom: 10px;
 }

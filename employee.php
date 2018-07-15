@@ -12,8 +12,9 @@
 				var $active;
 				var $bank_info;
 				var $phone;
+				var $admin;
 
-				function __construct($user,$id,$password,$name,$employee_rate,$ocupation,$pay_week,$active,$bank_info,$phone,$paid_by)
+				function __construct($user,$id,$password,$name,$employee_rate,$ocupation,$pay_week,$active,$bank_info,$phone,$paid_by,$admin)
 				{
 					$this->user = $user;
 					$this->id = $id;
@@ -26,6 +27,7 @@
 					$this->bank_info = $bank_info;
 					$this->phone = $phone;
 					$this->paid_by = $paid_by;
+					$this->admin = $admin;
 				}
 			}
 ?>

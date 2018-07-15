@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css?family=Bowlby+One+SC');
+
+* {
+
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+
+div.contenedor{
+  margin: auto;
+  width: 100%;
+  max-width: 400px;
+  background: #F2F2F2;
+  padding: 0px 10px;
+  border: 1px solid rgba(0,0,0,0.2);
+  padding: 0;
+}
+
+div.contenedor-btn{
+  margin: auto;
+  width: 80%;
+  padding-bottom: 20px;
+}
+
+body {
+
+    background: #FFFFFF;
+    display: flex;
+    min-height: 100vh;
+
+}
+
+input.textbox{
+  width: 98%;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: BLACK;
+    font-family: 'Bowlby One SC', cursive;
+
+
+}
+
+h3 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: black;
+
+}
+
+input {
+    display: block;
+    padding: 5px;
+    width: 100%;
+    font-size: 15px;
+    border-radius: 5px;
+    border-style: none;
+    margin-bottom: 10px;
+}
+
+table{
+  width: 80%;
+  margin: auto;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+
+tr td{
+  font-size: 15px;
+  padding: 0;
+  margin: 0;
+}
+
+td.primera_fila{
+  text-align: center;
+  padding-bottom: 10px;
+  padding-top: 0px;
+
+}
+
+
+a {
+
+    text-decoration: none;
+
+}
+
+li{
+  text-decoration: none;
+}

@@ -2,6 +2,7 @@
     include("../funtions.php");
     include("../employee.php");
     include("../validar_inicio_sesion.php");
+
     $conexion_db = new ConexionDB();
     $employee = $_SESSION['employee'];
     $user_id = $_SESSION['employee']->id;
@@ -26,7 +27,16 @@
       <!-- Imprime el nombre del trabajador -->
       <h2 class="title">Bienvenido</h2>
       <?php echo "<h3> $employee->name </h3>"; ?>
-       <a href="registro_horas.php"><input  type='button' value='Nuevo Registro'></a>
+       <a href="registro_horas.php"><input class='btn_principal' type='button' value='Nuevo Registro'></a>
+       <!-- Selector de semana -->
+       <!--
+       <select class="semana" name="semana" >
+           <option value='0.00'>Actual</option>
+           <option value='0.25'>-1 Quincena</option>
+           <option value='0.50'>-2 Quincena</option>
+           <option value='0.75'>-3 Quincena</option>
+       </select>
+       -->
   <table width="100%" align="center">
     <tr >
       <td colspan="8" width="100%" class="primera_fila">Registros</td>
@@ -53,7 +63,7 @@
   </center>
   <center>
         <a href="../cerrar_session.php"><input id="logout" type='button' value='Salir'></a>
-        <a href="../cambiar_password/formulario_cambiar_contra.php"><input type='button' value='Cambiar Contraseña'></a>
+        <a href="formulario_config.php"><input type='button' value='Configuración'></a>
     </center>
    </section>
 </body>

@@ -8,7 +8,14 @@
     box-sizing: border-box;
 }
 
-
+div.contenedor{
+  margin: auto;
+  width: 100%;
+  max-width: 400px;
+  background: #F2F2F2;
+  padding: 0px 10px;
+  border: 1px solid rgba(0,0,0,0.2);
+}
 
 body {
 
@@ -60,6 +67,17 @@ input {
 
 }
 
+select.semana{
+    display: block;
+    padding: 5px;
+    width: 100%;
+    font-size: 15px;
+    border-radius: 5px;
+    border-style: none;
+    margin-bottom: 10px;
+}
+
+
 table{
   margin-left: 0;
   font-size: 12px;
@@ -84,6 +102,12 @@ input#id_empleado{
   font-size: 10px;
 }
 
+input.btn_principal{
+  color: white;
+  background-color: black;
+  border-color: black;
+  margin-bottom: 10px;
+}
 
 
 a {
@@ -91,6 +115,8 @@ a {
     text-decoration: none;
 
 }
+
+
 
 h2.title{
   color: black;

@@ -45,11 +45,11 @@
         </select>
         <p>Comentarios:</p>
         <input type="text" name="comentario" >
-        <input type="submit" name="enviar" value="Agregar">
+        <input class="btn_principal" type="submit" name="enviar" value="Agregar">
 
         <a href="cerrar_session.php" class="logout"><input  type="button" value="Salir"></a>
 
     </form>
-    
+
 </body>
 </html>
