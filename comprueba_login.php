@@ -14,7 +14,9 @@
         $consulta = $conexion_db->ConsultaSQL($sql);
         $employee = new Employee($consulta->user,
                                   $consulta->id,
+                                  $consulta->work_for,
                                   $consulta->password,
+                                  $consulta->work_for_rate,
                                   $consulta->name,
                                   $consulta->employee_rate,
                                   $consulta->ocupation,

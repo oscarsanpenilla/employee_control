@@ -2,7 +2,7 @@
     include("../funtions.php");
     include("../validar_inicio_sesion.php");
     $conexion_db = new ConexionDB();
-    $sql = "SELECT * FROM users";
+    $sql = "SELECT * FROM users ORDER BY id";
     $array_usuarios = $conexion_db->ConsultaArray($sql);
 ?>
 
@@ -16,13 +16,15 @@
 <body>
   <div class="contenedor">
     <table>
-      <h3>Workers Panel</h3>
+      <h3>Editar Empleados</h3>
       <tr >
         <td>Id</td>
+        <td>Work for</td>
         <td>Name</td>
         <td>User</td>
         <td>Password</td>
-        <td>$/hour</td>
+        <td>Employee Rate</td>
+        <td>Work for Rate</td>
         <td>Week</td>
         <td>Status</td>
         <td>Ocupation</td>
@@ -33,10 +35,12 @@
       <?php foreach($array_usuarios as $elemento): ?>
       <tr>
               <td> <?php echo $elemento->id ?></td>
+              <td> <?php echo $elemento->work_for ?></td>
               <td> <?php echo $elemento->name ?></td>
               <td> <?php echo $elemento->user ?></td>
               <td> <?php echo $elemento->password ?></td>
               <td> <?php echo $elemento->employee_rate ?></td>
+              <td> <?php echo $elemento->work_for_rate ?></td>
               <td> <?php echo $elemento->pay_week ?></td>
               <td> <?php echo $elemento->active ?></td>
               <td> <?php echo $elemento->ocupation ?></td>
@@ -50,16 +54,18 @@
       <tr>
         <td>#</td>
         <form action="crud_insertar.php" method="post">
-            <td><input type='text' required="required" name='nombre' size='20' class='centrado' placeholder="Name"></td>
-            <td><input type='text' required="required" name='usuario' size='20' class='centrado' placeholder="User"></td>
-            <td><input type='text' required="required" name='contra' size='20' class='centrado' placeholder="Password"></td>
-            <td><input type='text' required="required" name='precio_hora' size='10' class='centrado' placeholder="Price/hour"></td>
-            <td><input type='text' required="required" name='payment_week' size='10' class='centrado' placeholder="Week of Payment"></td>
-            <td><input type='text' required="required" name='status' size='10' class='centrado' placeholder="Status"></td>
-            <td><input type='text' required="required" name='task' size='10' class='centrado' placeholder="Ocupation"></td>
-            <td><input type='text' required="required" name='phone' size='10' class='centrado' placeholder="Phone"></td>
-            <td><input type='text' required="required" name='paid_by' size='10' class='centrado' placeholder="Paid by"></td>
-            <td><input type='text' required="required" name='bank_info' size='10' class='centrado' placeholder="Bank info"></td>
+            <td><input type='text' required="required" name='work_for'  class='centrado' placeholder="Work for"></td>
+            <td><input type='text' required="required" name='nombre'  class='centrado' placeholder="Name"></td>
+            <td><input type='text' required="required" name='usuario'  class='centrado' placeholder="User"></td>
+            <td><input type='text' required="required" name='contra'  class='centrado' placeholder="Password"></td>
+            <td><input type='text' required="required" name='precio_hora' class='centrado' placeholder="Employee Rate"></td>
+            <td><input type='text' required="required" name='work_for_rate'  class='centrado' placeholder="Work for Rate"></td>
+            <td><input type='text' required="required" name='payment_week'  class='centrado' placeholder="Week of Payment"></td>
+            <td><input type='text' required="required" name='status'  class='centrado' placeholder="Status"></td>
+            <td><input type='text' required="required" name='task'  class='centrado' placeholder="Ocupation"></td>
+            <td><input type='text' required="required" name='phone'  class='centrado' placeholder="Phone"></td>
+            <td><input type='text' required="required" name='paid_by'  class='centrado' placeholder="Paid by"></td>
+            <td><input type='text' required="required" name='bank_info'  class='centrado' placeholder="Bank info"></td>
             <td colspan="2"><input type='submit' name='insertar'  value='Nuevo'></td>
         </form>
       </tr>

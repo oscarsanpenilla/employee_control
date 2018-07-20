@@ -21,6 +21,5 @@
     $sql .= ", ocupation='$task', phone='$phone', bank_info='$bank_info' WHERE id = '$id'";
     $conexion_db->Prepare($sql);
 
-    session_destroy();
-    header("Location:../index.php");
+    header("Location:insertar_eventos_crud.php");
 ?>

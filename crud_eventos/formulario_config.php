@@ -21,12 +21,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <link rel="stylesheet" href="../css/events.css">
     <title>Sanvan Update Worker</title>
 </head>
 <body>
     <form action="config_actualizar.php" method="post" ><br>
         <h3>Configuración</h3>
+        <p style="text-align:center">En esta sección puedes visualizar tu información,asi como cambiar tu usuario, contraseña, número de celular asi como tu número de cuenta.</p><br>
         <p>Nombre Completo:</p>
         <input type="text" name="name" value="<?php echo $elemento->name?>">
         <p>Usuario:</p>

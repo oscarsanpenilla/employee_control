@@ -9,6 +9,10 @@
     $arreglo_lugares = $conexion_db->ConsultaArray($sql);
     $sql= "SELECT employee_rate FROM users WHERE id = '$id'";
     $arreglo_precio = $conexion_db->ConsultaArray($sql);
+    $sql= "SELECT site,date FROM events WHERE id = '$id' ORDER BY event_id";
+    $ultimo_evento = $conexion_db->ConsultaArray($sql);
+    $ultimo_evento = end($ultimo_evento);
+
 ?>
 
 <!DOCTYPE html>
@@ -22,14 +26,16 @@
 <body>
     <form action="insertar_eventos.php" method="post" >
         <?php echo "<h3> Registro Horas </h3>"; ?>
+        <p style="text-align:center">Aquí podras regristrar tus horas, si te equivocas en el registro, solamente borralo y agrega uno nuevo.</p>
         <p>Site: </p>
         <select  name="lugar" required="required">
+          <option selected='selected' value="<?php echo $ultimo_evento->site;?>"><?php echo $ultimo_evento->site;?></option>
             <?php foreach($arreglo_lugares as $elemento): ?>
                     <option value="<?php echo $elemento->site;?>"> <?php echo $elemento->site;   ?>  </option>
             <?php endforeach ?>
         </select>
         <p>Fecha: </p>
-        <input type="date" name="fecha" required="required" value="<?php echo date("Y-m-d");?>">
+        <input type="date" name="fecha" required="required" value="<?php echo date('Y-m-d', strtotime($ultimo_evento->date. ' + 1 days'));?>">
         <p>Horas Trabajadas</p>
         <select name="horas" required="required">
             <?php
@@ -47,7 +53,7 @@
         <input type="text" name="comentario" >
         <input class="btn_principal" type="submit" name="enviar" value="Agregar">
 
-        <a href="cerrar_session.php" class="logout"><input  type="button" value="Salir"></a>
+        <a href="../cerrar_session.php" class="logout"><input  type="button" value="Salir"></a>
 
     </form>
 

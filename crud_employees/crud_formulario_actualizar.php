@@ -17,32 +17,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../css/estilos_main.css">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <link rel="stylesheet" href="../css/events.css">
     <title>Sanvan Update Worker</title>
 </head>
 <body>
     <form action="crud_actualizar.php" method="post" >
-        <h2>Modify</h2><br>
-        <h3>Name:</h3>
-        <input type="text" name="nombre" value="<?php echo $elemento->name?>"><br>
-        <h3>User:</h3>
-        <input type="text" name="usuario" value="<?php echo $elemento->user ?>" ><br>
-        <h3>Password:</h3>
-        <input type="text" name="contra" value="<?php echo $elemento->password ?>" ><br>
-        <h3>Employee Rate:</h3>
-        <input type="text" name="rate_hour" value="<?php echo $elemento->employee_rate ?>" ><br>
-        <h3>Pay Week:</h3><
-        <input type="text" name="payment_week" value="<?php echo $elemento->pay_week ?>" ><br>
-        <h3>Active:</h3>
-        <input type="text" name="status" value="<?php echo $elemento->active?>" ><br>
-        <h3>Ocupation:</h3>
-        <input type="text" name="task" value="<?php echo $elemento->ocupation?>" ><br>
-        <h3>Phone:</h3>
-        <input type="text" name="phone" value="<?php echo $elemento->phone?>" ><br>
-        <h3>Paid by:</h3>
-        <input type="text" name="paid_by" value="<?php echo $elemento->paid_by?>" ><br>
-        <h3>Bank info:</h3>
-        <input type="text" name="bank_info" value="<?php echo $elemento->bank_info?>" ><br>
+        <h3>Modify</h3><br>
+        <p>Work for:</p>
+        <select class="semana" name="work_for"  required="required" >
+            <option selected='selected'> <?php echo $elemento->work_for?> </option>
+            <option value='Sanvan'>Sanvan</option>
+            <option value='Tolin'>Tolin</option>
+            <option value='Global Contact'>Global Contact</option>
+        </select>
+        <p>Name:</p>
+        <input type="text" name="nombre" value="<?php echo $elemento->name?>">
+        <p>User:</p>
+        <input type="text" name="usuario" value="<?php echo $elemento->user ?>" >
+        <p>Password:</p>
+        <input type="text" name="contra" value="<?php echo $elemento->password ?>" >
+        <p>Employee Rate:</p>
+        <input type="text" name="rate_hour" value="<?php echo $elemento->employee_rate ?>" >
+        <p>Work for Rate:</p>
+        <input type="text" name="work_for_rate" value="<?php echo $elemento->work_for_rate ?>" >
+        <p>Pay Week:</p>
+        <select class="semana" name="pay_week" required="required" >
+            <option selected='selected'> <?php echo $elemento->pay_week ?> </option>
+            <option value='A'>A</option>
+            <option value='B'>B</option>
+        </select>
+        <p>Active:</p>
+        <input type="text" name="status" value="<?php echo $elemento->active?>" >
+        <p>Ocupation:</p>
+        <select class="semana" name="task"  required="required" >
+            <option selected='selected'> <?php echo $elemento->ocupation?> </option>
+            <option value='Labour'>Labour</option>
+            <option value='Cement Finisher'>Cement Finisher</option>
+            <option value='Skill Labour'>Skill Labour</option>
+            <option value='Carpenter'>Carpenter</option>
+            <option value='Carpenter Helper'>Carpenter Helper</option>
+            <option value='Otro'>Otro</option>
+        </select>
+        <p>Phone:</p>
+        <input type="text" name="phone" value="<?php echo $elemento->phone?>" >
+        <p>Paid by:</p>
+        <select class="semana" name="paid_by" >
+          <option selected='selected'> <?php echo $elemento->paid_by?> </option>
+            <option value='Rafael'>1 Rafael</option>
+            <option value='Carlos'>2 Carlos</option>
+            <option value='Cristian'>3 Cristian</option>
+        </select>
+        <p>Bank info:</p>
+        <input type="text" name="bank_info" value="<?php echo $elemento->bank_info?>" >
         <input type="hidden" name="id" value="<?php echo $id ?>"><br>
         <input type="submit"  value="enviar">
         <a href="crud_empleados.php"><input  type="button" value="Return"></a>
