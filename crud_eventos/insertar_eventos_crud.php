@@ -8,11 +8,77 @@
     $user_id = $_SESSION['employee']->id;
     $start_date = date("Y-m-d",strtotime('-30 day'));
     $end_date = date("Y-m-d",strtotime('+15 day'));
-    $sql = " SELECT * FROM events WHERE id=$user_id AND date BETWEEN '$start_date' AND '$end_date' ORDER BY date";
+    //$sql = " SELECT * FROM events WHERE id=$user_id AND date BETWEEN '$start_date' AND '$end_date' ORDER BY date";
+    //$sql = " SELECT * FROM events WHERE id=$user_id AND date<="."'".date("Y-m-d")."'".";";
+    $today = date("Y-m-d");
+
+
+    //Registros y totales de quincena
+    $sql = "SELECT * FROM week_a WHERE week_end<='$today' ORDER BY id DESC LIMIT 1";
+    $fechas = $conexion_db->ConsultaArray($sql);
+    $start_date = $fechas[0]->week_start;
+    $end_date = $fechas[0]->week_end;
+    $sql = "SELECT * FROM events WHERE id=$user_id AND date BETWEEN '$start_date' AND '$end_date' ORDER BY date";
     $array_eventos = $conexion_db->ConsultaArray($sql);
+
+    /*
+
+    //Registro y totales de la semana Actualizar
+    $sql = "SELECT * FROM week_a WHERE week_end<='$today' ORDER BY id DESC LIMIT 1";
+    $fechas = $conexion_db->ConsultaArray($sql);
+    $end_date = $fechas[0]->week_end;
+    $end_date = date('Y-m-d', strtotime($end_date));
+    $sql = "SELECT * FROM events WHERE id=$user_id AND date >'$end_date' ORDER BY date";
+    $array_eventos = $conexion_db->ConsultaArray($sql);
+
+    //Registro y totales de la quincena -1
+    $sql = "SELECT * FROM week_a WHERE week_end<='$today' ORDER BY id DESC LIMIT 3";
+    $fechas = $conexion_db->ConsultaArray($sql);
+    $start_date = $fechas[1]->week_start;
+    $end_date = $fechas[1]->week_end;
+    $sql = "SELECT * FROM events WHERE id=$user_id AND date BETWEEN '$start_date' AND '$end_date' ORDER BY date";
+    $array_eventos = $conexion_db->ConsultaArray($sql);
+
+    //Registro y totales de la quincena -2
+    $sql = "SELECT * FROM week_a WHERE week_end<='$today' ORDER BY id DESC LIMIT 3";
+    $fechas = $conexion_db->ConsultaArray($sql);
+    $start_date = $fechas[2]->week_start;
+    $end_date = $fechas[2]->week_end;
+    $sql = "SELECT * FROM events WHERE id=$user_id AND date BETWEEN '$start_date' AND '$end_date' ORDER BY date";
+    $array_eventos = $conexion_db->ConsultaArray($sql);
+
+    //Registro y totales de la quincena 0
+    //$sql = "SELECT * FROM week_a WHERE week_end<='$today' ORDER BY id DESC LIMIT 3";
+    //$fechas = $conexion_db->ConsultaArray($sql);
+  //  $start_date = $fechas[0]->week_start;
+  //  $end_date = $fechas[0]->week_end;
+  //  $sql = "SELECT * FROM events WHERE id=$user_id AND date BETWEEN '$start_date' AND '$end_date' ORDER BY date";
+
+  */
+    $array_eventos = ConexionDB::Quincena(1,$conexion_db,$user_id);
+
+    //$fecha_id =+ -1;
+    //$sql = "SELECT * FROM week_a WHERE id='$fecha_id'";
+    //$fechas = $conexion_db->ConsultaArray($sql);
+    //$start_date = $fechas[0]->week_start;
+    //$end_date = $fechas[0]->week_end;
+    //$sql = "SELECT * FROM events WHERE id=$user_id AND date BETWEEN '$start_date' AND '$end_date' ORDER BY date";
+    //$array_eventos = $conexion_db->ConsultaArray($sql);
+
+
+
 
     $total_pago = 0.0;
     $total_hrs = 0.0;
+    //echo $fecha_id."   ";
+    //echo $sql;
+    var_dump($fechas);
+    //Selector de Quincena
+    //SELECT * FROM week_a WHERE week_end<='2018-07-29' ORDER BY id DESC LIMIT 1
+
+    //Selector semana Actual
+    //
+
 ?>
 
 <!doctype html>
@@ -58,7 +124,7 @@
 	<?php foreach($array_eventos as $elemento): ?>
 
    	<tr>
-            <td> <?php echo date_format(date_create($elemento->date),"d/D/M") ?></td>
+            <td> <?php echo date_format(date_create($elemento->date),"D d/M/y") ?></td>
             <td> <?php echo $elemento->site ?></td>
             <td> <?php echo $elemento->hours_day ?></td>
             <td> <?php echo $elemento->employee_rate ?></td>
