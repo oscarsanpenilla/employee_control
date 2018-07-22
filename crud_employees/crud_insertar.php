@@ -19,6 +19,15 @@
     $paid_by = $_POST["paid_by"];
     $bank_info = $_POST["bank_info"];
 
+    if ($status == 'on')
+    {
+      $status = 1;
+    }else {
+      $status = 0;
+    }
+
+    //var_dump($_POST);
+
     $sql = "INSERT INTO users (work_for,user,password,name,employee_rate,work_for_rate,pay_week,active,ocupation,phone,paid_by,bank_info) ";
     $sql .= "VALUES('$work_for','$usuario','$contra','$nombre','$precio_hora','$work_for_rate','$payment_week','$status','$task','$phone','$paid_by','$bank_info')";
     $conexion_db->Prepare($sql);

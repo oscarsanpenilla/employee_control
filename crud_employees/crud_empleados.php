@@ -61,7 +61,7 @@
             <td><input type='number' required="required" name='precio_hora' class='centrado' placeholder="Employee Rate"></td>
             <td><input type='number' required="required" name='work_for_rate'  class='centrado' placeholder="Work for Rate"></td>
             <td><input type='text' required="required" name='payment_week'  class='centrado' placeholder="Week of Payment"></td>
-            <td><input type='checkbox' required="required" name='status'  class='centrado' placeholder="Status"></td>
+            <td><input type='checkbox' checked name='status'  class='centrado' placeholder="Status"></td>
             <td><input type='text' required="required" name='task'  class='centrado' placeholder="Ocupation"></td>
             <td><input type='text' required="required" name='phone'  class='centrado' placeholder="Phone"></td>
             <td><input type='text' required="required" name='paid_by'  class='centrado' placeholder="Paid by"></td>
