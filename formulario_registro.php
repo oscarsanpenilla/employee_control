@@ -32,7 +32,7 @@
         <p>Contraseña:*</p>
         <input type="text" name="password" required="required">
         <p>$/hora:*</p>
-        <input type="text" name="employee_rate"  required="required">
+        <input type="number" name="employee_rate"  required="required">
         <p>Pay Week:*</p>
         <select class="semana" name="pay_week" required="required" >
             <option value='A'>A</option>
