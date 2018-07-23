@@ -88,29 +88,39 @@ class ConexionDB
 
 
 	//Devuelve el total de la quincena seleccionada,
-	// 0 quincena actual
-	// -1 quincena pasada
-	// -2 quincena antepasada
+	// 0 semana actual
+	// -1 quincena actual
+	// -2 quincena pasada
+	// -3 quincena antepasada
 	public static function Quincena($quincena,$conexion_db,$user_id)
 	{
-		$today = date("Y-m-d");
-		if ($quincena == 1) {
-			$sql = "SELECT * FROM week_a WHERE week_end<='$today' ORDER BY id DESC LIMIT 1";
-	    $fechas = $conexion_db->ConsultaArray($sql);
-	    $end_date = $fechas[0]->week_end;
-	    $end_date = date('Y-m-d', strtotime($end_date));
-	    $sql = "SELECT * FROM events WHERE id=$user_id AND date >'$end_date' ORDER BY date";
-	    return $conexion_db->ConsultaArray($sql);
+		date_default_timezone_set("America/Vancouver");
+		$today = date('Y-m-d');
+		$sql = "SELECT * FROM week_a WHERE week_start<='$today' ORDER BY id DESC LIMIT 4";
+		$fechas = $conexion_db->ConsultaArray($sql);
+		$start_date = $fechas[$quincena]->week_start;
+    $end_date = $fechas[$quincena]->week_end;
+		$sql = "SELECT * FROM events WHERE id='$user_id' AND date BETWEEN '$start_date' AND '$end_date' ORDER BY date";
+		return $conexion_db->ConsultaArray($sql);
+
+	}
+
+	public static function SemanaActual($quincena,$conexion_db,$user_id)
+	{
+		date_default_timezone_set("America/Vancouver");
+		$today = date('Y-m-d');
+		$sql = "SELECT * FROM week_a WHERE week_start<='$today' ORDER BY id DESC LIMIT 4";
+		$fechas = $conexion_db->ConsultaArray($sql);
+		$start_date = $fechas[0]->week_start;
+		$end_date = $fechas[0]->week_end;
+		$fecha_media = date('Y-m-d', strtotime("$end_date -6 day"));
+		if ($today <= $fecha_media && $today >= $start_date) {
+			$sql = "SELECT * FROM events WHERE id='$user_id' AND date BETWEEN '$start_date' AND '$fecha_media' ORDER BY date";
+			return $conexion_db->ConsultaArray($sql);
 		}else {
-			$sql = "SELECT * FROM week_a WHERE week_end<='$today' ORDER BY id DESC LIMIT 3";
-	    $fechas = $conexion_db->ConsultaArray($sql);
-			$start_date = $fechas[abs($quincena)]->week_start;
-	    $end_date = $fechas[abs($quincena)]->week_end;
-	    $sql = "SELECT * FROM events WHERE id='$user_id' AND date BETWEEN '$start_date' AND '$end_date' ORDER BY date";
-	    return $conexion_db->ConsultaArray($sql);
+			$sql = "SELECT * FROM events WHERE id='$user_id' AND date > '$fecha_media' AND  date <= '$end_date' ORDER BY date";
+			return $conexion_db->ConsultaArray($sql);
 		}
-
-
 
 	}
 
