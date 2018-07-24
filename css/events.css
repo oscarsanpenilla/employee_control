@@ -87,24 +87,56 @@ select.semana{
     margin-bottom: 10px;
 }
 
+p.txt_anterior_tabla, form p{
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+
+}
+
+
 
 table{
+  margin-top: 10px;
   margin-left: 0;
-  font-size: 12px;
+  border-collapse: collapse;
   margin-bottom: 20px;
-}
-
-td.td_btn{
-  width: 20px;
-}
-
-td{
-  font-size: 15px;
-}
-
-td.primera_fila{
   text-align: center;
+  width: auto;
+  font-size: 12px;
+
+}
+
+table thead{
+  font-size: 12px;
   padding-bottom: 10px;
+
+}
+
+table tbody{
+  font-size: 8px;
+}
+
+tr td {
+    border-bottom: 1px solid #ddd;
+    margin: auto;
+    font-size: 12px;
+}
+
+table tfoot tr td{
+  font-size: 14px;
+  padding: 10px;
+  border-bottom: none;
+  text-align: center;
+}
+
+tr th{
+  font-size: 13px;
+  padding: 3px;
+}
+th.col_btn{
+  width: 18%;
 }
 
 input#id_empleado{
@@ -119,6 +151,15 @@ input.btn_principal{
   margin-bottom: 10px;
 }
 
+div.totales p{
+  text-align: left;
+  padding: 5px;
+  font-size: 14px;
+}
+
+div.btn_inf{
+  margin-top: 15px;
+}
 
 a {
 
