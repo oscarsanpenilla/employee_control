@@ -37,7 +37,7 @@
         <input type="text" name="user" value="<?php echo $elemento->user ?>" >
         <p class="p_form">Contraseña:</p>
         <input type="text" name="password" value="<?php echo $elemento->password ?>" >
-        <p class="p_form">$/Hora:</p>
+        <p class="p_form">Rate ($/Hora):</p>
         <input type="text" disabled="true" name="employee_rate" value="<?php echo $elemento->employee_rate ?>" >
         <p class="p_form">Semana de Pago:</p>
         <input type="text" disabled="true"name="pay_week" value="<?php echo $elemento->pay_week ?>" >
