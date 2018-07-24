@@ -26,16 +26,7 @@ body {
 }
 
 
-form {
 
-    margin: auto;
-    width: 100%;
-    max-width: 400px;
-    background: #F2F2F2;
-    padding: 0px 10px;
-    border: 1px solid rgba(0,0,0,0.2);
-
-}
 
 div.main{
   margin: auto;
@@ -165,6 +156,15 @@ a {
 
     text-decoration: none;
 
+}
+
+form p.p_form{
+  text-align: left;
+}
+
+form p.p_info{
+  text-align: justify;
+  font-weight: normal;
 }
 
 
