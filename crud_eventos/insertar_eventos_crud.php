@@ -45,8 +45,8 @@
 </head>
 <body>
   <div class="main">
-    <section>
-    <center>
+
+
       <!-- Imprime el nombre del trabajador -->
       <h2 class="title">Bienvenido</h2>
       <?php echo "<h3> $employee->name </h3>"; ?>
@@ -62,50 +62,47 @@
        <input type='submit' value="Ver" >
      </form>
 
+    <p class="txt_anterior_tabla">Registros <?php echo $periodo[$indice_periodo]; ?></p>
     <table width="100%" align="center">
-    <tr >
-      <td colspan="8" width="100%" class="primera_fila">Registros <?php echo $periodo[$indice_periodo]; ?></td>
-    </tr>
-    <tr>
-            <td>Fecha </td>
-            <td>Site </td>
-            <td>Horas </td>
-            <td>Rate</td>
-            <td>$/día</td>
-            <td></td>
-    </tr>
+    <thead>
+      <tr>
+              <th class="col_fecha">Fecha</th>
+              <th class="col_site">Site</th>
+              <th class="col_hrs">Horas</th>
+              <th class="col_rate">Rate</th>
+              <th class="col_dia">$/día</th>
+              <th class="col_btn"> </th>
+      </tr>
+    </thead>
+    <tbody>
+          <?php foreach($array_eventos as $elemento): ?>
+          <tr>
+                  <td class="first_col"> <?php echo date_format(date_create($elemento->date),"D d/M/y") ?></td>
+                  <td> <?php echo $elemento->site ?></td>
+                  <td> <?php echo $elemento->hours_day ?></td>
+                  <td> <?php echo $elemento->employee_rate ?></td>
+                  <td> <?php echo $elemento->total_day ?></td>
+                  <?php
+                  $total_pago += $elemento->total_day;
+                  $total_hrs += $elemento->hours_day;
+                  ?>
+                  <td class="td_btn" width="100px"><a  href="crud_borrar_evento.php?num=<?php echo $elemento->event_id ?>"><input type='button' name='borrar' id='id_empleado' value='Borrar'></td></a>
+          </tr>
+          <?php endforeach ?>
 
-
-    <?php foreach($array_eventos as $elemento): ?>
-
-    <tr>
-            <td> <?php echo date_format(date_create($elemento->date),"D d/M/y") ?></td>
-            <td> <?php echo $elemento->site ?></td>
-            <td> <?php echo $elemento->hours_day ?></td>
-            <td> <?php echo $elemento->employee_rate ?></td>
-            <td> <?php echo $elemento->total_day ?></td>
-            <?php
-            $total_pago += $elemento->total_day;
-            $total_hrs += $elemento->hours_day;
-            ?>
-            <td class="td_btn" width="100px"><a  href="crud_borrar_evento.php?num=<?php echo $elemento->event_id ?>"><input type='button' name='borrar' id='id_empleado' value='Borrar'></td></a>
-    </tr>
-    <?php endforeach ?>
-    <tr>
-            <td><?php echo "Total Horas: ".$total_hrs; ?></td>
-
-    </tr>
-    <tr>
-            <td><?php echo "Total Pago: $".$total_pago; ?></td>
-    </tr>
+    </tbody>
     </table>
-    </center>
-    <center>
+    <div class="totales">
+      <p> Total Horas: <strong><?php echo $total_hrs; ?></strong></p>
+      <p> Total  Pago: <strong>$<?php echo $total_pago; ?> </strong></p>
+    </div>
+
+    <div class="btn_inf">
         <a href="registro_horas.php"><input class='btn_principal' type='button' value='Nuevo Registro'></a>
         <a href="../cerrar_session.php"><input id="logout" type='button' value='Salir'></a>
         <a href="formulario_config.php"><input type='button' value='Configuración'></a>
-    </center>
-    </section>
+    </div>
+
 
   </div>
 
