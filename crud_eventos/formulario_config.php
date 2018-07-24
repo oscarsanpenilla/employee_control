@@ -26,28 +26,38 @@
     <title>Sanvan Update Worker</title>
 </head>
 <body>
-    <form action="config_actualizar.php" method="post" ><br>
+  <div class="main">
+    <form action="config_actualizar.php" method="post" >
         <h3>Configuración</h3>
-        <p style="text-align:center">En esta sección puedes visualizar tu información,asi como cambiar tu usuario, contraseña, número de celular asi como tu número de cuenta.</p><br>
-        <p>Nombre Completo:</p>
+        <p class="p_info">En esta sección puedes actualizar tu información
+          como: usuario, contraseña, número de contacto y la información de deposito.</p><br>
+        <p class="p_form">Nombre Completo:</p>
         <input type="text" name="name" value="<?php echo $elemento->name?>">
-        <p>Usuario:</p>
+        <p class="p_form">Usuario:</p>
         <input type="text" name="user" value="<?php echo $elemento->user ?>" >
-        <p>Contraseña:</p>
+        <p class="p_form">Contraseña:</p>
         <input type="text" name="password" value="<?php echo $elemento->password ?>" >
-        <p>$/Hora:</p>
+        <p class="p_form">$/Hora:</p>
         <input type="text" disabled="true" name="employee_rate" value="<?php echo $elemento->employee_rate ?>" >
-        <p>Semana de Pago:</p>
+        <p class="p_form">Semana de Pago:</p>
         <input type="text" disabled="true"name="pay_week" value="<?php echo $elemento->pay_week ?>" >
-        <p>Ocupación:</p>
+        <p class="p_form">Ocupación:</p>
         <input type="text" disabled="true" name="ocupation" value="<?php echo $elemento->ocupation ?>" >
-        <p>Telefono:</p>
+        <p class="p_form">Telefono:</p>
         <input type="text" name="phone" value="<?php echo $elemento->phone?>" >
-        <p>No. TD Canada Bank:</p>
+        <p class="p_info">La siguiente información es la que se debe de proporcionar: <br> Tansit No. &nbsp &nbsp Inst No. &nbsp &nbsp  Account No. <br>  Asegurate de pedirla al abrir tu cuenta.</p>
+        <p class="p_info">Ejemplo: 96660 004 77777788</p>
+        <p class="p_form">Info. TD Canada Bank:</p>
         <input type="text" name="bank_info" value="<?php echo $elemento->bank_info?>" >
         <input type="hidden" name="id" value="<?php echo $id ?>">
+        <div class="btn_inf">
+          <a href="insertar_eventos_crud.php"><input type='button' value='Regresar'></a>
+        </div>
         <input class="btn_principal" type="submit"  value="Enviar">
-
     </form>
+
+  </div>
+
+
 </body>
 </html>
