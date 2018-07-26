@@ -12,12 +12,16 @@
     <title>Sanvan Manager</title>
 </head>
 <body>
+  <div class="main">
     <form action=""><br>
         <a href="crud_lugares.php"><input  type="button" value="Editar Sites"></a>
         <a href="../crud_employees/crud_empleados.php"><input  type="button" value="Editar Empleados"></a>
           <a href="crud_empleados_eliminados.php"><input  type="button" value="Empleados Borrados"></a>
         <a href="formulario_descarga.php"><input  type="button" value="Descargar Tabla"></a>
+        <a href="formulario_resumen.php"><input  type="button" value="Resumen"></a>
         <a  href="../cerrar_session.php" class="logout"><input  type="button" value="Salir"></a>
     </form>
+  </div>
+
 </body>
 </html>
