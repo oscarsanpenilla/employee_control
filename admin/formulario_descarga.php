@@ -2,6 +2,13 @@
     include("../funtions.php");
     include("../employee.php");
     include("../validar_inicio_sesion.php");
+    $conexion_db = new ConexionDB();
+    date_default_timezone_set("America/Vancouver");
+		$today = date('Y-m-d');
+		$sql = "SELECT * FROM week_a WHERE week_start<='$today' ORDER BY id DESC LIMIT 4";
+		$fechas = $conexion_db->ConsultaArray($sql);
+		$start_date = $fechas[0]->week_start;
+		$end_date = $fechas[0]->week_end;
 
 ?>
 
@@ -14,13 +21,16 @@
     <title>Sanvan</title>
 </head>
 <body>
-   <form action="descargar_tabla.php" method="post">
-      <h3>Periodo de Tiempo</h3>
-      <p>Desde:</p>
-       <input type="date" required="required" name="fecha_inicio" value="<?php echo date("Y-m-d",strtotime('-15 day'))?>">
-        <p>Hasta:</p>
-       <input type="date" required="required" name="fecha_fin" value="<?php echo date("Y-m-d")?>">
-       <input type="submit" name="enviar" value="Enviar">
-   </form>
+  <div class="main">
+    <form action="descargar_tabla.php" method="post">
+      <h3>Periodo de Tiempo</h3>
+      <p  class="p_form">Desde:</p>
+      <input type="date" required="required" name="fecha_inicio" value="<?php echo $start_date)?>">
+      <p class="p_form">Hasta:</p>
+      <input type="date" required="required" name="fecha_fin" value="<?php echo $end_date?>">
+      <input type="submit" name="enviar" value="Enviar">
+      </form>
+  </div>
+
 </body>
 </html>
