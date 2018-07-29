@@ -1,0 +1,101 @@
+* {
+
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+
+div.contenedor{
+  margin: auto;
+  margin-top: 30px;
+  width: 100%;
+  max-width: 950px;
+  background: white;
+  padding: 0px 10px;
+  border: 1px solid rgba(0,0,0,0.2);
+}
+
+div.second_table div.contenedor table {
+  margin: auto;
+  margin-top: 30px;
+  width: auto;
+
+}
+
+div.bank_info{
+  margin: auto;
+  margin-top: 30px;
+  width: 100%;
+  max-width: 950px;
+  background: white;
+  padding: 0px 10px;
+  border: 1px solid rgba(0,0,0,0.2);
+}
+
+div.contenedor table{
+  width: 95%;
+  margin: auto;
+  margin-top: 30px;
+  padding-bottom: 20px;
+  border-collapse: collapse;
+
+
+}
+
+div.bank_info table{
+  width: auto%;
+  margin: auto;
+  margin-top: 30px;
+  padding-bottom: 20px;
+  border-collapse: collapse;
+  table-layout: fixed;
+
+}
+
+div.contenedor div.info{
+  margin-top: 20px;
+  margin-left: 25px;
+}
+
+th{
+  text-align: center;
+  height: 40px;
+
+}
+table thead{
+  background-color: black;
+  color: #F2F2F2;
+
+}
+
+td{
+  padding: 3px 6px;
+  border-right: 1px solid black;
+  border-left: : 1px solid black;
+
+}
+tbody, tfoot{
+  border: 1px solid black;
+}
+
+
+td.td_total{
+  text-align: right;
+}
+
+td.td_center, td.td_money{
+  text-align: center;
+}
+
+td.td_money::before{
+  content: '$ ';
+}
+tr:nth-child(even) {
+  background-color: #F2F2F2;
+}
+
+div.div_total{
+  padding: 10px 25px;
+  text-align: right;
+}
