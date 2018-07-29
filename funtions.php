@@ -50,6 +50,16 @@ class ConexionDB
 
 	}
 
+	function Consulta($sql)
+	{
+
+		$sentencia = $this->conexion_db->prepare($sql);
+	    $sentencia->execute();
+
+	    return $sentencia->fetchAll();
+
+	}
+
 	function ConsultaAssoc($sql)
 	{
 
@@ -105,6 +115,16 @@ class ConexionDB
 
 	}
 
+	public static function Periodo_Tipo_A()
+	{
+		date_default_timezone_set("America/Vancouver");
+		$today = date('Y-m-d');
+		$sql = "SELECT * FROM week_a WHERE week_start<='$today' ORDER BY id DESC LIMIT 4";
+		$fechas = $conexion_db->ConsultaArray($sql);
+		$start_date = $fechas[0]->week_start;
+		$end_date = $fechas[0]->week_end;
+	}
+
 	public static function SemanaActual($quincena,$conexion_db,$user_id)
 	{
 		date_default_timezone_set("America/Vancouver");
@@ -123,13 +143,41 @@ class ConexionDB
 		}
 
 	}
-
-
-
-
-
 }
 
+/**
+ *
+ */
+class ResumeFunctions
+{
+
+	public static function get_sites($start_date,$end_date,$conexion_db)
+	{
+		$sql = "SELECT DISTINCT sites FROM events WHERE date BETWEEN '$start_date' AND '$end_date' ";
+		return $conexion_db->prepare($sql);
+	}
+
+	public static function get_ocupation($array_eventos)
+	{
+		$array = array();
+		foreach ($array_eventos as $evento) {
+			$array[] = $evento->ocupation;
+		}
+		$array = array_unique($array);
+		return $array;
+	}
+
+	public static function get_names($array_eventos)
+	{
+		$array = array();
+		foreach ($array_eventos as $evento) {
+			$array[] = $evento->name;
+		}
+		$array = array_unique($array);
+		return $array;
+	}
+
+}
 
 
 

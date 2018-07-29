@@ -18,44 +18,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="../css/registro_horas.css">
+    <link rel="stylesheet" href="../css/events.css">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <meta charset="UTF-8">
     <title>Sanvan Construction</title>
 </head>
 <body>
+  <div class="main">
     <form action="insertar_eventos.php" method="post" >
-        <?php echo "<h3> Registro Horas </h3>"; ?>
-        <p style="text-align:center">Aquí podras regristrar tus horas, si te equivocas en el registro, solamente borralo y agrega uno nuevo.</p>
-        <p>Site: </p>
-        <select  name="lugar" required="required">
+        <h3> Registro de Horas </h3>
+        <p class="p_info">Aquí podras regristrar tus horas, si te equivocas en el registro solamente borralo y agrega uno nuevo. Los registros se guardan automáticamente.</p>
+        <p class="p_form">Site: </p>
+        <select  class="semana" name="lugar" required="required">
           <option selected='selected' value="<?php echo $ultimo_evento->site;?>"><?php echo $ultimo_evento->site;?></option>
             <?php foreach($arreglo_lugares as $elemento): ?>
                     <option value="<?php echo $elemento->site;?>"> <?php echo $elemento->site;   ?>  </option>
             <?php endforeach ?>
         </select>
-        <p>Fecha: </p>
+        <p class="p_form">Fecha: </p>
         <input type="date" name="fecha" required="required" value="<?php echo date('Y-m-d', strtotime($ultimo_evento->date. ' + 1 days'));?>">
-        <p>Horas Trabajadas</p>
-        <select name="horas" required="required">
+        <p class="p_form">Horas Trabajadas</p>
+        <select class="semana" name="horas" required="required">
             <?php
             echo "<option value='8'>8</option>";
             for ($i=0; $i < 24; $i++) echo "<option value='$i'>$i</option>";   ?>
         </select>
-        <p>Minutos</p>
-        <select name="frac_hrs" required="required">
+        <p class="p_form">Minutos</p>
+        <select class="semana" name="frac_hrs" required="required">
             <option value='0.00'>0</option>
             <option value='0.25'>15</option>
             <option value='0.50'>30</option>
             <option value='0.75'>45</option>
         </select>
-        <p>Comentarios:</p>
+        <p class="p_form">Comentarios:</p>
         <input type="text" name="comentario" >
-        <input class="btn_principal" type="submit" name="enviar" value="Agregar">
 
-        <a href="../cerrar_session.php" class="logout"><input  type="button" value="Salir"></a>
+        <div class="btn_inf">
+          <input class="btn_principal" type="submit" name="enviar" value="Agregar">
+          <a href="insertar_eventos_crud.php"><input type='button' value='Regresar'></a>
+          <a href="../cerrar_session.php" class="logout"><input  type="button" value="Salir"></a>
+        </div>
+
 
     </form>
-
+  </div>
 </body>
 </html>
