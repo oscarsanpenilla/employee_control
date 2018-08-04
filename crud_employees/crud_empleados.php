@@ -55,17 +55,17 @@
         <td>#</td>
         <form action="crud_insertar.php" method="post">
             <td><input type='text' required="required" name='work_for'  class='centrado' placeholder="Work for"></td>
-            <td><input type='text' required="required" name='nombre'  class='centrado' placeholder="Name"></td>
-            <td><input type='text' required="required" name='usuario'  class='centrado' placeholder="User"></td>
-            <td><input type='text' required="required" name='contra'  class='centrado' placeholder="Password"></td>
-            <td><input type='number' required="required" name='precio_hora' class='centrado' placeholder="Employee Rate"></td>
+            <td><input type='text' required="required" name='name'  class='centrado' placeholder="Name"></td>
+            <td><input type='text' required="required" name='user'  class='centrado' placeholder="User"></td>
+            <td><input type='text' required="required" name='password'  class='centrado' placeholder="Password"></td>
+            <td><input type='number' required="required" name='employee_rate' class='centrado' placeholder="Employee Rate"></td>
             <td><input type='number' required="required" name='work_for_rate'  class='centrado' placeholder="Work for Rate"></td>
             <td><input type='text' required="required" name='payment_week'  class='centrado' placeholder="Week of Payment"></td>
             <td><input type='checkbox' checked name='status'  class='centrado' placeholder="Status"></td>
-            <td><input type='text' required="required" name='task'  class='centrado' placeholder="Ocupation"></td>
+            <td><input type='text' required="required" name='ocupation'  class='centrado' placeholder="Ocupation"></td>
             <td><input type='text' required="required" name='phone'  class='centrado' placeholder="Phone"></td>
             <td><input type='text' required="required" name='paid_by'  class='centrado' placeholder="Paid by"></td>
-            <td><input type='text' required="required" name='bank_info'  class='centrado' placeholder="Bank info"></td>
+            <td><input type='text'  name='bank_info'  class='centrado' placeholder="Bank info"></td>
             <td colspan="2"><input type='submit' name='insertar'  value='Nuevo'></td>
         </form>
       </tr>

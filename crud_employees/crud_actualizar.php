@@ -2,21 +2,27 @@
     include("../funtions.php");
     include("../validar_inicio_sesion.php");
     $conexion_db = new ConexionDB();
+    $employee = $_SESSION['employee'];
     $id = $_POST["id"];
     $work_for = $_POST["work_for"];
-    $name= $_POST["nombre"];
-    $user= $_POST["usuario"];
-    $password= $_POST["contra"];
-    $rate_hour= $_POST["rate_hour"];
+    $name= $_POST["name"];
+    $user= $_POST["user"];
+    $password= $_POST["password"];
+    $employee_rate= $_POST["employee_rate"];
     $work_for_rate = $_POST["work_for_rate"];
-    $payment_week= $_POST["payment_week"];
+    $pay_week= $_POST["pay_week"];
     $status= $_POST["status"];
-    $task= $_POST["task"];
+    $ocupation= $_POST["ocupation"];
     $phone= $_POST["phone"];
     $paid_by= $_POST["paid_by"];
     $bank_info= $_POST["bank_info"];
-    $sql = "UPDATE users SET work_for='$work_for',name='$name', user='$user', password='$password', employee_rate='$rate_hour',work_for_rate='$work_for_rate', phone='$phone', paid_by='$paid_by', bank_info='$bank_info'";
-    $sql .= ",active='$status', ocupation='$task', phone='$phone', paid_by='$paid_by', bank_info='$bank_info' WHERE id = '$id'";
+    $sql = "UPDATE users
+            SET work_for='$work_for', name='$name', user='$user', password='$password',
+                employee_rate='$employee_rate', work_for_rate='$work_for_rate',
+                pay_week='$pay_week', phone='$phone', paid_by='$paid_by', bank_info='$bank_info',
+                active='$status', ocupation='$ocupation', phone='$phone', paid_by='$paid_by',
+                bank_info='$bank_info'
+                WHERE id = '$id'";
     $conexion_db->Prepare($sql);
     header("Location:crud_empleados.php");
 ?>
