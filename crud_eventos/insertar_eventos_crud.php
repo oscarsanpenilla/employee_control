@@ -7,25 +7,25 @@
     $employee = $_SESSION['employee'];
     $user_id = $_SESSION['employee']->id;
 
-    $array_eventos = ConexionDB::SemanaActual(0,$conexion_db,$user_id);
+    $array_eventos = Events::SemanaActual($employee);
     $periodo = array(" de la Semana Actual", " de la Quincena de Pago", " de la Quincena Pasada", " de la Quincena Antepasada");
     $indice_periodo = 0;
     if (isset($_POST['quincena'])) {
       switch ($_POST['quincena']) {
         case '0':
-          $array_eventos = ConexionDB::SemanaActual(0,$conexion_db,$user_id);
+          $array_eventos = Events::SemanaActual($employee);
           $indice_periodo = 0;
           break;
         case '1':
-          $array_eventos = ConexionDB::Quincena(0,$conexion_db,$user_id);
+          $array_eventos = Events::QuincenaPago($employee,-1);
           $indice_periodo = 1;
           break;
         case '2':
-          $array_eventos = ConexionDB::Quincena(1,$conexion_db,$user_id);
+          $array_eventos = Events::QuincenaPago($employee,-2);
           $indice_periodo = 2;
           break;
         case '3':
-          $array_eventos = ConexionDB::Quincena(2,$conexion_db,$user_id);
+          $array_eventos = Events::QuincenaPago($employee,-3);
           $indice_periodo = 3;
           break;
         }
@@ -81,7 +81,7 @@
                   <td> <?php echo $elemento->site ?></td>
                   <td> <?php echo $elemento->hours_day ?></td>
                   <td> <?php echo $elemento->employee_rate ?></td>
-                  <td> <?php echo $elemento->total_day ?></td>
+                  <td> <?php echo $elemento->total_day?></td>
                   <?php
                   $total_pago += $elemento->total_day;
                   $total_hrs += $elemento->hours_day;
