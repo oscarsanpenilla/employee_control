@@ -6,27 +6,53 @@
   $fecha_inicio = $_POST['fecha_inicio'];
   $fecha_fin = $_POST['fecha_fin'];
   $site = $_POST['site'];
+  $ocupation = $_POST['ocupation'];
 
   $conexion_db = new ConexionDB();
-  $sql = "SELECT DISTINCT date
-          FROM events
-          WHERE site='$site' AND date BETWEEN '$fecha_inicio' AND '$fecha_fin'
-          ORDER BY date";
-  $dates = $conexion_db->ConsultaArray($sql);
-  $sql = "SELECT DISTINCT name,ocupation
-          FROM events
-          WHERE site='$site' AND date BETWEEN '$fecha_inicio' AND '$fecha_fin'
-          ORDER BY ocupation,name";
-  $names = $conexion_db->ConsultaArray($sql);
-  $sql = "SELECT name, date,hours_day
-          FROM events
-          WHERE site='$site' AND date BETWEEN '$fecha_inicio' AND '$fecha_fin'";
-  $hours_day = $conexion_db->ConsultaArray($sql);
-  $sql = "SELECT name, SUM(hours_day) AS total
-          FROM events
-          WHERE site='$site' AND date BETWEEN '$fecha_inicio' AND '$fecha_fin'
-          GROUP BY name";
-  $total_hours = $conexion_db->ConsultaArray($sql);
+
+  if ($ocupation != "any") {
+    $sql = "SELECT DISTINCT date
+            FROM events
+            WHERE site='$site' AND date BETWEEN '$fecha_inicio' AND '$fecha_fin' AND ocupation='$ocupation'
+            ORDER BY date";
+    $dates = $conexion_db->ConsultaArray($sql);
+    $sql = "SELECT DISTINCT name,ocupation
+            FROM events
+            WHERE site='$site' AND date BETWEEN '$fecha_inicio' AND '$fecha_fin' AND ocupation='$ocupation'
+            ORDER BY ocupation,name";
+    $names = $conexion_db->ConsultaArray($sql);
+    $sql = "SELECT name, date,hours_day
+            FROM events
+            WHERE site='$site' AND date BETWEEN '$fecha_inicio' AND '$fecha_fin' AND ocupation='$ocupation'";
+    $hours_day = $conexion_db->ConsultaArray($sql);
+    $sql = "SELECT name, SUM(hours_day) AS total
+            FROM events
+            WHERE site='$site' AND date BETWEEN '$fecha_inicio' AND '$fecha_fin' AND ocupation='$ocupation'
+            GROUP BY name";
+    $total_hours = $conexion_db->ConsultaArray($sql);
+  }else{
+    $sql = "SELECT DISTINCT date
+            FROM events
+            WHERE site='$site' AND date BETWEEN '$fecha_inicio' AND '$fecha_fin'
+            ORDER BY date";
+    $dates = $conexion_db->ConsultaArray($sql);
+    $sql = "SELECT DISTINCT name,ocupation
+            FROM events
+            WHERE site='$site' AND date BETWEEN '$fecha_inicio' AND '$fecha_fin'
+            ORDER BY ocupation,name";
+    $names = $conexion_db->ConsultaArray($sql);
+    $sql = "SELECT name, date,hours_day
+            FROM events
+            WHERE site='$site' AND date BETWEEN '$fecha_inicio' AND '$fecha_fin'";
+    $hours_day = $conexion_db->ConsultaArray($sql);
+    $sql = "SELECT name, SUM(hours_day) AS total
+            FROM events
+            WHERE site='$site' AND date BETWEEN '$fecha_inicio' AND '$fecha_fin'
+            GROUP BY name";
+    $total_hours = $conexion_db->ConsultaArray($sql);
+
+  }
+
 
 
   $total_hrs = 0.0;
