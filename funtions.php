@@ -13,7 +13,7 @@ class ConexionDB
 		{
 			$this->conexion_db = new PDO("mysql:host=". DB_HOST ."; dbname=".DB_NOMBRE ,DB_USUARIO,DB_CONTRA);
 			$this->conexion_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	    	$this->conexion_db->exec("SET CHARACTER SET utf8");
+	    $this->conexion_db->exec("SET CHARACTER SET utf8");
 
 		}
 		catch(EXCEPTION $e)
@@ -26,10 +26,6 @@ class ConexionDB
 	    }
 	}
 
-
-
-
-
 	function ConsultaSQL($sql)
 	{
 
@@ -40,35 +36,35 @@ class ConexionDB
 
 	}
 
-	function ConsultaArray($sql)
+	public function ConsultaArray($sql)
 	{
 
 		$sentencia = $this->conexion_db->prepare($sql);
-	    $sentencia->execute();
-
-	    return $sentencia->fetchAll(PDO::FETCH_OBJ);
-
-	}
-
-	function Consulta($sql)
-	{
-
-		$sentencia = $this->conexion_db->prepare($sql);
-	    $sentencia->execute();
-
-	    return $sentencia->fetchAll();
+	  $sentencia->execute();
+		$resultado = $sentencia->fetchAll(PDO::FETCH_OBJ);
+		return $resultado;
 
 	}
 
-	function ConsultaAssoc($sql)
-	{
-
-		$sentencia = $this->conexion_db->prepare($sql);
-	    $sentencia->execute();
-
-	    return $sentencia->fetchAll(PDO::FETCH_ASSOC);
-
-	}
+	// function Consulta($sql)
+	// {
+	//
+	// 	$sentencia = $this->conexion_db->prepare($sql);
+	//     $sentencia->execute();
+	//
+	//     return $sentencia->fetchAll();
+	//
+	// }
+	//
+	// function ConsultaAssoc($sql)
+	// {
+	//
+	// 	$sentencia = $this->conexion_db->prepare($sql);
+	//     $sentencia->execute();
+	//
+	//     return $sentencia->fetchAll(PDO::FETCH_ASSOC);
+	//
+	// }
 
 	function ConsultaLogin($sql)
 	{
@@ -95,90 +91,226 @@ class ConexionDB
 	}
 
 
-
-
-	//Devuelve el total de la quincena seleccionada,
-	// 0 semana actual
-	// -1 quincena actual
-	// -2 quincena pasada
-	// -3 quincena antepasada
-	public static function Quincena($quincena,$conexion_db,$user_id)
-	{
-		date_default_timezone_set("America/Vancouver");
-		$today = date('Y-m-d');
-		$sql = "SELECT * FROM week_a WHERE week_start<='$today' ORDER BY id DESC LIMIT 4";
-		$fechas = $conexion_db->ConsultaArray($sql);
-		$start_date = $fechas[$quincena]->week_start;
-    $end_date = $fechas[$quincena]->week_end;
-		$sql = "SELECT * FROM events WHERE id='$user_id' AND date BETWEEN '$start_date' AND '$end_date' ORDER BY date";
-		return $conexion_db->ConsultaArray($sql);
-
-	}
-
-	public static function Periodo_Tipo_A()
-	{
-		date_default_timezone_set("America/Vancouver");
-		$today = date('Y-m-d');
-		$sql = "SELECT * FROM week_a WHERE week_start<='$today' ORDER BY id DESC LIMIT 4";
-		$fechas = $conexion_db->ConsultaArray($sql);
-		$start_date = $fechas[0]->week_start;
-		$end_date = $fechas[0]->week_end;
-	}
-
-	public static function SemanaActual($quincena,$conexion_db,$user_id)
-	{
-		date_default_timezone_set("America/Vancouver");
-		$today = date('Y-m-d');
-		$sql = "SELECT * FROM week_a WHERE week_start<='$today' ORDER BY id DESC LIMIT 4";
-		$fechas = $conexion_db->ConsultaArray($sql);
-		$start_date = $fechas[0]->week_start;
-		$end_date = $fechas[0]->week_end;
-		$fecha_media = date('Y-m-d', strtotime("$end_date -6 day"));
-		if ($today <= $fecha_media && $today >= $start_date) {
-			$sql = "SELECT * FROM events WHERE id='$user_id' AND date BETWEEN '$start_date' AND '$fecha_media' ORDER BY date";
-			return $conexion_db->ConsultaArray($sql);
-		}else {
-			$sql = "SELECT * FROM events WHERE id='$user_id' AND date > '$fecha_media' AND  date <= '$end_date' ORDER BY date";
-			return $conexion_db->ConsultaArray($sql);
-		}
-
-	}
 }
 
 /**
  *
  */
-class ResumeFunctions
+class Events
 {
 
-	public static function get_sites($start_date,$end_date,$conexion_db)
+	public static function PeriodoPago()
 	{
-		$sql = "SELECT DISTINCT sites FROM events WHERE date BETWEEN '$start_date' AND '$end_date' ";
-		return $conexion_db->prepare($sql);
+		$conexion_db = new ConexionDB();
+		date_default_timezone_set("America/Vancouver");
+		$today = date('Y-m-d');
+		$sql = "SELECT *
+						FROM week_a
+						WHERE week_start<='$today' AND week_end>='$today'";
+		$fechas = $conexion_db->ConsultaArray($sql);
+		$fecha_id = $fechas[0]->id;
+		$id_quincena_pago = $fecha_id - 1;
+
+		$sql = "SELECT * FROM week_a WHERE id='$id_quincena_pago'";
+		return $conexion_db->ConsultaArray($sql);
 	}
 
-	public static function get_ocupation($array_eventos)
+
+	public static function SemanaActual($employee)
 	{
-		$array = array();
-		foreach ($array_eventos as $evento) {
-			$array[] = $evento->ocupation;
+		$conexion_db = new ConexionDB();
+		$user_id = $employee->id;
+		date_default_timezone_set("America/Vancouver");
+		$today = date('Y-m-d');
+		$sql = "SELECT *
+						FROM week_a
+						WHERE week_start<='$today' AND week_end>='$today'";
+		$fechas = $conexion_db->ConsultaArray($sql);
+		$start_date = $fechas[0]->week_start;
+		$end_date = $fechas[0]->week_end;
+		$fecha_media = date('Y-m-d', strtotime("$end_date -6 day"));
+		if ($today <= $fecha_media && $today >= $start_date) {
+			$sql = "SELECT *
+							FROM events WHERE id='$user_id' AND date BETWEEN '$start_date' AND '$fecha_media'
+							ORDER BY date";
+			return $conexion_db->ConsultaArray($sql);
+		}else {
+			$sql = "SELECT *
+							FROM events
+							WHERE id='$user_id' AND date > '$fecha_media' AND  date <= '$end_date'
+							ORDER BY date";
+			return $conexion_db->ConsultaArray($sql);
 		}
-		$array = array_unique($array);
-		return $array;
+
 	}
 
-	public static function get_names($array_eventos)
+	public static function QuincenaPago($employee,$quincena)
 	{
-		$array = array();
-		foreach ($array_eventos as $evento) {
-			$array[] = $evento->name;
-		}
-		$array = array_unique($array);
-		return $array;
+		$conexion_db = new ConexionDB();
+		$user_id = $employee->id;
+		date_default_timezone_set("America/Vancouver");
+		$today = date('Y-m-d');
+		$sql = "SELECT *
+						FROM week_a
+						WHERE week_start<='$today' AND week_end>='$today'";
+		$fechas = $conexion_db->ConsultaArray($sql);
+		$fecha_id = $fechas[0]->id;
+		$id_quincena_pago = $fecha_id + $quincena;
+
+		$sql = "SELECT *
+						FROM week_a
+						WHERE id='$id_quincena_pago'";
+		$fechas = $conexion_db->ConsultaArray($sql);
+		$start_date = $fechas[0]->week_start;
+    $end_date = $fechas[0]->week_end;
+		$sql = "SELECT *
+						FROM events
+						WHERE id='$user_id' AND date BETWEEN '$start_date' AND '$end_date'
+						ORDER BY date";
+		return $conexion_db->ConsultaArray($sql);
+
 	}
+
+
+
 
 }
 
+
+/**
+ *
+ */
+
+/**
+ *
+ */
+
+
+
+
+
+class ResumeTimesheet
+{
+	private $conexion_db;
+	private $sql;
+	private $fecha_inicio;
+	private $fecha_fin;
+	private $paid_by;
+	private $site;
+	private $ocupation;
+	private $POST;
+
+
+	function __construct($POST){
+		$this->conexion_db = new ConexionDB();
+		$this->POST = $POST;
+		$this->fecha_inicio = $POST['fecha_inicio'];
+		$this->fecha_fin = $POST['fecha_fin'];
+		$this->paid_by = $POST['paid_by_checkbox'];
+		$this->site = $POST['site_checkbox'];
+		$this->ocupation = $POST['ocupation_checkbox'];
+	}
+
+	private function filter($criteria_array,$criteria){
+		$checkbox = $criteria_array;
+		$validate = True;
+		$length = count($checkbox);
+		$sql = "";
+		foreach ($checkbox as $p) {
+			if ($p == "any") $validate = False;
+		}
+		if ($validate) {
+			$sql .= " AND ( ";
+			for ($i=0; $i < $length - 1; $i++){
+				$sql .= " $criteria='$checkbox[$i]' OR ";
+			}
+		  $sql .= "$criteria='$checkbox[$i]'";
+			$sql .= "  )";
+		}
+		return $sql;
+	}
+
+	public function resume()
+	{
+		$sql = "SELECT site,ocupation,SUM(hours_day) AS hours, SUM(hours_day*work_for_rate) AS total_ocupation
+		 				FROM events
+						WHERE date BETWEEN '$this->fecha_inicio' AND '$this->fecha_fin'";
+		$sql_site = ResumeTimesheet::filter($this->site,"site");
+		$sql_paid_by = ResumeTimesheet::filter($this->paid_by,"paid_by");
+		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"ocupation");
+
+		$sql .= $sql_site.$sql_paid_by.$sql_ocupation;
+		$sql .= " GROUP BY site,ocupation ORDER BY site,ocupation";
+
+		$resume = $this->conexion_db->ConsultaArray($sql);
+		return $resume;
+	}
+
+
+
+	public function getOcupations(){
+		$sql = "SELECT DISTINCT ocupation
+		 				FROM events
+						WHERE date BETWEEN '$this->fecha_inicio' AND '$this->fecha_fin'";
+		$sql_site = ResumeTimesheet::filter($this->site,"site");
+		$sql_paid_by = ResumeTimesheet::filter($this->paid_by,"paid_by");
+		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"ocupation");
+
+		$sql .= $sql_site.$sql_paid_by.$sql_ocupation;
+
+		$ocupations = $this->conexion_db->ConsultaArray($sql);
+		return $ocupations;
+	}
+
+	public function getEvents(){
+		$sql = "SELECT site,ocupation,name, SUM(hours_day) AS hours, work_for_rate, SUM(hours_day)*work_for_rate AS total
+						FROM events
+						WHERE date BETWEEN '$this->fecha_inicio' AND '$this->fecha_fin'";
+
+		$sql_site = ResumeTimesheet::filter($this->site,"site");
+		$sql_paid_by = ResumeTimesheet::filter($this->paid_by,"paid_by");
+		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"ocupation");
+		$sql .= $sql_site.$sql_paid_by.$sql_ocupation;
+		$sql .= " GROUP BY site,ocupation,name ORDER BY site,ocupation,name";
+
+		$results = $this->conexion_db->ConsultaArray($sql);
+		return $results;
+	}
+
+	public function bankResume(){
+		$sql = "SELECT name,bank_info,SUM(hours_day)*work_for_rate AS total
+						FROM events
+						WHERE date BETWEEN '$this->fecha_inicio' AND '$this->fecha_fin' AND bank_info!='' ";
+
+		$sql_site = ResumeTimesheet::filter($this->site,"site");
+		$sql_paid_by = ResumeTimesheet::filter($this->paid_by,"paid_by");
+		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"ocupation");
+		$sql .= $sql_site.$sql_paid_by.$sql_ocupation;
+		$sql .= " GROUP BY bank_info";
+
+
+		$results = $this->conexion_db->ConsultaArray($sql);
+		return $results;
+	}
+
+	public function cashResume(){
+		$sql = "SELECT name,bank_info,SUM(hours_day)*work_for_rate AS total
+						FROM events
+						WHERE date BETWEEN '$this->fecha_inicio' AND '$this->fecha_fin' AND bank_info=''";
+
+		$sql_site = ResumeTimesheet::filter($this->site,"site");
+		$sql_paid_by = ResumeTimesheet::filter($this->paid_by,"paid_by");
+		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"ocupation");
+		$sql .= $sql_site.$sql_paid_by.$sql_ocupation;
+		$sql .= " GROUP BY name ORDER BY name";
+
+		$results = $this->conexion_db->ConsultaArray($sql);
+		return $results;
+	}
+
+	
+
+}
 
 
 
