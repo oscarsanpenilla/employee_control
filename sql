@@ -37,3 +37,9 @@ SELECT name, SUM(hours_day) AS total
 FROM events
 WHERE site='Triumph' AND date BETWEEN '2018-07-01' AND '2018-07-14'
 GROUP BY name
+
+
+//semana corriente
+SELECT *
+FROM week_a
+WHERE week_start<='2018-07-29' AND week_end>='2018-07-29'
