@@ -12,8 +12,9 @@ div.contenedor{
   width: 100%;
   max-width: 950px;
   background: white;
-  padding: 0px 10px;
+  padding: 20px 10px;
   border: 1px solid rgba(0,0,0,0.2);
+
 }
 
 div.second_table div.contenedor table {
