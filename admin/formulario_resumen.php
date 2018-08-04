@@ -3,20 +3,18 @@
     include("../funtions.php");
     include("../employee.php");
     include("../validar_inicio_sesion.php");
+
     $conexion_db = new ConexionDB();
-    date_default_timezone_set("America/Vancouver");
-		$today = date('Y-m-d');
-		$sql = "SELECT * FROM week_a WHERE week_start<='$today' ORDER BY id DESC LIMIT 4";
-		$fechas = $conexion_db->ConsultaArray($sql);
+
+		$fechas = Events::PeriodoPago();
 		$start_date = $fechas[0]->week_start;
 		$end_date = $fechas[0]->week_end;
 
     $sql= "SELECT site FROM sites ORDER by site";
     $arreglo_lugares = $conexion_db->ConsultaArray($sql);
 
-    $sql= "SELECT DISTINCT ocupation FROM events";
+    $sql= "SELECT DISTINCT ocupation FROM events ORDER BY ocupation";
     $arreglo_ocupation = $conexion_db->ConsultaArray($sql);
-
 ?>
 
 
@@ -42,38 +40,67 @@
 
   <div class="main">
     <form action="resumen.php" method="post">
-      <h3>Periodo de Tiempo</h3>
+      <h3>Resume</h3>
       <p  class="p_form">Desde:</p>
       <input type="date" required="required" name="fecha_inicio" value="<?php echo $start_date?>">
       <p class="p_form">Hasta:</p>
       <input type="date" required="required" name="fecha_fin" value="<?php echo $end_date?>">
       <p class="p_form">Site:</p>
-
-      <select class="semana" name="site">
-        <?php foreach($arreglo_lugares as $elemento): ?>
-                <option value="<?php echo $elemento->site;?>"> <?php echo $elemento->site;   ?>  </option>
-        <?php endforeach ?>
-
-        <option value="VH_and_P" selected>Vancouver House & Pendrell</option>
-        <option value="any" selected>Cualquiera</option>
-      </select>
+      <div class="checkbox">
+        <input type="checkbox" name="site_checkbox[]"
+              value="any"
+              id="any_site"
+              checked>
+              <label for="any_site">Cualquiera</label>
+      </div>
+      <?php foreach($arreglo_lugares as $elemento): ?>
+        <div class="checkbox">
+          <input type="checkbox" name="site_checkbox[]"
+                value="<?php echo $elemento->site;?>"
+                id="<?php echo $elemento->site; ?>">
+                <label for="<?php echo $elemento->site; ?>"><?php echo $elemento->site; ?></label>
+        </div>
+      <?php endforeach ?>
 
       <p class="p_form">Pagado por:</p>
-      <select class="semana" name="paid_by">
-        <option value="Rafael">Rafael</option>
-        <option value="Cristian">Cristian</option>
-        <option value="Carlos">Carlos</option>
-        <option value="any" selected>Cualquiera</option>
-      </select>
-      <p class="p_form">Ocupación</p>
-      <select class="semana" name="ocupation">
-        <?php foreach($arreglo_ocupation as $elemento): ?>
-                <option value="<?php echo $elemento->ocupation;?>"> <?php echo $elemento->ocupation;?>  </option>
-        <?php endforeach ?>
-        <option value="any" selected>Cualquiera</option>
-      </select>
+      <div class="checkbox">
+        <input type="checkbox" name="paid_by_checkbox[]" value="any" id="D" checked><label for="D">Cualquiera</label><br>
+      </div>
+      <div class="checkbox">
+        <input type="checkbox" name="paid_by_checkbox[]" value="Rafael" id="A"><label for="A">Rafael</label><br>
+      </div>
+      <div class="checkbox">
+        <input type="checkbox" name="paid_by_checkbox[]" value="Cristian" id="B"><label for="B">Cristian</label><br>
+      </div>
+      <div class="checkbox">
+        <input type="checkbox" name="paid_by_checkbox[]" value="Carlos" id="C"><label for="C">Carlos</label><br>
+      </div>
 
-      <input type="submit" name="enviar" value="Enviar">
+
+
+
+
+      <!-- </div> -->
+      <p class="p_form">Ocupación</p>
+      <div class="checkbox">
+        <input type="checkbox" name="ocupation_checkbox[]"
+              value="any"
+              id="any_ocup"
+              checked>
+              <label for="any_ocup">Cualquiera</label>
+      </div>
+      <?php foreach($arreglo_ocupation as $elemento): ?>
+        <div class="checkbox">
+          <input type="checkbox" name="ocupation_checkbox[]"
+                value="<?php echo $elemento->ocupation;?>"
+                id="<?php echo $elemento->ocupation; ?>">
+                <label for="<?php echo $elemento->ocupation; ?>"><?php echo $elemento->ocupation; ?></label>
+        </div>
+      <?php endforeach ?>
+
+
+      <a href="main_admin.php"> <input type="button" value="Main Menu"> </a>
+      <input class="btn_principal" type="submit" name="enviar" value="Enviar">
       </form>
   </div>
 
