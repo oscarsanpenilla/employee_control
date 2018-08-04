@@ -10,7 +10,7 @@
 
 
 
-    $sql = "DELETE FROM events WHERE event_id = $event_id";
+    $sql = "DELETE FROM events WHERE event_id ='$event_id'";
 
     $conexion_db->Prepare($sql);
 
