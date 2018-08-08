@@ -115,6 +115,16 @@ class Events
 		return $conexion_db->ConsultaArray($sql);
 	}
 
+	public static function getActualPeriodDates($week){
+		$conexion_db = new ConexionDB();
+		date_default_timezone_set("America/Vancouver");
+		$today = date('Y-m-d');
+		$sql = "SELECT *
+						FROM $week
+						WHERE week_start<='$today' AND week_end>='$today'";
+		$fechas = $conexion_db->ConsultaArray($sql);
+		return $fechas;
+	}
 
 	public static function SemanaActual($employee)
 	{
@@ -308,7 +318,7 @@ class ResumeTimesheet
 		return $results;
 	}
 
-	
+
 
 }
 
