@@ -8,7 +8,6 @@ $fecha_fin = $_POST['fecha_fin'];
 
 $resume = new ResumeTimesheet($_POST);
 $array_resume = $resume->resume();
-//$ocupations = $resume->getOcupations();
 $results = $resume->getEvents();
 $bank_results = $resume->bankResume();
 $cash_results = $resume->cashResume();
@@ -61,8 +60,6 @@ $paid = 0.0;
         </tfoot>
       </table>
     </section>
-  </div>
-  <div class="contenedor"><!-- table Total employees  -->
     <section id="total_employee">
       <h3>Total Employees</h3>
       <p><strong><?php echo $fecha_inicio; ?></strong> to <strong><?php echo $fecha_fin; ?></strong></p>
@@ -108,8 +105,6 @@ $paid = 0.0;
         </tfoot>
       </table>
     </section>
-  </div>
-  <div class="contenedor">
     <section id="td_bank_deposits">
       <h3>TD Bank Deposits</h3>
       <p><strong><?php echo $fecha_inicio; ?></strong> to <strong><?php echo $fecha_fin; ?></strong></p>
@@ -142,8 +137,6 @@ $paid = 0.0;
         </tfoot>
       </table><!-- table end TD Bank Deposits  -->
     </section>
-  </div><!-- TD Bank Deposits  -->
-  <div class="contenedor">
     <section id="no_bank_info">
       <h3>No Bank Information</h3>
       <p><strong><?php echo $fecha_inicio; ?></strong> to <strong><?php echo $fecha_fin; ?></strong></p>
@@ -174,7 +167,6 @@ $paid = 0.0;
         </tfoot>
       </table><!-- table end bank info  -->
     </section>
-  </div><!-- TD Bank bank info  -->
   <br>
 </body>
 </html>
