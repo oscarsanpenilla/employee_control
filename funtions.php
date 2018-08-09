@@ -319,6 +319,114 @@ class ResumeTimesheet
 		return $results;
 	}
 
+	//Seccion de Timesheets
+	public function datesTimesheet(){
+		$sql = "SELECT DISTINCT date
+						FROM events
+						WHERE date BETWEEN '$this->fecha_inicio' AND '$this->fecha_fin' ";
+		$sql_site = ResumeTimesheet::filter($this->site,"site");
+		$sql_paid_by = ResumeTimesheet::filter($this->paid_by,"paid_by");
+		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"ocupation");
+		$sql .= $sql_site.$sql_paid_by.$sql_ocupation;
+		$sql .= " ORDER BY date";
+		$dates = $this->conexion_db->ConsultaArray($sql);
+		return $dates;
+
+	}
+
+	public function datesCompleteTimesheet(){
+		$dates = [];
+		$start = date('Y-m-d',strtotime($this->fecha_inicio));
+		$end = date('Y-m-d',strtotime($this->fecha_fin));
+		$i =0;
+		while ( $start <= $end) {
+		  $dates[] = $start;
+		  $start = date('Y-m-d',strtotime ( '+1 day' , strtotime ( $start ) )) ;
+		  $i++;
+		}
+		return $dates;
+	}
+
+	public function siteOcupationName(){
+		$sql = "SELECT id,site,ocupation,name
+						FROM events
+						WHERE date BETWEEN '$this->fecha_inicio' AND '$this->fecha_fin' ";
+		$sql_site = ResumeTimesheet::filter($this->site,"site");
+		$sql_paid_by = ResumeTimesheet::filter($this->paid_by,"paid_by");
+		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"ocupation");
+		$sql .= $sql_site.$sql_paid_by.$sql_ocupation;
+		$sql .= " GROUP BY site,id ORDER BY site,ocupation,name";
+		$consulta = $this->conexion_db->ConsultaArray($sql);
+		return $consulta;
+
+
+	}
+
+	public function sitesTimesheet(){
+		$sql = "SELECT DISTINCT site
+					  FROM events
+						WHERE date BETWEEN '$this->fecha_inicio' AND '$this->fecha_fin' ";
+		$sql_site = ResumeTimesheet::filter($this->site,"site");
+		$sql_paid_by = ResumeTimesheet::filter($this->paid_by,"paid_by");
+		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"ocupation");
+		$sql .= $sql_site.$sql_paid_by.$sql_ocupation;
+		$sql .= " ORDER BY site ASC";
+		$sites = $this->conexion_db->ConsultaArray($sql);
+		return $sites;
+	}
+
+	public function nameTimesheet(){
+		$sql = "SELECT DISTINCT id,name
+					  FROM events
+						WHERE date BETWEEN '$this->fecha_inicio' AND '$this->fecha_fin' ";
+		$sql_site = ResumeTimesheet::filter($this->site,"site");
+		$sql_paid_by = ResumeTimesheet::filter($this->paid_by,"paid_by");
+		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"ocupation");
+		$sql .= $sql_site.$sql_paid_by.$sql_ocupation;
+		$sql .= " ORDER BY name";
+		$names = $this->conexion_db->ConsultaArray($sql);
+		return $names;
+	}
+
+	public function ocupationTimesheet(){
+		$sql = "SELECT DISTINCT ocupation
+					  FROM events
+						WHERE date BETWEEN '$this->fecha_inicio' AND '$this->fecha_fin' ";
+		$sql_site = ResumeTimesheet::filter($this->site,"site");
+		$sql_paid_by = ResumeTimesheet::filter($this->paid_by,"paid_by");
+		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"ocupation");
+		$sql .= $sql_site.$sql_paid_by.$sql_ocupation;
+		$sql .= " ORDER BY ocupation ASC ";
+		$ocupation = $this->conexion_db->ConsultaArray($sql);
+		return $ocupation;
+	}
+
+
+
+	public function hoursDayTimesheet(){
+		$sql = "SELECT site,name,date,hours_day,id
+						FROM events
+						WHERE date BETWEEN '$this->fecha_inicio' AND '$this->fecha_fin' ";
+		$sql_site = ResumeTimesheet::filter($this->site,"site");
+		$sql_paid_by = ResumeTimesheet::filter($this->paid_by,"paid_by");
+		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"ocupation");
+		$sql .= $sql_site.$sql_paid_by.$sql_ocupation;
+		$hours_day = $this->conexion_db->ConsultaArray($sql);
+		return $hours_day;
+	}
+
+	public function totalHoursTimesheet(){
+		$sql = "SELECT site,name,id, SUM(hours_day) AS total
+					  FROM events
+						WHERE date BETWEEN '$this->fecha_inicio' AND '$this->fecha_fin' ";
+		$sql_site = ResumeTimesheet::filter($this->site,"site");
+		$sql_paid_by = ResumeTimesheet::filter($this->paid_by,"paid_by");
+		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"ocupation");
+		$sql .= $sql_site.$sql_paid_by.$sql_ocupation;
+		$sql .= " GROUP BY site,id ORDER BY site,ocupation,name";
+		$total_hours = $this->conexion_db->ConsultaArray($sql);
+		return $total_hours;
+	}
 
 
 }
