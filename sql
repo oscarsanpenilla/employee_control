@@ -43,3 +43,17 @@ GROUP BY name
 SELECT *
 FROM week_a
 WHERE week_start<='2018-07-29' AND week_end>='2018-07-29'
+
+//juntando tablas
+SELECT users.id,events.name,users.bank_info
+FROM events
+INNER JOIN users ON events.id = users.id
+WHERE date BETWEEN '2018-07-15' AND '2018-07-28' AND site='Vancouver House'
+GROUP BY users.id
+
+//bank Deposits resumen
+SELECT users.name,users.bank_info,SUM(hours_day)*users.work_for_rate AS total
+FROM events
+JOIN users ON events.id = users.id
+WHERE date BETWEEN '2018-07-15' AND '2018-07-28' AND users.bank_info!='' AND site='Vancouver House'
+GROUP BY users.bank_info
