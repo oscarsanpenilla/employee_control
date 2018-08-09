@@ -8,33 +8,19 @@
 
 div.contenedor{
   margin: auto;
-  margin-top: 30px;
+  margin: 30px;
   width: 100%;
-  max-width: 950px;
   background: white;
   padding: 20px 10px;
   border: 1px solid rgba(0,0,0,0.2);
 
 }
 
-div.second_table div.contenedor table {
-  margin: auto;
-  margin-top: 30px;
-  width: auto;
-
+section{
+  margin-bottom: 30px;
 }
 
-div.bank_info{
-  margin: auto;
-  margin-top: 30px;
-  width: 100%;
-  max-width: 950px;
-  background: white;
-  padding: 0px 10px;
-  border: 1px solid rgba(0,0,0,0.2);
-}
-
-div.contenedor table{
+table{
   width: 95%;
   margin: auto;
   margin-top: 30px;
@@ -42,21 +28,6 @@ div.contenedor table{
   border-collapse: collapse;
 
 
-}
-
-div.bank_info table{
-  width: auto%;
-  margin: auto;
-  margin-top: 30px;
-  padding-bottom: 20px;
-  border-collapse: collapse;
-  table-layout: fixed;
-
-}
-
-div.contenedor div.info{
-  margin-top: 20px;
-  margin-left: 25px;
 }
 
 th{
