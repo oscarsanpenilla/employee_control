@@ -288,15 +288,16 @@ class ResumeTimesheet
 	}
 
 	public function bankResume(){
-		$sql = "SELECT name,bank_info,SUM(hours_day)*work_for_rate AS total
+		$sql = "SELECT users.name,users.bank_info,SUM(hours_day)*events.work_for_rate AS total
 						FROM events
-						WHERE date BETWEEN '$this->fecha_inicio' AND '$this->fecha_fin' AND bank_info!='' ";
+						JOIN users ON events.id = users.id
+						WHERE date BETWEEN '$this->fecha_inicio' AND '$this->fecha_fin' AND users.bank_info!='' ";
 
 		$sql_site = ResumeTimesheet::filter($this->site,"site");
 		$sql_paid_by = ResumeTimesheet::filter($this->paid_by,"paid_by");
 		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"ocupation");
 		$sql .= $sql_site.$sql_paid_by.$sql_ocupation;
-		$sql .= " GROUP BY bank_info";
+		$sql .= " GROUP BY users.bank_info";
 
 
 		$results = $this->conexion_db->ConsultaArray($sql);
