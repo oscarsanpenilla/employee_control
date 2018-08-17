@@ -17,11 +17,24 @@ try {
   var_dump($bank_results);
 }
 
-
-
-
 $hrs = 0.0;
 $paid = 0.0;
+
+?>
+
+<!-- //Timesheet -->
+<?php
+$fecha_inicio = $_POST['fecha_inicio'];
+$fecha_fin = $_POST['fecha_fin'];
+
+$resume = new ResumeTimesheet($_POST);
+
+$dates = $resume->datesCompleteTimesheet();
+$names = $resume->siteOcupationNameResume();
+$hours_day = $resume->hoursDayTimesheet();
+$total_hours = $resume->totalHoursTimesheetResume();
+$sites = $resume->sitesTimesheet();
+$total_hrs = 0.0;
 
 ?>
 
@@ -34,6 +47,11 @@ $paid = 0.0;
 </head>
 <body>
   <div class="contenedor"> <!--table main resume -->
+    <div class="logo">
+      <img id="logo" src="../img/logo.png" alt="sanvan_logo">
+    </div>
+
+    <?php include("encabezado_filtro.php"); ?>
     <section id="main_resume">
       <h3>Final Resume</h3>
       <p><strong><?php echo $fecha_inicio; ?></strong> to <strong><?php echo $fecha_fin; ?></strong></p>
@@ -177,20 +195,7 @@ $paid = 0.0;
       </table><!-- table end bank info  -->
     </section>
     <section id="timesheet">
-      <?php
-      $fecha_inicio = $_POST['fecha_inicio'];
-      $fecha_fin = $_POST['fecha_fin'];
-
-      $resume = new ResumeTimesheet($_POST);
-
-      $dates = $resume->datesCompleteTimesheet();
-      $names = $resume->siteOcupationName();
-      $hours_day = $resume->hoursDayTimesheet();
-      $total_hours = $resume->totalHoursTimesheet();
-      $sites = $resume->sitesTimesheet();
-      $total_hrs = 0.0;
-      ?>
-
+      <h3>Timesheets Merged</h3>
       <p>Site:
         <?php foreach ($sites as $key=>$site): ?>
           <strong><?php echo $site->site." / "; ?> </strong>
@@ -201,7 +206,7 @@ $paid = 0.0;
         <thead>
           <tr>
             <th>&nbsp</th>
-            <th>Site</th>
+            <th>Work for</th>
             <th>Ocupation</th>
             <th>Name</th>
             <?php foreach ($dates as $date):?>
@@ -214,14 +219,17 @@ $paid = 0.0;
           <?php foreach ($names as $key=>$name):?>
             <tr>
               <td><?php echo $key + 1; ?></td>
-              <td><?php echo $name->site; ?></td>
+              <td><?php echo $name->work_for; ?></td>
               <td><?php echo $name->ocupation; ?></td>
               <td><?php echo $name->name; ?></td>
               <?php foreach ($dates as $date):?>
                 <td class="td_center">
                   <?php
+
                   foreach ($hours_day as $event){
-                    if ($date == $event->date && $name->id == $event->id && $name->site == $event->site)  echo $event->hours_day;
+                    if ($date == $event->date && $name->id == $event->id){
+                      echo $event->hours_day." ";
+                    }
                   }
                   ?>
                 </td>
@@ -229,7 +237,7 @@ $paid = 0.0;
               <td class="td_center">
                 <?php
                 foreach ($total_hours as $total) {
-                  if ($name->id == $total->id && $name->site == $total->site) {
+                  if ($name->id == $total->id) {
                     echo $total->total;
                     $total_hrs += $total->total;
                   }
@@ -243,7 +251,6 @@ $paid = 0.0;
       <div class="div_total">
         <p>Total hours: <strong><?php echo $total_hrs; ?></strong></p>
       </div>
-
   </section>
   <br>
 </body>

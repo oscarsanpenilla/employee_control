@@ -13,18 +13,13 @@
     $work_for_rate = $_POST["work_for_rate"];
     $precio_hora = $_POST["employee_rate"];
     $pay_week = $_POST["pay_week"];
-    $status = $_POST["status"];
+    $status = 1;
     $task = $_POST["ocupation"];
     $phone = $_POST["phone"];
     $paid_by = $_POST["paid_by"];
     $bank_info = $_POST["bank_info"];
 
-    if ($status == 'on')
-    {
-      $status = 1;
-    }else {
-      $status = 0;
-    }
+
 
     //var_dump($_POST);
 

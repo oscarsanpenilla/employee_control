@@ -46,25 +46,6 @@ class ConexionDB
 
 	}
 
-	// function Consulta($sql)
-	// {
-	//
-	// 	$sentencia = $this->conexion_db->prepare($sql);
-	//     $sentencia->execute();
-	//
-	//     return $sentencia->fetchAll();
-	//
-	// }
-	//
-	// function ConsultaAssoc($sql)
-	// {
-	//
-	// 	$sentencia = $this->conexion_db->prepare($sql);
-	//     $sentencia->execute();
-	//
-	//     return $sentencia->fetchAll(PDO::FETCH_ASSOC);
-	//
-	// }
 
 	function ConsultaLogin($sql)
 	{
@@ -187,16 +168,6 @@ class Events
 }
 
 
-/**
- *
- */
-
-/**
- *
- */
-
-
-
 
 
 class ResumeTimesheet
@@ -241,6 +212,22 @@ class ResumeTimesheet
 		}
 		return $sql;
 	}
+
+	private function getArrayFilter($criteria_array,$criteria){
+		$checkbox = $criteria_array;
+		$validate = True;
+		$length = count($checkbox);
+		$arreglo = [];
+		foreach ($checkbox as $key=>$p) {
+			if ($p == "any"){
+				$arreglo[] = "Cualquiera";
+			}else {
+				$arreglo[$key] = $p;
+			}
+		}
+		return $arreglo;
+	}
+
 
 	public function resume()
 	{
@@ -307,15 +294,16 @@ class ResumeTimesheet
 	}
 
 	public function cashResume(){
-		$sql = "SELECT name,bank_info,SUM(hours_day)*work_for_rate AS total
+		$sql = "SELECT users.name,users.bank_info,SUM(hours_day)*events.work_for_rate AS total
 						FROM events
-						WHERE date BETWEEN '$this->fecha_inicio' AND '$this->fecha_fin' AND bank_info=''";
+						JOIN users ON events.id = users.id
+						WHERE date BETWEEN '$this->fecha_inicio' AND '$this->fecha_fin' AND users.bank_info=''";
 
 		$sql_site = ResumeTimesheet::filter($this->site,"site");
-		$sql_paid_by = ResumeTimesheet::filter($this->paid_by,"paid_by");
-		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"ocupation");
+		$sql_paid_by = ResumeTimesheet::filter($this->paid_by,"users.paid_by");
+		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"events.ocupation");
 		$sql .= $sql_site.$sql_paid_by.$sql_ocupation;
-		$sql .= " GROUP BY name ORDER BY name";
+		$sql .= " GROUP BY name ORDER BY users.name";
 
 		$results = $this->conexion_db->ConsultaArray($sql);
 		return $results;
@@ -360,8 +348,19 @@ class ResumeTimesheet
 		$sql .= " GROUP BY site,id ORDER BY site,ocupation,name";
 		$consulta = $this->conexion_db->ConsultaArray($sql);
 		return $consulta;
+	}
 
-
+	public function siteOcupationNameResume(){
+		$sql = "SELECT id,work_for,ocupation,name
+						FROM events
+						WHERE date BETWEEN '$this->fecha_inicio' AND '$this->fecha_fin' ";
+		$sql_site = ResumeTimesheet::filter($this->site,"site");
+		$sql_paid_by = ResumeTimesheet::filter($this->paid_by,"paid_by");
+		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"ocupation");
+		$sql .= $sql_site.$sql_paid_by.$sql_ocupation;
+		$sql .= " GROUP BY id ORDER BY work_for,ocupation,name";
+		$consulta = $this->conexion_db->ConsultaArray($sql);
+		return $consulta;
 	}
 
 	public function sitesTimesheet(){
@@ -426,6 +425,19 @@ class ResumeTimesheet
 		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"ocupation");
 		$sql .= $sql_site.$sql_paid_by.$sql_ocupation;
 		$sql .= " GROUP BY site,id ORDER BY site,ocupation,name";
+		$total_hours = $this->conexion_db->ConsultaArray($sql);
+		return $total_hours;
+	}
+
+	public function totalHoursTimesheetResume(){
+		$sql = "SELECT ocupation,work_for,name,id, SUM(hours_day) AS total
+					  FROM events
+						WHERE date BETWEEN '$this->fecha_inicio' AND '$this->fecha_fin' ";
+		$sql_site = ResumeTimesheet::filter($this->site,"site");
+		$sql_paid_by = ResumeTimesheet::filter($this->paid_by,"paid_by");
+		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"ocupation");
+		$sql .= $sql_site.$sql_paid_by.$sql_ocupation;
+		$sql .= " GROUP BY id ORDER BY work_for,ocupation,name";
 		$total_hours = $this->conexion_db->ConsultaArray($sql);
 		return $total_hours;
 	}

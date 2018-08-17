@@ -30,7 +30,7 @@ $arreglo_ocupation = $conexion_db->ConsultaArray($sql);
 </head>
 <body>
   <div class="main">
-    <h3>Timesheet</h3>
+    <h1>Timesheet</h1>
     <form action="timesheet.php" method="post">
       <section id="form_date">
         <p  class="p_form">Desde:</p>

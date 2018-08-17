@@ -71,3 +71,12 @@ div.div_total{
   padding: 10px 25px;
   text-align: right;
 }
+/* Logo */
+div.logo, div.logo img{
+  width: 200px;
+  margin: auto;
+}
+
+#filtro_encabezado{
+  text-align:center;
+}

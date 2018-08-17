@@ -15,6 +15,7 @@ $arreglo_lugares = $conexion_db->ConsultaArray($sql);
 
 $sql= "SELECT DISTINCT ocupation FROM events ORDER BY ocupation";
 $arreglo_ocupation = $conexion_db->ConsultaArray($sql);
+
 ?>
 
 
@@ -30,7 +31,7 @@ $arreglo_ocupation = $conexion_db->ConsultaArray($sql);
 </head>
 <body>
   <div class="main">
-    <h3>Resume</h3>
+    <h1>Resume</h1>
     <form action="resumen.php" method="post">
       <section id="form_date">
         <p  class="p_form">Desde:</p>
@@ -108,7 +109,7 @@ $arreglo_ocupation = $conexion_db->ConsultaArray($sql);
               <label for="<?php echo $elemento->ocupation; ?>"><?php echo $elemento->ocupation; ?></label>
             </div>
           <?php endforeach ?>
-        </div>
+        </div><br><br>
       </section>
       <input class="btn_principal" type="submit" name="enviar" value="Enviar">
     </form>

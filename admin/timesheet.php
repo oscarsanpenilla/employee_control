@@ -29,6 +29,9 @@ $total_hrs = 0.0;
 </head>
 <body>
   <div class="contenedor">
+    <div class="logo">
+      <img id="logo" src="../img/logo.png" alt="sanvan_logo">
+    </div>
     <div class="info">
       <p>Site:
         <?php foreach ($sites as $key=>$site): ?>

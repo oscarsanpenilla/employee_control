@@ -39,6 +39,7 @@ $array_conteo = $conexion_db->ConsultaArray($sql);
         <tr >
           <!-- <th>Id</th> -->
           <th>Work for</th>
+          <th>Ocupation</th>
           <th>Name</th>
           <!-- <th>User</th> -->
           <!-- <th>Password</th> -->
@@ -46,7 +47,7 @@ $array_conteo = $conexion_db->ConsultaArray($sql);
           <th>Work for Rate</th>
           <!-- <th>Week</th> -->
           <!-- <th>Status</th> -->
-          <th>Ocupation</th>
+
           <!-- <th>Phone</th> -->
           <!-- <th>Paid by</th> -->
           <!-- <th>Bank info</th> -->
@@ -57,6 +58,7 @@ $array_conteo = $conexion_db->ConsultaArray($sql);
           <tr>
             <!-- <td> <?php //echo $elemento->id ?></td> -->
             <td> <?php echo $elemento->work_for ?></td>
+            <td> <?php echo $elemento->ocupation ?></td>
             <td> <?php echo $elemento->name ?></td>
             <!-- <td> <?php //echo $elemento->user ?></td> -->
             <!-- <td> <?php //echo $elemento->password ?></td> -->
@@ -64,7 +66,7 @@ $array_conteo = $conexion_db->ConsultaArray($sql);
             <td> <?php echo $elemento->work_for_rate ?></td>
             <!-- <td> <?php //echo $elemento->pay_week ?></td> -->
             <!-- <td> <?php //echo $elemento->active ?></td> -->
-            <td> <?php echo $elemento->ocupation ?></td>
+
             <!-- <td> <?php //echo $elemento->phone ?></td> -->
             <!-- <td> <?php //echo $elemento->paid_by ?></td> -->
             <!-- <td> <?php //echo $elemento->bank_info ?></td> -->

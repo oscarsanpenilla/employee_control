@@ -18,7 +18,7 @@ $conexion_db = new ConexionDB();
     <h3>Register of New Employee</h3>
     <form action="../crud_employees/crud_insertar.php" method="post" >
       <p class="p_form">Work for:</p>
-      <select class="semana" name="work_for"  required="required" >
+      <select class="semana" name="work_for"  required>
         <option value='Sanvan' selected>Sanvan</option>
         <option value='Tolin'>Tolin</option>
         <option value='Global Contact'>Global Contact</option>
@@ -34,12 +34,12 @@ $conexion_db = new ConexionDB();
       <p class="p_form">Work for Rate:</p>
       <input type="number" name="work_for_rate" required >
       <p class="p_form">Pay Week:</p>
-      <select class="semana" name="pay_week" required="required" >
+      <select class="semana" name="pay_week" required>
         <option value='A' selected>A</option>
         <option value='B'>B</option>
       </select>
       <p class="p_form">Ocupation:</p>
-      <select class="semana" name="ocupation"  required="required" required >
+      <select class="semana" name="ocupation"  required  >
         <option value='Labour' selected>Labour</option>
         <option value='Cement Finisher'>Cement Finisher</option>
         <option value='Skill Labour'>Skill Labour</option>
@@ -48,7 +48,7 @@ $conexion_db = new ConexionDB();
         <option value='Otro'>Otro</option>
       </select>
       <p class="p_form">Phone:</p>
-      <input type="text" name="phone" required >
+      <input type="text" name="phone" >
       <p class="p_form">Paid by:</p>
       <select class="semana" name="paid_by" required>
         <option value='Rafael'>Rafael</option>
