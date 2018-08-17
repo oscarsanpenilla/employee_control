@@ -7,10 +7,19 @@ $fecha_inicio = $_POST['fecha_inicio'];
 $fecha_fin = $_POST['fecha_fin'];
 
 $resume = new ResumeTimesheet($_POST);
-$array_resume = $resume->resume();
+
 $results = $resume->getEvents();
-$bank_results = $resume->bankResume();
+$array_resume = $resume->resume();
 $cash_results = $resume->cashResume();
+try {
+  $bank_results = $resume->bankResume();
+} catch (\Exception $e) {
+  var_dump($bank_results);
+}
+
+
+
+
 $hrs = 0.0;
 $paid = 0.0;
 
@@ -167,6 +176,75 @@ $paid = 0.0;
         </tfoot>
       </table><!-- table end bank info  -->
     </section>
+    <section id="timesheet">
+      <?php
+      $fecha_inicio = $_POST['fecha_inicio'];
+      $fecha_fin = $_POST['fecha_fin'];
+
+      $resume = new ResumeTimesheet($_POST);
+
+      $dates = $resume->datesCompleteTimesheet();
+      $names = $resume->siteOcupationName();
+      $hours_day = $resume->hoursDayTimesheet();
+      $total_hours = $resume->totalHoursTimesheet();
+      $sites = $resume->sitesTimesheet();
+      $total_hrs = 0.0;
+      ?>
+
+      <p>Site:
+        <?php foreach ($sites as $key=>$site): ?>
+          <strong><?php echo $site->site." / "; ?> </strong>
+        <?php endforeach; ?>
+      </p>
+      <p>Period: <strong><?php echo $fecha_inicio ?></strong> to <strong><?php echo $fecha_fin ?></strong></p>
+      <table>
+        <thead>
+          <tr>
+            <th>&nbsp</th>
+            <th>Site</th>
+            <th>Ocupation</th>
+            <th>Name</th>
+            <?php foreach ($dates as $date):?>
+              <th><?php echo date_format(date_create($date),"D d")?></th>
+            <?php endforeach; ?>
+            <th>Total hours</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($names as $key=>$name):?>
+            <tr>
+              <td><?php echo $key + 1; ?></td>
+              <td><?php echo $name->site; ?></td>
+              <td><?php echo $name->ocupation; ?></td>
+              <td><?php echo $name->name; ?></td>
+              <?php foreach ($dates as $date):?>
+                <td class="td_center">
+                  <?php
+                  foreach ($hours_day as $event){
+                    if ($date == $event->date && $name->id == $event->id && $name->site == $event->site)  echo $event->hours_day;
+                  }
+                  ?>
+                </td>
+              <?php endforeach; ?>
+              <td class="td_center">
+                <?php
+                foreach ($total_hours as $total) {
+                  if ($name->id == $total->id && $name->site == $total->site) {
+                    echo $total->total;
+                    $total_hrs += $total->total;
+                  }
+                }
+                ?>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+      <div class="div_total">
+        <p>Total hours: <strong><?php echo $total_hrs; ?></strong></p>
+      </div>
+
+  </section>
   <br>
 </body>
 </html>

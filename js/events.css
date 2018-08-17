@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css?family=Bowlby+One+SC');
+
+* {
+
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+
+div.contenedor{
+  margin: auto;
+  width: 100%;
+  max-width: 400px;
+  background: #F2F2F2;
+  padding: 0px 10px;
+  border: 1px solid rgba(0,0,0,0.2);
+}
+
+body {
+
+    background: #FFFFFF;
+    display: flex;
+    min-height: 100vh;
+
+}
+
+
+
+
+div.main{
+  margin: auto;
+  width: 100%;
+  max-width: 400px;
+  background: #F2F2F2;
+  padding: 0px 10px;
+  border: 1px solid rgba(0,0,0,0.2);
+}
+
+div.checkbox{
+  display: flex;
+
+}
+
+div.main div.checkbox input{
+  width: 3%;
+  padding: 7px;
+  margin: auto;
+
+}
+
+div.main div.checkbox label{
+  width: 97%;
+  margin-left: 15px;
+  padding: 7px;
+
+
+}
+
+h2 {
+    text-align: center;
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: BLACK;
+    font-family: 'Bowlby One SC', cursive;
+
+
+}
+
+h3 {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    color: black;
+
+}
+
+input {
+    display: block;
+    padding: 5px;
+    width: 100%;
+    font-size: 15px;
+    border-radius: 5px;
+    border-style: none;
+    margin-bottom: 10px;
+
+
+}
+
+select.semana{
+    display: block;
+    padding: 5px;
+    width: 100%;
+    font-size: 15px;
+    border-radius: 5px;
+    border-style: none;
+    margin-bottom: 10px;
+}
+
+p.txt_anterior_tabla, form p{
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+
+}
+
+
+
+table{
+  margin-top: 10px;
+  margin-left: 0;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  text-align: center;
+  width: 100%;
+  font-size: 12px;
+
+}
+
+table thead{
+  font-size: 12px;
+  padding-bottom: 10px;
+
+}
+
+table tbody{
+  font-size: 8px;
+}
+
+tr td {
+    border-bottom: 1px solid #ddd;
+    margin: auto;
+    font-size: 12px;
+}
+
+table tfoot tr td{
+  font-size: 14px;
+  padding: 10px;
+  border-bottom: none;
+  text-align: center;
+}
+
+tr th{
+  font-size: 13px;
+  padding: 3px;
+}
+th.col_btn{
+  width: 18%;
+}
+
+input#id_empleado{
+  width: 100%;
+  font-size: 10px;
+}
+
+ div.btn_inf a input.btn_principal{
+  color: white;
+  background-color: black;
+  border-color: black;
+  margin-bottom: 10px;
+}
+div.btn_inf input.btn_principal{
+ color: white;
+ background-color: black;
+ border-color: black;
+ margin-bottom: 10px;
+}
+
+div.totales p{
+  text-align: left;
+  padding: 5px;
+  font-size: 14px;
+}
+
+div.btn_inf{
+  margin-top: 15px;
+}
+
+a {
+
+    text-decoration: none;
+
+}
+
+form p.p_form{
+  text-align: left;
+}
+
+form p.p_info{
+  text-align: justify;
+  font-weight: normal;
+}
+
+
+
+h2.title{
+  color: black;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 0;
+}
+
+.nuevo_usuario {
+  margin-top: 10px;
+}
+
+.textbox{
+  border-radius: 8px;
+}
+
+.submit{
+  color: white;
+  background-color: black;
+  border-color: black;
+}
+
+/*
+===============================================================================
+
+
+
+===============================================================================
+*/
+
+section#quin_pago, section#quin_pasada, section#quin_antepasada{
+  display: none;
+}
+
+#p_intervalo{
+  text-align: center;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+td.first_col{
+  padding: 5px;
+
+input{
+  border-radius: 1px solid #e1e1e1;
+}
+
+}
+td a input{
+  display: none;
+  margin: 2px auto;
+  padding: 2;
+  background-color: #e1e1e1;
+  border: 1px solid rgba(0,0,0,0.2);
+}
+
+
+div.btn_inf a input{
+  background-color: #e1e1e1;
+  border: 1px solid rgba(0,0,0,0.2);
+}

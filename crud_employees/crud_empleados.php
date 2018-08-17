@@ -1,9 +1,19 @@
 <?php
-    include("../funtions.php");
-    include("../validar_inicio_sesion.php");
-    $conexion_db = new ConexionDB();
-    $sql = "SELECT * FROM users ORDER BY id";
-    $array_usuarios = $conexion_db->ConsultaArray($sql);
+include("../funtions.php");
+include("../validar_inicio_sesion.php");
+$conexion_db = new ConexionDB();
+$sql = "SELECT *
+FROM users
+WHERE active=1
+ORDER BY work_for,ocupation,name";
+$array_usuarios = $conexion_db->ConsultaArray($sql);
+
+$sql = "SELECT work_for,count(id) as count
+FROM users
+WHERE active=1
+GROUP BY work_for";
+$array_conteo = $conexion_db->ConsultaArray($sql);
+//var_dump($array_conteo);
 ?>
 
 <!doctype html>
@@ -11,68 +21,65 @@
 <head>
   <meta charset="utf-8">
   <title>Sanvan Employees</title>
-  <link rel="stylesheet" type="text/css" href="../css/crud_trabajadores.css">
+  <link rel="stylesheet" type="text/css" href="../css/events.css">
 </head>
 <body>
   <div class="contenedor">
-    <table>
+    <section>
       <h3>Editar Empleados</h3>
-      <tr >
-        <td>Id</td>
-        <td>Work for</td>
-        <td>Name</td>
-        <td>User</td>
-        <td>Password</td>
-        <td>Employee Rate</td>
-        <td>Work for Rate</td>
-        <td>Week</td>
-        <td>Status</td>
-        <td>Ocupation</td>
-        <td>Phone</td>
-        <td>Paid by</td>
-        <td>Bank info</td>
-      </tr>
-      <?php foreach($array_usuarios as $elemento): ?>
-      <tr>
-              <td> <?php echo $elemento->id ?></td>
-              <td> <?php echo $elemento->work_for ?></td>
-              <td> <?php echo $elemento->name ?></td>
-              <td> <?php echo $elemento->user ?></td>
-              <td> <?php echo $elemento->password ?></td>
-              <td> <?php echo $elemento->employee_rate ?></td>
-              <td> <?php echo $elemento->work_for_rate ?></td>
-              <td> <?php echo $elemento->pay_week ?></td>
-              <td> <?php echo $elemento->active ?></td>
-              <td> <?php echo $elemento->ocupation ?></td>
-              <td> <?php echo $elemento->phone ?></td>
-              <td> <?php echo $elemento->paid_by ?></td>
-              <td> <?php echo $elemento->bank_info ?></td>
-        <td class="btn-crud"><a href="crud_borrar.php?Id=<?php echo $elemento->id ?>"><input type='button' name='borrar' value='Borrar'></td></a>
-        <td class="btn-crud"><a href="crud_formulario_actualizar.php?Id=<?php echo $elemento->id ?>"><input type='button' name='Actualizar' value='Update'></td></a>
-      </tr>
-      <?php endforeach ?>
-      <tr>
-        <td>#</td>
-        <form action="crud_insertar.php" method="post">
-            <td><input type='text' required="required" name='work_for'  class='centrado' placeholder="Work for"></td>
-            <td><input type='text' required="required" name='name'  class='centrado' placeholder="Name"></td>
-            <td><input type='text' required="required" name='user'  class='centrado' placeholder="User"></td>
-            <td><input type='text' required="required" name='password'  class='centrado' placeholder="Password"></td>
-            <td><input type='number' required="required" name='employee_rate' class='centrado' placeholder="Employee Rate"></td>
-            <td><input type='number' required="required" name='work_for_rate'  class='centrado' placeholder="Work for Rate"></td>
-            <td><input type='text' required="required" name='payment_week'  class='centrado' placeholder="Week of Payment"></td>
-            <td><input type='checkbox' checked name='status'  class='centrado' placeholder="Status"></td>
-            <td><input type='text' required="required" name='ocupation'  class='centrado' placeholder="Ocupation"></td>
-            <td><input type='text' required="required" name='phone'  class='centrado' placeholder="Phone"></td>
-            <td><input type='text' required="required" name='paid_by'  class='centrado' placeholder="Paid by"></td>
-            <td><input type='text'  name='bank_info'  class='centrado' placeholder="Bank info"></td>
-            <td colspan="2"><input type='submit' name='insertar'  value='Nuevo'></td>
-        </form>
-      </tr>
+      <p class="p_header">
+        <strong>Total Empleados</strong><br>
+        <?php foreach ($array_conteo as $key => $value){
+          echo $value->work_for. ": ".$value->count."<br>";
+        } ?>
+      </p>
+    </section>
+    <table>
+      <thead>
+        <tr >
+          <!-- <th>Id</th> -->
+          <th>Work for</th>
+          <th>Name</th>
+          <!-- <th>User</th> -->
+          <!-- <th>Password</th> -->
+          <!-- <th>Employee Rate</th> -->
+          <th>Work for Rate</th>
+          <!-- <th>Week</th> -->
+          <!-- <th>Status</th> -->
+          <th>Ocupation</th>
+          <!-- <th>Phone</th> -->
+          <!-- <th>Paid by</th> -->
+          <!-- <th>Bank info</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach($array_usuarios as $elemento): ?>
+          <tr>
+            <!-- <td> <?php //echo $elemento->id ?></td> -->
+            <td> <?php echo $elemento->work_for ?></td>
+            <td> <?php echo $elemento->name ?></td>
+            <!-- <td> <?php //echo $elemento->user ?></td> -->
+            <!-- <td> <?php //echo $elemento->password ?></td> -->
+            <!-- <td> <?php //echo $elemento->employee_rate ?></td> -->
+            <td> <?php echo $elemento->work_for_rate ?></td>
+            <!-- <td> <?php //echo $elemento->pay_week ?></td> -->
+            <!-- <td> <?php //echo $elemento->active ?></td> -->
+            <td> <?php echo $elemento->ocupation ?></td>
+            <!-- <td> <?php //echo $elemento->phone ?></td> -->
+            <!-- <td> <?php //echo $elemento->paid_by ?></td> -->
+            <!-- <td> <?php //echo $elemento->bank_info ?></td> -->
+            <td class="btn-crud"><a href="crud_borrar.php?Id=<?php echo $elemento->id ?>"><input type='button' name='borrar' value='Borrar'></td></a>
+            <td class="btn-crud"><a href="crud_formulario_actualizar.php?Id=<?php echo $elemento->id ?>"><input type='button' name='Actualizar' value='Update'></td></a>
+          </tr>
+        <?php endforeach ?>
+      </tbody>
+      <tfoot>
+      </tfoot>
     </table>
     <div class="contenedor-btn">
-        <a href="../admin/main_admin.php"><input type='button' value='Main Menu'></a>
-        <a href="../cerrar_session.php"><input type='button'value='Log Out'></a>
+      <a href="../admin/formulario_nuevo_empleado.php"><input class="btn_principal" type='button' value='New Employee'></a>
+      <a href="../admin/main_admin.php"><input type='button' value='Main Menu'></a>
+      <a href="../cerrar_session.php"><input type='button'value='Log Out'></a>
     </div>
   </div>
 

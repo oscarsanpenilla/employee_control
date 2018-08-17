@@ -16,7 +16,7 @@
     $ocupation=$consulta->ocupation;
     $phone=$consulta->phone;
     $pay_week=$consulta->pay_week;
-    $active=$consulta->active;
+    $active=0;
     $paid_by=$consulta->paid_by;
     $bank_info=$consulta->bank_info;
     $admin=$consulta->admin;
@@ -25,7 +25,9 @@
     $sql.= "VALUES ('$id','$work_for', '$name', '$user', '$password', '$employee_rate','$work_for_rate','$ocupation','$phone','$pay_week','$active','$paid_by','$bank_info','$admin')";
     $conexion_db->Prepare($sql);
 
-    $sql = "DELETE FROM users WHERE id = '$id'";
+    $sql = "UPDATE users
+            SET active=0
+            WHERE id=$id";
     $conexion_db->Prepare($sql);
 
     header("Location:crud_empleados.php");

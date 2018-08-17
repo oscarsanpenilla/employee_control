@@ -12,6 +12,11 @@
     $sql= "SELECT site,date FROM events WHERE id = '$id' ORDER BY event_id";
     $ultimo_evento = $conexion_db->ConsultaArray($sql);
     $ultimo_evento = end($ultimo_evento);
+    $arr_fechas = Events::PeriodoPago();
+    //var_dump($arr_fechas);
+    $fecha_min = $arr_fechas[0]->week_start;
+    date_default_timezone_set("America/Vancouver");
+		$today = date('Y-m-d');
 
 ?>
 
@@ -36,12 +41,17 @@
             <?php endforeach ?>
         </select>
         <p class="p_form">Fecha: </p>
-        <input type="date" name="fecha" required="required" value="<?php echo date('Y-m-d', strtotime($ultimo_evento->date. ' + 1 days'));?>">
+        <input min= '<?php echo $fecha_min; ?>' max='<?php echo $today; ?>' type="date" name="fecha" required="required" value="<?php echo date('Y-m-d', strtotime($ultimo_evento->date. ' + 1 days'));?>">
         <p class="p_form">Horas Trabajadas</p>
         <select class="semana" name="horas" required="required">
             <?php
-            echo "<option value='8'>8</option>";
-            for ($i=0; $i < 24; $i++) echo "<option value='$i'>$i</option>";   ?>
+            for ($i=0; $i < 24; $i++){
+              if ($i == 8) {
+                echo "<option value='$i'selected>$i</option>";
+              }else {
+                echo "<option value='$i'>$i</option>";
+              }
+            }    ?>
         </select>
         <p class="p_form">Minutos</p>
         <select class="semana" name="frac_hrs" required="required">

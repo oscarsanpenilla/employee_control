@@ -1,17 +1,17 @@
 <?php
     include("funtions.php");
     include("employee.php");
-
-    $conexion_db = new ConexionDB();
+    echo "en mantenimiento";
+    $conexion = new ConexionDB();
     $user= addslashes($_POST['user']);
     $password= addslashes($_POST['password']);
 
-    $sql= "SELECT * FROM users WHERE user= '$user' AND password= '$password'";
-    $numero_registro = $conexion_db->ConsultaLogin($sql);
+    $sql= "SELECT * FROM users WHERE user= '$user' AND password= '$password'";;
+    $numero_registro = $conexion->ConsultaArray($sql);
 
     if($numero_registro)
     {
-        $consulta = $conexion_db->ConsultaSQL($sql);
+        $consulta = $conexion->ConsultaSQL($sql);
         $employee = new Employee($consulta->user,
                                   $consulta->id,
                                   $consulta->work_for,
@@ -32,6 +32,6 @@
         {
             header("location:admin/main_admin.php");
         }else{header("location:crud_eventos/insertar_eventos_crud.php");}
-    }else{header("location:index.php"); }
+    }else{header("location:http://sanvancontracting.com/"); }
 
 ?>

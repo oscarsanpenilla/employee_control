@@ -221,6 +221,8 @@ class ResumeTimesheet
 		$this->ocupation = $POST['ocupation_checkbox'];
 	}
 
+
+
 	private function filter($criteria_array,$criteria){
 		$checkbox = $criteria_array;
 		$validate = True;
@@ -294,8 +296,8 @@ class ResumeTimesheet
 						WHERE date BETWEEN '$this->fecha_inicio' AND '$this->fecha_fin' AND users.bank_info!='' ";
 
 		$sql_site = ResumeTimesheet::filter($this->site,"site");
-		$sql_paid_by = ResumeTimesheet::filter($this->paid_by,"paid_by");
-		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"ocupation");
+		$sql_paid_by = ResumeTimesheet::filter($this->paid_by,"events.paid_by");
+		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"events.ocupation");
 		$sql .= $sql_site.$sql_paid_by.$sql_ocupation;
 		$sql .= " GROUP BY users.bank_info";
 

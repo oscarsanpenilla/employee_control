@@ -34,5 +34,6 @@
     $sql.= "VALUES ('$id','$work_for','$paid_by','$site','$ocupation','$name','$date','$hours_day','$total_day','$employee_rate','$work_for_rate','$bank_info','$phone','$note','$pay_week')";
     $conexion_db->Prepare($sql);
 
+
     header("Location:insertar_eventos_crud.php");
 ?>
