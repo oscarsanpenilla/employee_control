@@ -43,7 +43,7 @@ $total_hrs = 0.0;
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="../css/resumen.css">
-  <title></title>
+  <title>Resume</title>
 </head>
 <body>
   <div class="contenedor"> <!--table main resume -->

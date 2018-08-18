@@ -14,12 +14,12 @@
 <body>
   <div class="main">
     <form action=""><br>
-        <a href="crud_lugares.php"><input  type="button" value="Editar Sites"></a>
-        <a href="formulario_nuevo_empleado.php"><input  type="button" value="Nuevo Empleado"></a>
-        <a href="../crud_employees/crud_empleados.php"><input  type="button" value="Editar Empleados"></a>
-        <a href="crud_empleados_eliminados.php"><input  type="button" value="Empleados Borrados"></a>
-        <a href="formulario_timesheet.php"><input  type="button" value="Timesheet"></a>
-        <a href="formulario_resumen.php"><input class="btn_principal" type="button" value="Resumen"></a>
+        <a href="crud_lugares.php" target="_blank"><input  type="button" value="Editar Sites"></a>
+        <a href="formulario_nuevo_empleado.php" target="_blank"><input  type="button" value="Nuevo Empleado"></a>
+        <a href="../crud_employees/crud_empleados.php" target="_blank"><input  type="button" value="Editar Empleados"></a>
+        <a href="crud_empleados_eliminados.php" target="_blank"><input  type="button" value="Empleados Borrados"></a>
+        <a href="formulario_timesheet.php" target="_blank"><input  type="button" value="Timesheet"></a>
+        <a href="formulario_resumen.php" target="_blank"><input class="btn_principal" type="button" value="Resumen"></a>
         <a  href="../cerrar_session.php" class="logout"><input  type="button" value="Salir"></a>
     </form>
   </div>

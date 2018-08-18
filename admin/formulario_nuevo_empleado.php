@@ -11,7 +11,7 @@ $conexion_db = new ConexionDB();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
   <link rel="stylesheet" href="../css/events.css">
-  <title>Sanvan Update Worker</title>
+  <title>New Employee</title>
 </head>
 <body>
   <div class="contenedor">

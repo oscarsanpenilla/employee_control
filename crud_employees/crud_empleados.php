@@ -39,6 +39,7 @@ $array_conteo = $conexion_db->ConsultaArray($sql);
       <thead>
         <tr >
           <!-- <th>Id</th> -->
+          <th></th>
           <th>Work for</th>
           <th>Ocupation</th>
           <th>Name</th>
@@ -57,6 +58,7 @@ $array_conteo = $conexion_db->ConsultaArray($sql);
       <tbody>
         <?php foreach($array_usuarios as $elemento): ?>
           <tr>
+            <td class="btn-crud"><a href="crud_borrar.php?Id=<?php echo $elemento->id ?>"><input type='button' name='borrar' value='Borrar'></td></a>
             <!-- <td> <?php //echo $elemento->id ?></td> -->
             <td> <?php echo $elemento->work_for ?></td>
             <td> <?php echo $elemento->ocupation ?></td>
@@ -71,8 +73,9 @@ $array_conteo = $conexion_db->ConsultaArray($sql);
             <!-- <td> <?php //echo $elemento->phone ?></td> -->
             <!-- <td> <?php //echo $elemento->paid_by ?></td> -->
             <!-- <td> <?php //echo $elemento->bank_info ?></td> -->
-            <td class="btn-crud"><a href="crud_borrar.php?Id=<?php echo $elemento->id ?>"><input type='button' name='borrar' value='Borrar'></td></a>
+
             <td class="btn-crud"><a href="crud_formulario_actualizar.php?Id=<?php echo $elemento->id ?>"><input type='button' name='Actualizar' value='Update'></td></a>
+            <td class="btn-crud"><a href="agregar_eventos.php?Id=<?php echo $elemento->id ?>" target="_blank"><input type='button' name='add' value='Add'></td></a>
           </tr>
         <?php endforeach ?>
       </tbody>

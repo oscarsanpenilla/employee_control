@@ -14,6 +14,12 @@ foreach($arreglo_usuarios as $elemento){
 $fechas = Events::PeriodoPago();
 $start_date = $fechas[0]->week_start;
 $end_date = $fechas[0]->week_end;
+
+$arr_fechas = Events::PeriodoPago();
+$fecha_min = $arr_fechas[0]->week_start;
+date_default_timezone_set("America/Vancouver");
+$today = date('Y-m-d');
+
 ?>
 
 <!DOCTYPE html>
@@ -90,9 +96,9 @@ $end_date = $fechas[0]->week_end;
       <section id="periodo">
         <h1>Selecciona el Periodo Deseado</h1>
         <p  class="p_form">Desde:</p>
-        <input type="date" required="required" name="fecha_inicio" value="<?php echo $start_date?>">
+        <input type="date" required="required" name="fecha_inicio" min= '<?php echo $fecha_min; ?>' max='<?php echo $today; ?>' value="<?php echo $start_date?>">
         <p class="p_form">Hasta:</p>
-        <input type="date" required="required" name="fecha_fin" value="<?php echo $end_date?>">
+        <input type="date" required="required" name="fecha_fin" min= '<?php echo $fecha_min; ?>' max='<?php echo $today; ?>' value="<?php echo $end_date?>">
       </section><br>
       <input class="btn_principal" id="btn_modify" type="submit"  value="Modify">
       <a href="crud_empleados.php"><input  type="button" value="Return"></a>
