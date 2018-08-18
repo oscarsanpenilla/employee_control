@@ -26,7 +26,9 @@
                                   $consulta->phone,
                                   $consulta->paid_by,
                                   $consulta->admin);
+        setcookie("cookie","$consulta->user",time() + 86400);
         session_start();
+        $_SESSION['cookie'] = $consulta->user;
         $_SESSION['employee'] = $employee;
         if ($_SESSION['employee']->admin == 1)
         {

@@ -16,6 +16,8 @@
     $phone= $_POST["phone"];
     $paid_by= $_POST["paid_by"];
     $bank_info= $_POST["bank_info"];
+    $fecha_inicio =  $_POST["fecha_inicio"];
+    $fecha_fin =  $_POST["fecha_fin"];
     $sql = "UPDATE users
             SET work_for='$work_for', name='$name', user='$user', password='$password',
                 employee_rate='$employee_rate', work_for_rate='$work_for_rate',
@@ -24,5 +26,17 @@
                 bank_info='$bank_info'
                 WHERE id = '$id'";
     $conexion_db->Prepare($sql);
+    //var_dump($_POST);
+    if (isset($_POST["date_checkbox"])) {
+
+      $sql = "UPDATE events
+              SET work_for='$work_for', employee_rate='$employee_rate',
+                  work_for_rate='$work_for_rate', pay_week='$pay_week',
+                  phone='$phone', paid_by='$paid_by', bank_info='$bank_info',
+                  ocupation='$ocupation'
+                  WHERE id = '$id' AND date BETWEEN '$fecha_inicio' AND '$fecha_fin'";
+      $conexion_db->Prepare($sql);
+    }
+
     header("Location:crud_empleados.php");
 ?>

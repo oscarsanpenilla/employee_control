@@ -121,12 +121,12 @@ class Events
 		$end_date = $fechas[0]->week_end;
 		$fecha_media = date('Y-m-d', strtotime("$end_date -6 day"));
 		if ($today <= $fecha_media && $today >= $start_date) {
-			$sql = "SELECT *
+			$sql = "SELECT event_id,date,site,hours_day,employee_rate,hours_day*employee_rate AS total_day
 							FROM events WHERE id='$user_id' AND date BETWEEN '$start_date' AND '$fecha_media'
 							ORDER BY date";
 			return $conexion_db->ConsultaArray($sql);
 		}else {
-			$sql = "SELECT *
+			$sql = "SELECT event_id,date,site,hours_day,employee_rate,hours_day*employee_rate AS total_day
 							FROM events
 							WHERE id='$user_id' AND date > '$fecha_media' AND  date <= '$end_date'
 							ORDER BY date";
@@ -154,7 +154,7 @@ class Events
 		$fechas = $conexion_db->ConsultaArray($sql);
 		$start_date = $fechas[0]->week_start;
     $end_date = $fechas[0]->week_end;
-		$sql = "SELECT *
+		$sql = "SELECT event_id,date,site,hours_day,employee_rate,hours_day*employee_rate AS total_day
 						FROM events
 						WHERE id='$user_id' AND date BETWEEN '$start_date' AND '$end_date'
 						ORDER BY date";
