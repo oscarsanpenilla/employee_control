@@ -34,6 +34,7 @@ $names = $resume->siteOcupationNameResume();
 $hours_day = $resume->hoursDayTimesheet();
 $total_hours = $resume->totalHoursTimesheetResume();
 $sites = $resume->sitesTimesheet();
+$notes = $resume->getComments();
 $total_hrs = 0.0;
 
 ?>
@@ -43,6 +44,7 @@ $total_hrs = 0.0;
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="../css/resumen.css">
+  <link rel="shortcut icon" type="image/png" href="../img/favicon.ico">
   <title>Resume</title>
 </head>
 <body>
@@ -251,7 +253,32 @@ $total_hrs = 0.0;
       <div class="div_total">
         <p>Total hours: <strong><?php echo $total_hrs; ?></strong></p>
       </div>
-  </section>
+      </section>
+    <section id="comentarios">
+      <h3>Comments and Notes</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Site</th>
+            <th>Name</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($notes as $key => $value):?>
+            <tr>
+              <td class="td_center"><?php echo date('D d M',strtotime($value->date)); ?></td>
+              <td class="td_center"><?php echo $value->site ?></td>
+              <td ><?php echo $value->name ?></td>
+              <td ><?php echo $value->note ?></td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </section>
+    <?php //var_dump($notes); ?>
+
   <br>
 </body>
 </html>

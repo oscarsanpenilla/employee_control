@@ -27,6 +27,7 @@ $arreglo_ocupation = $conexion_db->ConsultaArray($sql);
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
   <link rel="stylesheet" href="../css/events.css">
+  <link rel="shortcut icon" type="image/png" href="../img/favicon.ico">
   <title>Sanvan</title>
 </head>
 <body>

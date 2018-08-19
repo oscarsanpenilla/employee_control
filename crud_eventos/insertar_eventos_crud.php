@@ -20,6 +20,7 @@ $arr_quin_ante = Events::QuincenaPago($employee,-3);
   <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1">
   <title>Sanvan Contracting</title>
   <link rel="stylesheet" href="../css/events.css">
+  <link rel="shortcut icon" type="image/png" href="../img/favicon.ico">
 </head>
 <body>
   <div class="main">

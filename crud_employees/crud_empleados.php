@@ -23,6 +23,7 @@ $array_conteo = $conexion_db->ConsultaArray($sql);
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
   <title>Sanvan Employees</title>
   <link rel="stylesheet" type="text/css" href="../css/events.css">
+  <link rel="shortcut icon" type="image/png" href="../img/favicon.ico">
 </head>
 <body>
   <div class="contenedor">

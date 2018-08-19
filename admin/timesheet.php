@@ -25,6 +25,7 @@ $total_hrs = 0.0;
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="../css/resumen.css">
+  <link rel="shortcut icon" type="image/png" href="../img/favicon.ico">
   <title>Timesheet</title>
 </head>
 <body>

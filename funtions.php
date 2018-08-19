@@ -442,6 +442,19 @@ class ResumeTimesheet
 		return $total_hours;
 	}
 
+	public function getComments(){
+		$sql = "SELECT date,site,name,note
+					  FROM events
+						WHERE date BETWEEN '$this->fecha_inicio' AND '$this->fecha_fin' AND note!='' ";
+		$sql_site = ResumeTimesheet::filter($this->site,"site");
+		$sql_paid_by = ResumeTimesheet::filter($this->paid_by,"paid_by");
+		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"ocupation");
+		$sql .= $sql_site.$sql_paid_by.$sql_ocupation;
+		$sql .= " ORDER BY date,site,name";
+		$notes = $this->conexion_db->ConsultaArray($sql);
+		return $notes;
+	}
+
 
 }
 

@@ -17,6 +17,7 @@ $array_usuarios = $conexion_db->ConsultaArray($sql);
 
   <title>Sanvan Employees</title>
   <link rel="stylesheet" type="text/css" href="../css/events.css">
+  <link rel="shortcut icon" type="image/png" href="../img/favicon.ico">
 </head>
 <body>
   <div class="contenedor">

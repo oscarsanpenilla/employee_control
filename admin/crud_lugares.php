@@ -14,6 +14,7 @@
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <title>Sanvan Modify Places</title>
   <link rel="stylesheet" href="../css/events.css">
+  <link rel="shortcut icon" type="image/png" href="../img/favicon.ico">
 </head>
 <body>
   <div class="main">
