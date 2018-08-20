@@ -277,8 +277,5 @@ $total_hrs = 0.0;
         </tbody>
       </table>
     </section>
-    <?php //var_dump($notes); ?>
-
-  <br>
 </body>
 </html>

@@ -8,9 +8,10 @@ $employee = $_SESSION['employee'];
 $user_id = $_SESSION['employee']->id;
 
 $arr_sem_actual = Events::SemanaActual($employee);
-$arr_quin_pago = Events::QuincenaPago($employee,-1);
-$arr_quin_pasada = Events::QuincenaPago($employee,-2);
-$arr_quin_ante = Events::QuincenaPago($employee,-3);
+$arr_quin_pago = Events::QuincenaPago($employee,0);
+$arr_quin_pasada = Events::QuincenaPago($employee,-1);
+$arr_quin_ante = Events::QuincenaPago($employee,-2);
+//var_dump(Events::SemanaActual($employee));
 ?>
 
 <!doctype html>

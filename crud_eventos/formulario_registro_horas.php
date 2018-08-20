@@ -12,7 +12,7 @@
     $sql= "SELECT site,date FROM events WHERE id = '$id' ORDER BY event_id";
     $ultimo_evento = $conexion_db->ConsultaArray($sql);
     $ultimo_evento = end($ultimo_evento);
-    $arr_fechas = Events::PeriodoPago();
+    $arr_fechas = Events::getActualPeriodDates("week_a");
     //var_dump($arr_fechas);
     $fecha_min = $arr_fechas[0]->week_start;
     date_default_timezone_set("America/Vancouver");

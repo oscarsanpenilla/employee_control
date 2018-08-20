@@ -79,23 +79,7 @@ class ConexionDB
  */
 class Events
 {
-
-	public static function PeriodoPago()
-	{
-		$conexion_db = new ConexionDB();
-		date_default_timezone_set("America/Vancouver");
-		$today = date('Y-m-d');
-		$sql = "SELECT *
-						FROM week_a
-						WHERE week_start<='$today' AND week_end>='$today'";
-		$fechas = $conexion_db->ConsultaArray($sql);
-		$fecha_id = $fechas[0]->id;
-		$id_quincena_pago = $fecha_id - 1;
-
-		$sql = "SELECT * FROM week_a WHERE id='$id_quincena_pago'";
-		return $conexion_db->ConsultaArray($sql);
-	}
-
+	//Devuelve un arreglo con el intervalo de fechas con base al dia actual
 	public static function getActualPeriodDates($week){
 		$conexion_db = new ConexionDB();
 		date_default_timezone_set("America/Vancouver");
@@ -107,45 +91,47 @@ class Events
 		return $fechas;
 	}
 
-	public static function SemanaActual($employee)
-	{
+	public static function PeriodoPago(){
+		$conexion_db = new ConexionDB();
+		$fechas = Events::getActualPeriodDates('week_a');
+		$fecha_id = $fechas[0]->id;
+		$id_quincena_pago = $fecha_id;
+		$sql = "SELECT * FROM week_a WHERE id='$id_quincena_pago'";
+		return $conexion_db->ConsultaArray($sql);
+	}
+
+
+
+	public static function SemanaActual($employee)	{
 		$conexion_db = new ConexionDB();
 		$user_id = $employee->id;
 		date_default_timezone_set("America/Vancouver");
 		$today = date('Y-m-d');
-		$sql = "SELECT *
-						FROM week_a
-						WHERE week_start<='$today' AND week_end>='$today'";
-		$fechas = $conexion_db->ConsultaArray($sql);
+		$fechas = Events::getActualPeriodDates('week_a');
 		$start_date = $fechas[0]->week_start;
 		$end_date = $fechas[0]->week_end;
 		$fecha_media = date('Y-m-d', strtotime("$end_date -6 day"));
-		if ($today <= $fecha_media && $today >= $start_date) {
+		if ($today < $fecha_media) {
 			$sql = "SELECT event_id,date,site,hours_day,employee_rate,hours_day*employee_rate AS total_day
 							FROM events WHERE id='$user_id' AND date BETWEEN '$start_date' AND '$fecha_media'
 							ORDER BY date";
-			return $conexion_db->ConsultaArray($sql);
+			$events = $conexion_db->ConsultaArray($sql);
+			return $events;
 		}else {
 			$sql = "SELECT event_id,date,site,hours_day,employee_rate,hours_day*employee_rate AS total_day
 							FROM events
-							WHERE id='$user_id' AND date > '$fecha_media' AND  date <= '$end_date'
+							WHERE id='$user_id' AND date BETWEEN '$fecha_media' AND '$end_date'
 							ORDER BY date";
-			return $conexion_db->ConsultaArray($sql);
+			$events = $conexion_db->ConsultaArray($sql);
+			return $events;
 		}
 
 	}
 
-	public static function QuincenaPago($employee,$quincena)
-	{
+	public static function QuincenaPago($employee,$quincena)	{
 		$conexion_db = new ConexionDB();
 		$user_id = $employee->id;
-		date_default_timezone_set("America/Vancouver");
-		$today = date('Y-m-d');
-		$sql = "SELECT *
-						FROM week_a
-						WHERE week_start<='$today' AND week_end>='$today'";
-		$fechas = $conexion_db->ConsultaArray($sql);
-		$fecha_id = $fechas[0]->id;
+		$fecha_id = Events::getActualPeriodDates('week_a')[0]->id;
 		$id_quincena_pago = $fecha_id + $quincena;
 
 		$sql = "SELECT *
@@ -154,12 +140,14 @@ class Events
 		$fechas = $conexion_db->ConsultaArray($sql);
 		$start_date = $fechas[0]->week_start;
     $end_date = $fechas[0]->week_end;
+
+
 		$sql = "SELECT event_id,date,site,hours_day,employee_rate,hours_day*employee_rate AS total_day
 						FROM events
 						WHERE id='$user_id' AND date BETWEEN '$start_date' AND '$end_date'
 						ORDER BY date";
-		return $conexion_db->ConsultaArray($sql);
-
+		$events = $conexion_db->ConsultaArray($sql);
+		return $events;
 	}
 
 
@@ -457,13 +445,6 @@ class ResumeTimesheet
 
 
 }
-
-
-
-
-
-
-
 
 
 

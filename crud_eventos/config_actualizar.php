@@ -18,9 +18,9 @@
     $bank_info= $_POST["bank_info"];
 
     $sql = "UPDATE users SET name='$name', user='$user', password='$password', phone='$phone', bank_info='$bank_info'";
-    $sql .= ", ocupation='$task', phone='$phone', bank_info='$bank_info' WHERE id = '$id'";
+    $sql .= ", phone='$phone', bank_info='$bank_info' WHERE id = '$id'";
     $conexion_db->Prepare($sql);
-    
+
 
     header("Location:insertar_eventos_crud.php");
 ?>

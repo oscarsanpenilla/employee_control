@@ -41,7 +41,7 @@
         <p class="p_form">Rate ($/Hora):</p>
         <input type="text" disabled="true" name="employee_rate" value="<?php echo $elemento->employee_rate ?>" >
         <p class="p_form">Semana de Pago:</p>
-        <input type="text" disabled="true"name="pay_week" value="<?php echo $elemento->pay_week ?>" >
+        <input type="text" disabled="true" name="pay_week" value="<?php echo $elemento->pay_week ?>" >
         <p class="p_form">Ocupación:</p>
         <input type="text" disabled="true" name="ocupation" value="<?php echo $elemento->ocupation ?>" >
         <p class="p_form">Telefono:</p>

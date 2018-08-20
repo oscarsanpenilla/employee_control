@@ -6,4 +6,5 @@
     define('DB_NOMBRE', 'sanvan_db');
     define('DB_CHARSET', 'utf8');
 
+
 ?>
