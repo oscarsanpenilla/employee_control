@@ -4,14 +4,23 @@ include("../employee.php");
 include("../validar_inicio_sesion.php");
 
 $conexion_db = new ConexionDB();
+$events = new Events();
 $employee = $_SESSION['employee'];
 $user_id = $_SESSION['employee']->id;
 
-$arr_sem_actual = Events::SemanaActual($employee);
-$arr_quin_pago = Events::QuincenaPago($employee,0);
-$arr_quin_pasada = Events::QuincenaPago($employee,-1);
-$arr_quin_ante = Events::QuincenaPago($employee,-2);
-//var_dump(Events::SemanaActual($employee));
+if ($events->isFirstWeek()) {
+  $arr_quin_pago = $events->QuincenaPago($employee,-1);
+  $arr_quin_pasada = $events->QuincenaPago($employee,-2);
+  $arr_quin_ante = $events->QuincenaPago($employee,-3);
+}else {
+  $arr_quin_pago = $events->QuincenaPago($employee,0);
+  $arr_quin_pasada = $events->QuincenaPago($employee,-1);
+  $arr_quin_ante = $events->QuincenaPago($employee,-2);
+}
+$arr_sem_actual = $events->SemanaActual($employee);
+
+//var_dump($events->isFirstWeek());
+//Events::getPeriodDates();
 ?>
 
 <!doctype html>

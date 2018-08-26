@@ -9,7 +9,7 @@
 div.contenedor{
   margin: auto;
   width: 100%;
-  max-width: 920px;
+  /* max-width: 920px; */
   background: white;
   padding: 20px 10px;
   border: 1px solid rgba(0,0,0,0.2);

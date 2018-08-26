@@ -9,8 +9,7 @@
     $sql= "SELECT * FROM users WHERE user= '$user' AND password= '$password'";;
     $numero_registro = $conexion->ConsultaArray($sql);
 
-    if($numero_registro)
-    {
+    if($numero_registro){
         $consulta = $conexion->ConsultaSQL($sql);
         $employee = new Employee($consulta->user,
                                   $consulta->id,

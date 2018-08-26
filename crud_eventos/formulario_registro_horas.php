@@ -3,20 +3,16 @@
     include("../employee.php");
     include("../validar_inicio_sesion.php");
     $conexion_db = new ConexionDB();
+    $events = new Events();
     $employee = $_SESSION['employee'];
     $id = $employee->id;
     $sql= "SELECT site FROM sites ORDER by site";
     $arreglo_lugares = $conexion_db->ConsultaArray($sql);
-    $sql= "SELECT employee_rate FROM users WHERE id = '$id'";
-    $arreglo_precio = $conexion_db->ConsultaArray($sql);
     $sql= "SELECT site,date FROM events WHERE id = '$id' ORDER BY event_id";
     $ultimo_evento = $conexion_db->ConsultaArray($sql);
     $ultimo_evento = end($ultimo_evento);
-    $arr_fechas = Events::getActualPeriodDates("week_a");
-    //var_dump($arr_fechas);
-    $fecha_min = $arr_fechas[0]->week_start;
-    date_default_timezone_set("America/Vancouver");
-		$today = date('Y-m-d');
+    $fecha_min = $events->getMinDate();
+		$today = $events->getToday();
 
 ?>
 
@@ -24,6 +20,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="../css/events.css">
+    <link rel="shortcut icon" type="image/png" href="../img/favicon.ico">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <meta charset="UTF-8">
     <title>Sanvan Construction</title>

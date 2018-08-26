@@ -1,165 +1,205 @@
 <?php
 require "config.php";
-/**
-*
-*/
-class ConexionDB
-{
+class ConexionDB{
 	var $conexion_db;
-
-	function __construct()
-	{
-		try
-		{
+	function __construct(){
+		try{
 			$this->conexion_db = new PDO("mysql:host=". DB_HOST ."; dbname=".DB_NOMBRE ,DB_USUARIO,DB_CONTRA);
 			$this->conexion_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	    $this->conexion_db->exec("SET CHARACTER SET utf8");
-
 		}
-		catch(EXCEPTION $e)
-	    {
-
+		catch(EXCEPTION $e){
 	    echo "Error en la linea: " . $e->getLine() . "<br>";
-
 	    echo "Error: " . $e->getMessage();
-
 	    }
 	}
 
-	function ConsultaSQL($sql)
-	{
-
+	function ConsultaSQL($sql){
 		$sentencia = $this->conexion_db->prepare($sql);
-	    $sentencia->execute();
-
-	    return $sentencia->fetch(PDO::FETCH_OBJ);
-
+	  $sentencia->execute();
+    return $sentencia->fetch(PDO::FETCH_OBJ);
 	}
 
-	public function ConsultaArray($sql)
-	{
-
+	public function ConsultaArray($sql){
 		$sentencia = $this->conexion_db->prepare($sql);
 	  $sentencia->execute();
 		$resultado = $sentencia->fetchAll(PDO::FETCH_OBJ);
 		return $resultado;
-
 	}
 
 
-	function ConsultaLogin($sql)
-	{
+	function ConsultaLogin($sql){
 		$sentencia = $this->conexion_db->prepare($sql);
 		$sentencia->execute();
 		if ($sentencia->rowCount()==1) {
 			return 1;
-		}
-		else
-		{
+		}else{
 			return 0;
 		}
-
 	}
 
-	function Prepare($sql)
-	{
+	function Prepare($sql){
 		$this->conexion_db->prepare($sql)->execute();
 	}
 
-	static function RegistroNuevoUsuario()
-	{
+	static function RegistroNuevoUsuario(){
 
 	}
 
 
 }
 
-/**
- *
- */
-class Events
-{
-	//Devuelve un arreglo con el intervalo de fechas con base al dia actual
-	public static function getActualPeriodDates($week){
-		$conexion_db = new ConexionDB();
+class Events{
+	private $today;
+	private $conexion_db;
+	private $fechas;
+	private $fecha_id;
+	private $start_date;
+	private $end_date;
+	private $fecha_media;
+
+	function __construct(){
+		$this->conexion_db = new ConexionDB();
 		date_default_timezone_set("America/Vancouver");
-		$today = date('Y-m-d');
+		$this->today = date('Y-m-d');
+		$this->fechas = Events::getActualPeriodDates('week_a');
+		$this->fecha_id = $this->fechas[0]->id;
+		$this->start_date = $this->fechas[0]->week_start;
+		$this->end_date = $this->fechas[0]->week_end;
+		$this->fecha_media = date('Y-m-d', strtotime("$this->end_date -6 day"));
+	}
+
+	// Devuelve un arreglo con las fechas de la tabla correspondiente
+	public function getActualPeriodDates($week){
 		$sql = "SELECT *
 						FROM $week
-						WHERE week_start<='$today' AND week_end>='$today'";
-		$fechas = $conexion_db->ConsultaArray($sql);
+						WHERE week_start<='$this->today' AND week_end>='$this->today'";
+		$fechas = $this->conexion_db->ConsultaArray($sql);
 		return $fechas;
 	}
 
-	public static function PeriodoPago(){
-		$conexion_db = new ConexionDB();
-		$fechas = Events::getActualPeriodDates('week_a');
-		$fecha_id = $fechas[0]->id;
-		$id_quincena_pago = $fecha_id;
-		$sql = "SELECT * FROM week_a WHERE id='$id_quincena_pago'";
-		return $conexion_db->ConsultaArray($sql);
+	// Devuelve true si se encuentra en la primera semana en el intervalo
+	// actual de la tabla week_a
+	public function isFirstWeek(){
+		return $this->today < $this->fecha_media;
+	}
+	// Devuelve la fecha minima que pueden seleccionar en el input de tipo fecha
+	public function getMinDate(){
+		if (Events::isFirstWeek()) {
+			$sql = "SELECT *
+							FROM week_a
+							WHERE id=$this->fecha_id - 1";
+			$fechas = $this->conexion_db->ConsultaArray($sql);
+			$fecha_min = $fechas[0]->week_start;
+			return $fecha_min;
+		}else{
+			$sql = "SELECT *
+							FROM week_a
+							WHERE id='$this->fecha_id'";
+			$fechas = $this->conexion_db->ConsultaArray($sql);
+			$fecha_min = $fechas[0]->week_start;
+			return $fecha_min;
+		}
 	}
 
+	// Devuelve el dia actual
+	public function getToday(){
+		return $this->today;
+	}
 
+	// Devuelve el inicio del periodo acutal
+	public function getStartDate(){
+		return $this->start_date;
+	}
 
-	public static function SemanaActual($employee)	{
-		$conexion_db = new ConexionDB();
+	//Devuelve el fin del periodo actual
+	public function getEndDate(){
+		return $this->end_date;
+	}
+
+	// Devuelve el la fecha de inicio para el input "desde" de tipo fecha para uso
+	// en las secciones de Resumen y Timesheet
+	public function getStartDateRT(){
+		if (Events::isFirstWeek()) {
+			$sql = "SELECT *
+							FROM week_a
+							WHERE id=$this->fecha_id - 1";
+			$fechas = $this->conexion_db->ConsultaArray($sql);
+			$date = $fechas[0]->week_start;
+			return $date;
+		}else{
+			$sql = "SELECT *
+							FROM week_a
+							WHERE id='$this->fecha_id'";
+			$fechas = $this->conexion_db->ConsultaArray($sql);
+			$date = $fechas[0]->week_start;
+			return $date;
+		}
+	}
+
+	// Devuelve el la fecha de final para el input "desde" de tipo fecha para uso
+	// en las secciones de Resumen y Timesheet
+	public function getEndDateRT(){
+		if (Events::isFirstWeek()) {
+			$sql = "SELECT *
+							FROM week_a
+							WHERE id=$this->fecha_id - 1";
+			$fechas = $this->conexion_db->ConsultaArray($sql);
+			$date = $fechas[0]->week_end;
+			return $date;
+		}else{
+			$sql = "SELECT *
+							FROM week_a
+							WHERE id='$this->fecha_id'";
+			$fechas = $this->conexion_db->ConsultaArray($sql);
+			$date = $fechas[0]->week_end;
+			return $date;
+		}
+	}
+
+	// Devuelve un arreglo con los eventos de la semana actual
+	public function SemanaActual($employee){
 		$user_id = $employee->id;
-		date_default_timezone_set("America/Vancouver");
-		$today = date('Y-m-d');
-		$fechas = Events::getActualPeriodDates('week_a');
-		$start_date = $fechas[0]->week_start;
-		$end_date = $fechas[0]->week_end;
-		$fecha_media = date('Y-m-d', strtotime("$end_date -6 day"));
-		if ($today < $fecha_media) {
+		if (Events::isFirstWeek()) {
 			$sql = "SELECT event_id,date,site,hours_day,employee_rate,hours_day*employee_rate AS total_day
-							FROM events WHERE id='$user_id' AND date BETWEEN '$start_date' AND '$fecha_media'
+							FROM events WHERE id='$user_id' AND date BETWEEN '$this->start_date' AND '$this->fecha_media'
 							ORDER BY date";
-			$events = $conexion_db->ConsultaArray($sql);
+			$events = $this->conexion_db->ConsultaArray($sql);
 			return $events;
 		}else {
 			$sql = "SELECT event_id,date,site,hours_day,employee_rate,hours_day*employee_rate AS total_day
 							FROM events
-							WHERE id='$user_id' AND date BETWEEN '$fecha_media' AND '$end_date'
+							WHERE id='$user_id' AND date BETWEEN '$this->fecha_media' AND '$this->end_date'
 							ORDER BY date";
-			$events = $conexion_db->ConsultaArray($sql);
+			$events = $this->conexion_db->ConsultaArray($sql);
 			return $events;
 		}
 
 	}
 
-	public static function QuincenaPago($employee,$quincena)	{
-		$conexion_db = new ConexionDB();
+	// Devuelve un arreglo con los eventos de la quincena de pago solicitada
+	public function QuincenaPago($employee,$quincena){
 		$user_id = $employee->id;
-		$fecha_id = Events::getActualPeriodDates('week_a')[0]->id;
-		$id_quincena_pago = $fecha_id + $quincena;
+		$id_quincena_pago = $this->fecha_id + $quincena;
 
 		$sql = "SELECT *
 						FROM week_a
 						WHERE id='$id_quincena_pago'";
-		$fechas = $conexion_db->ConsultaArray($sql);
+		$fechas = $this->conexion_db->ConsultaArray($sql);
 		$start_date = $fechas[0]->week_start;
     $end_date = $fechas[0]->week_end;
-
 
 		$sql = "SELECT event_id,date,site,hours_day,employee_rate,hours_day*employee_rate AS total_day
 						FROM events
 						WHERE id='$user_id' AND date BETWEEN '$start_date' AND '$end_date'
 						ORDER BY date";
-		$events = $conexion_db->ConsultaArray($sql);
+		$events = $this->conexion_db->ConsultaArray($sql);
 		return $events;
 	}
 
-
-
-
 }
 
-
-
-
-class ResumeTimesheet
-{
+class ResumeTimesheet{
 	private $conexion_db;
 	private $sql;
 	private $fecha_inicio;
@@ -445,7 +485,5 @@ class ResumeTimesheet
 
 
 }
-
-
 
 ?>

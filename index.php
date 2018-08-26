@@ -12,13 +12,13 @@
         <div class="logo">
           <img class="logo" src="./img/logo.png" alt="logo">
         </div>
-
+        <!-- <h3>En mantenimiento... </h3>
+        <p style="text-align:center">Podras ingresar tus horas mas tarde</p><br><br> -->
         <form action="comprueba_login.php" method="post">
-              <input class="textbox" type="text" placeholder="&#128679; User" name="user" ><br>
+              <input class="textbox" type="text" placeholder="&#128679; User" name="user" >
               <input class="textbox" type="password" placeholder="&#128272; Pass" name="password"><br>
               <input class="submit" type="submit" value="Login">
-                <!-- <a href="formulario_registro.php"><input type='button' value='Registro'></a> -->
-          </form>
+        </form>
       </div>
 
 

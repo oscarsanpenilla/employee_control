@@ -21,8 +21,8 @@
     $sql = "UPDATE users
             SET work_for='$work_for', name='$name', user='$user', password='$password',
                 employee_rate='$employee_rate', work_for_rate='$work_for_rate',
-                pay_week='$pay_week', phone='$phone', paid_by='$paid_by', bank_info='$bank_info',
-                active='$status', ocupation='$ocupation', phone='$phone', paid_by='$paid_by',
+                phone='$phone', paid_by='$paid_by', bank_info='$bank_info',
+                active='$status', phone='$phone', paid_by='$paid_by',
                 bank_info='$bank_info'
                 WHERE id = '$id'";
     $conexion_db->Prepare($sql);

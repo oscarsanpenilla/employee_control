@@ -1,14 +1,12 @@
 <?php
-
 include("../funtions.php");
 include("../employee.php");
 include("../validar_inicio_sesion.php");
 
 $conexion_db = new ConexionDB();
-
-$fechas = Events::PeriodoPago();
-$start_date = $fechas[0]->week_start;
-$end_date = $fechas[0]->week_end;
+$events = new Events();
+$start_date = $events->getStartDateRT();
+$end_date = $events->getEndDateRT();
 
 $sql= "SELECT site FROM sites ORDER by site";
 $arreglo_lugares = $conexion_db->ConsultaArray($sql);
