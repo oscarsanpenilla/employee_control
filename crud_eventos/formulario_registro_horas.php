@@ -13,6 +13,7 @@
     $ultimo_evento = end($ultimo_evento);
     $fecha_min = $events->getMinDate();
 		$today = $events->getToday();
+    //var_dump($ultimo_evento);
 
 ?>
 
@@ -32,23 +33,21 @@
         <p class="p_info">Aquí podras regristrar tus horas, si te equivocas en el registro solamente borralo y agrega uno nuevo. Los registros se guardan automáticamente.</p>
         <p class="p_form">Site: </p>
         <select  class="semana" name="lugar" required="required">
-          <option selected='selected' value="<?php echo $ultimo_evento->site;?>"><?php echo $ultimo_evento->site;?></option>
+          <option selected='selected' value="<?php if ($ultimo_evento) echo $ultimo_evento->site;?>"><?php if ($ultimo_evento) echo $ultimo_evento->site;?></option>
             <?php foreach($arreglo_lugares as $elemento): ?>
                     <option value="<?php echo $elemento->site;?>"> <?php echo $elemento->site;   ?>  </option>
             <?php endforeach ?>
         </select>
         <p class="p_form">Fecha: </p>
-        <input min= '<?php echo $fecha_min; ?>' max='<?php echo $today; ?>' type="date" name="fecha" required="required" value="<?php echo date('Y-m-d', strtotime($ultimo_evento->date. ' + 1 days'));?>">
+        <input min= '<?php echo $fecha_min; ?>' max='<?php echo $today; ?>' type="date" name="fecha" required="required" value="<?php if ($ultimo_evento) echo date('Y-m-d', strtotime($ultimo_evento->date. ' + 1 days'));?>">
         <p class="p_form">Horas Trabajadas</p>
         <select class="semana" name="horas" required="required">
             <?php
-            for ($i=0; $i < 24; $i++){
-              if ($i == 8) {
-                echo "<option value='$i'selected>$i</option>";
-              }else {
-                echo "<option value='$i'>$i</option>";
+              for ($i=0; $i < 24; $i++){
+                if ($i == 8) echo "<option value='$i'selected>$i</option>";
+                else echo "<option value='$i'>$i</option>";
               }
-            }    ?>
+            ?>
         </select>
         <p class="p_form">Minutos</p>
         <select class="semana" name="frac_hrs" required="required">
