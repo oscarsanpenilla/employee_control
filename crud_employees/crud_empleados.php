@@ -26,7 +26,7 @@ $array_conteo = $conexion_db->ConsultaArray($sql);
   <link rel="shortcut icon" type="image/png" href="../img/favicon.ico">
 </head>
 <body>
-  <div class="contenedor">
+  <div class="main">
     <section>
       <h3>Editar Empleados</h3>
       <p class="p_header">

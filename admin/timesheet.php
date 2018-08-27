@@ -33,62 +33,70 @@ $total_hrs = 0.0;
     <div class="logo">
       <img id="logo" src="../img/logo.png" alt="sanvan_logo">
     </div>
-    <div class="info">
+    <div class="center">
+      <?php include("encabezado_filtro.php"); ?>
+    </div>
+    <section id="timesheet">
+      <h3>Timesheet</h3>
       <p>Site:
         <?php foreach ($sites as $key=>$site): ?>
-        <strong><?php echo $site->site." / "; ?> </strong>
+          <strong><?php echo $site->site." / "; ?> </strong>
         <?php endforeach; ?>
       </p>
       <p>Period: <strong><?php echo $fecha_inicio ?></strong> to <strong><?php echo $fecha_fin ?></strong></p>
-    </div>
-    <table>
-      <thead>
-        <tr>
-          <th>&nbsp</th>
-          <th>Site</th>
-          <th>Ocupation</th>
-          <th>Name</th>
-          <?php foreach ($dates as $date):?>
-            <th><?php echo date_format(date_create($date),"D d")?></th>
-          <?php endforeach; ?>
-          <th>Total hours</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php foreach ($names as $key=>$name):?>
-          <tr>
-            <td><?php echo $key + 1; ?></td>
-            <td><?php echo $name->site; ?></td>
-            <td><?php echo $name->ocupation; ?></td>
-            <td><?php echo $name->name; ?></td>
-            <?php foreach ($dates as $date):?>
-              <td class="td_center">
-                <?php
-                foreach ($hours_day as $event){
-                  if ($date == $event->date && $name->id == $event->id && $name->site == $event->site)  echo $event->hours_day;
-                }
-                ?>
-              </td>
+
+        <table>
+          <thead>
+            <tr>
+              <th>&nbsp</th>
+              <th>Site</th>
+              <th>Ocupation</th>
+              <th>Name</th>
+              <?php foreach ($dates as $date):?>
+                <th><?php echo date_format(date_create($date),"D d")?></th>
+              <?php endforeach; ?>
+              <th>Total hours</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($names as $key=>$name):?>
+              <tr>
+                <td><?php echo $key + 1; ?></td>
+                <td><?php echo $name->site; ?></td>
+                <td><?php echo $name->ocupation; ?></td>
+                <td><?php echo $name->name; ?></td>
+                <?php foreach ($dates as $date):?>
+                  <td class="center">
+                    <?php
+                    foreach ($hours_day as $event){
+                      if ($date == $event->date && $name->id == $event->id && $name->site == $event->site)  echo $event->hours_day;
+                    }
+                    ?>
+                  </td>
+                <?php endforeach; ?>
+                <td class="center">
+                  <?php
+                  foreach ($total_hours as $total) {
+                    if ($name->id == $total->id && $name->site == $total->site) {
+                      echo $total->total;
+                      $total_hrs += $total->total;
+                    }
+                  }
+                  ?>
+                </td>
+              </tr>
             <?php endforeach; ?>
-            <td class="td_center">
-              <?php
-              foreach ($total_hours as $total) {
-                if ($name->id == $total->id && $name->site == $total->site) {
-                  echo $total->total;
-                  $total_hrs += $total->total;
-                }
-              }
-              ?>
-            </td>
-          </tr>
-        <?php endforeach; ?>
-      </tbody>
-    </table>
-    <div class="div_total">
-      <p>Total hours: <strong><?php echo $total_hrs; ?></strong></p>
-    </div>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="<?php echo count($dates)+4; ?>">Total</td>
+              <td class="center"><?php echo $total_hrs; ?></td>
+            </tr>
+          </tfoot>
+        </table>
+
+    </section>
     <br>
   </div>
-
 </body>
 </html>
