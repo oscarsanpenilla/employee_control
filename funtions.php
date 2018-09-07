@@ -220,6 +220,10 @@ class ResumeTimesheet{
 		$this->ocupation = $POST['ocupation_checkbox'];
 	}
 
+	public function getUsersActive(){
+		$sql = "SELECT * FROM users WHERE active=1";
+		return $this->conexion_db->ConsultaArray($sql);
+	}
 
 
 	private function filter($criteria_array,$criteria){
@@ -298,14 +302,14 @@ class ResumeTimesheet{
 		$sql_paid_by = ResumeTimesheet::filter($this->paid_by,"paid_by");
 		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"ocupation");
 		$sql .= $sql_site.$sql_paid_by.$sql_ocupation;
-		$sql .= " GROUP BY site,ocupation,name ORDER BY site,ocupation,name";
+		$sql .= " GROUP BY site,ocupation,name,work_for_rate,employee_rate ORDER BY site,ocupation,name,work_for_rate,employee_rate";
 
 		$results = $this->conexion_db->ConsultaArray($sql);
 		return $results;
 	}
 
 	public function bankResume(){
-		$sql = "SELECT users.name,users.bank_info,SUM(hours_day)*events.work_for_rate AS total
+		$sql = "SELECT users.id,events.name,users.bank_info,SUM(hours_day)*events.work_for_rate AS total
 						FROM events
 						JOIN users ON events.id = users.id
 						WHERE date BETWEEN '$this->fecha_inicio' AND '$this->fecha_fin' AND users.bank_info!='' ";
@@ -314,7 +318,7 @@ class ResumeTimesheet{
 		$sql_paid_by = ResumeTimesheet::filter($this->paid_by,"events.paid_by");
 		$sql_ocupation = ResumeTimesheet::filter($this->ocupation,"events.ocupation");
 		$sql .= $sql_site.$sql_paid_by.$sql_ocupation;
-		$sql .= " GROUP BY users.bank_info";
+		$sql .= " GROUP BY users.id ORDER BY users.bank_info";
 
 
 		$results = $this->conexion_db->ConsultaArray($sql);

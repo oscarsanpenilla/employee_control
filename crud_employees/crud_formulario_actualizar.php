@@ -2,6 +2,7 @@
 include("../funtions.php");
 include("../validar_inicio_sesion.php");
 $conexion_db = new ConexionDB();
+
 $id = $_GET["Id"];
 $sql = "SELECT * FROM users WHERE id = '$id'";
 $arreglo_usuarios = $conexion_db->ConsultaArray($sql);
@@ -11,14 +12,10 @@ foreach($arreglo_usuarios as $elemento){
   $contra = $elemento->password;
   $precio_hora = $elemento->employee_rate;
 }
-$fechas = Events::PeriodoPago();
-$start_date = $fechas[0]->week_start;
-$end_date = $fechas[0]->week_end;
-
-$arr_fechas = Events::PeriodoPago();
-$fecha_min = $arr_fechas[0]->week_start;
-date_default_timezone_set("America/Vancouver");
-$today = date('Y-m-d');
+$events = new Events();
+$start_date = $events->getStartDateRT();
+$end_date = $events->getEndDateRT();
+$today = $events->getToday();
 
 ?>
 
@@ -34,7 +31,6 @@ $today = date('Y-m-d');
 <body>
   <div class="main">
     <form action="crud_actualizar.php" method="post">
-
       <h1>Modify</h1>
       <p class="p_form">Work for:</p>
       <select class="semana" name="work_for"  required="required" >
@@ -91,15 +87,12 @@ $today = date('Y-m-d');
         <label for="date_checkbox"> <h3>Deseas actualizar los eventos?</h3> </label><br>
       </div>
 
-
-
-
       <section id="periodo">
         <h1>Selecciona el Periodo Deseado</h1>
         <p  class="p_form">Desde:</p>
-        <input type="date" required="required" name="fecha_inicio" min= '<?php echo $fecha_min; ?>' max='<?php echo $today; ?>' value="<?php echo $start_date?>">
+        <input type="date" required="required" name="fecha_inicio" min= '<?php echo $start_date; ?>' max='<?php echo $today; ?>' value="<?php echo $start_date?>">
         <p class="p_form">Hasta:</p>
-        <input type="date" required="required" name="fecha_fin" min= '<?php echo $fecha_min; ?>' max='<?php echo $today; ?>' value="<?php echo $end_date?>">
+        <input type="date" required="required" name="fecha_fin" min= '<?php echo $start_date; ?>' max='<?php echo $today; ?>' value="<?php echo $end_date?>">
       </section><br>
       <input class="btn_principal" id="btn_modify" type="submit"  value="Modify">
       <a href="crud_empleados.php"><input  type="button" value="Return"></a>

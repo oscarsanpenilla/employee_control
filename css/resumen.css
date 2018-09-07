@@ -5,8 +5,16 @@
     box-sizing: border-box;
 }
 
+body{
+  display: flex;
+}
+
 body div.contenedor{
-  margin: 20px;
+  margin: auto;
+  display: block;
+  padding-left: 20px;
+  padding-right: 20px;
+  border: solid 1px #ddd;
 }
 
 div div.logo img#logo{
@@ -75,4 +83,71 @@ td.center, td.money{
 
 td.money::before{
   content: "$ ";
+}
+
+div.btn_center{
+  text-align: center;
+}
+
+tbody td button{
+  width: 40px;
+  border-radius: 5px;
+}
+
+button#btn_agregar_eventos, button#btn_editar_eventos{
+  display: inline-block;
+  width: 50px;
+  border-radius: 5px;
+  /* display: block; */
+}
+
+input.hours,
+input[type="submit"]{
+  width: 100%;
+  text-align: center;
+}
+
+.edit_hours{
+  width: 100%;
+  text-align: center;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+td.event_edit{
+  max-width: 50px;
+}
+
+td#site{
+  min-width: 100px;
+}
+
+tr#fila_new_event td input{
+  max-width: 40px;
+}
+
+input#btn_submit{
+  width: 40px;
+  border-radius: 5px;
+}
+
+#row_add_event{
+  display: none;
+}
+
+.clearFix::after,
+.clearFix::before {
+  content: "";
+  display: table;
+}
+
+.clearFix::after{
+  clear: both;
 }
