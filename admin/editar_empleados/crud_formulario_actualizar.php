@@ -1,6 +1,6 @@
 <?php
-include("../funtions.php");
-include("../validar_inicio_sesion.php");
+include("../../funtions.php");
+include("../../validar_inicio_sesion.php");
 $conexion_db = new ConexionDB();
 
 $id = $_GET["Id"];
@@ -24,8 +24,8 @@ $today = $events->getToday();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
-  <link rel="stylesheet" href="../css/events.css">
-  <link rel="shortcut icon" type="image/png" href="../img/favicon.ico">
+  <link rel="stylesheet" href="../../css/events.css">
+  <link rel="shortcut icon" type="image/png" href="../../img/favicon.ico">
   <title>Sanvan Update Worker</title>
 </head>
 <body>

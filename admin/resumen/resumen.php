@@ -1,12 +1,16 @@
 <?php
-include("../funtions.php");
-include("../employee.php");
-include("../validar_inicio_sesion.php");
+include("../../funtions.php");
+include("../../employee.php");
+include("../../validar_inicio_sesion.php");
 
 $fecha_inicio = $_POST['fecha_inicio'];
 $fecha_fin = $_POST['fecha_fin'];
+$datos = array('fechas' => array($fecha_inicio , $fecha_fin),
+               'paid_by_checkbox' => $_POST['paid_by_checkbox'],
+               'ocupation_checkbox' => $_POST['ocupation_checkbox'],
+               'site_checkbox' => $_POST['site_checkbox']);
 
-$resume = new ResumeTimesheet($_POST);
+$resume = new ResumeTimesheet($datos);
 
 $results = $resume->getEvents();
 $array_resume = $resume->resume();
@@ -24,10 +28,7 @@ $paid = 0.0;
 
 <!-- //Timesheet -->
 <?php
-$fecha_inicio = $_POST['fecha_inicio'];
-$fecha_fin = $_POST['fecha_fin'];
-
-$resume = new ResumeTimesheet($_POST);
+$resume = new ResumeTimesheet($datos);
 
 $dates = $resume->datesCompleteTimesheet();
 $names = $resume->siteOcupationNameResume();
@@ -43,18 +44,18 @@ $total_hrs = 0.0;
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="../css/resumen.css">
-  <link rel="shortcut icon" type="image/png" href="../img/favicon.ico">
+  <link rel="stylesheet" href="../../css/resumen.css">
+  <link rel="shortcut icon" type="image/png" href="../../img/favicon.ico">
   <title>Resume</title>
 </head>
 <body>
   <div class="contenedor"> <!--table main resume -->
     <div class="logo">
-      <img id="logo" src="../img/logo.png" alt="sanvan_logo">
+      <img id="logo" src="../../img/logo.png" alt="sanvan_logo">
     </div>
 
     <div class="center">
-      <?php include("encabezado_filtro.php"); ?>
+      <?php include("../inc/encabezado_filtro.php"); ?>
     </div>
     <section id="main_resume">
       <h3>Final Resume</h3>

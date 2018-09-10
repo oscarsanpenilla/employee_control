@@ -1,4 +1,18 @@
 <?php
+
+function GetPagActual(){
+  $archivo = basename($_SERVER['PHP_SELF']);
+  $pagina = str_replace(".php","",$archivo);
+  return $pagina;
+
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+										          	//Conexion
+
+////////////////////////////////////////////////////////////////////////////////
+
 require "config.php";
 class ConexionDB{
 	var $conexion_db;
@@ -48,6 +62,12 @@ class ConexionDB{
 
 
 }
+
+////////////////////////////////////////////////////////////////////////////////
+
+										          	//Events
+
+////////////////////////////////////////////////////////////////////////////////
 
 class Events{
 	private $today;
@@ -199,6 +219,12 @@ class Events{
 
 }
 
+////////////////////////////////////////////////////////////////////////////////
+
+										          	//ResumeTimesheet
+
+////////////////////////////////////////////////////////////////////////////////
+
 class ResumeTimesheet{
 	private $conexion_db;
 	private $sql;
@@ -207,18 +233,19 @@ class ResumeTimesheet{
 	private $paid_by;
 	private $site;
 	private $ocupation;
-	private $POST;
+
 
 
 	function __construct($POST){
 		$this->conexion_db = new ConexionDB();
-		$this->POST = $POST;
-		$this->fecha_inicio = $POST['fecha_inicio'];
-		$this->fecha_fin = $POST['fecha_fin'];
+		$this->fecha_inicio = $POST['fechas'][0];
+		$this->fecha_fin = $POST['fechas'][1];
 		$this->paid_by = $POST['paid_by_checkbox'];
 		$this->site = $POST['site_checkbox'];
 		$this->ocupation = $POST['ocupation_checkbox'];
 	}
+
+
 
 	public function getUsersActive(){
 		$sql = "SELECT * FROM users WHERE active=1";

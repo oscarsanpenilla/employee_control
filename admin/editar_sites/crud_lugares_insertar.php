@@ -1,5 +1,5 @@
 <?php
-    include("../funtions.php");
+    include("../../funtions.php");
     $conexion_db = new ConexionDB();
     $lugar = $_POST["lugar"];
     $sql = "INSERT INTO sites (site) VALUES('$lugar')";
