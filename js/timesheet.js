@@ -1,58 +1,63 @@
-var empleado;
-var sites;
-$('#fila_new_event').hide();
-$('.btn_edit').hide();
-
-buscar_empleados();
-obtener_sites();
+var empleado = {
+  id: ""
+};
 
 
-////////////////////////////////////////////////////////////////////////////////
-                              //FUNCIONES
+ActualizarTabla();
+
+
 
 ////////////////////////////////////////////////////////////////////////////////
-function obtener_sites(consulta){
-  var obj = {
-    type: 'site',
-    con: consulta
-  }
+//FUNCIONES
+
+////////////////////////////////////////////////////////////////////////////////
+
+// Actuliza la informacion de la tabla
+function ActualizarTabla(){
   $.ajax({
-    url: 'buscar.php',
+    url: 'timesheet_ajax.php',
     type: 'POST',
-    dataType: 'json',
-    data: {data: obj}
+    dataType: 'html',
+    data: datos
   })
   .done(function(respuesta) {
-    sites = respuesta;
-  })
-  .fail(function() {
-    console.log("error");
-  });
-
-}
-
-function buscar_empleados(consulta){
-  var obj = {
-    type: 'name',
-    con: consulta
-  }
-
-  $.ajax({
-    url: '../admin/buscar.php',
-    type: 'POST',
-    dataType: 'json',
-    data: {data: obj}
-  })
-  .done(function(respuesta) {
-    empleado = respuesta;
-    insertDataRow(empleado);
-
+    // Trae la tabla por primera vez
+    $('div.ajax_response').html(respuesta);
+    EditBtnsHide();
+    FilaNuevoEmpleadoHide();
   })
   .fail(function() {
     console.log("error");
   });
 }
 
+// Actualizar la base de datos`
+function ActualizarBaseDatos(data){
+  $.ajax({
+    url: 'actualizar_base.php',
+    type: 'POST',
+    dataType: 'html',
+    data: data
+  })
+  .done(function(respuesta) {
+    swal({
+      title: 'Correcto',
+      text: 'Operaciones realizadas con exito',
+      type: 'success'
+    });
+    // Actualizamos la tabla
+    ActualizarTabla();
+  })
+  .fail(function() {
+    swal({
+      title: 'Error',
+      text: 'No se agregaron los registros',
+      type: 'error'
+    });
+  });
+}
+
+// Inserta el nombre, la ocupacion y los id's en la tabla
 function insertDataRow(respuesta){
   //console.log(respuesta);
   $('#new_name').append(respuesta.name);
@@ -61,149 +66,194 @@ function insertDataRow(respuesta){
   $('#new_id').attr("value",respuesta.id);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-                              //LISTENERS
+// Oculta para agregar nuevos empleados
+function FilaNuevoEmpleadoHide(){
+  $('tr.nueva_fila').hide();
+}
 
-////////////////////////////////////////////////////////////////////////////////
+// Oculta los btns de editar
+function EditBtnsHide(){
+  $('input.update').hide();
+}
 
-// Insertar nuevos empleados
-$('#btn_submit').on('click',function(e){
-  e.preventDefault();
-  var eventos = [];
-  var inputs = $('.hours');
-  var site = $('#new_site').val();
-  $.each(inputs,function(index, el) {
-    var evento = {
-      type: "new",
-      id: empleado.id,
-      work_for: empleado.work_for,
-      name: empleado.name,
-      employee_rate: empleado.employee_rate,
-      work_for_rate: empleado.work_for_rate,
-      ocupation: empleado.ocupation,
-      phone: empleado.phone,
-      pay_week: empleado.pay_week,
-      paid_by: empleado.paid_by,
-      bank_info: empleado.bank_info,
-      site: site,
-      date: $(el).attr('id'),
-      hours_day: $(el).val(),
-      total_day: empleado.work_for_rate*$(el).val(),
-      note: ""
+// Oculta los inputs de horas en la nueva filas
+function InputHorasHide(){
+  $('td.event_edit input[type="number"]').hide();
+}
+
+// Muestra los inputs de horas en la nueva filas
+function InputHorasShow(){
+  $('td.event_edit input[type="number"]').show();
+}
+
+
+// Muestra los btns de editar
+function EditBtnsShow(){
+  $('input.update').show();
+}
+
+// Borra el campo de Ocupacion en la fila de nuevo empleado
+function ClearOcupationNewEmployee(){
+  $('tr.nueva_fila td.ocupation').empty();
+}
+
+// Vertifica si se busco un empleado que ya estaba en la lista
+function BuscarEmpleadoLista(id,site){
+  var filas = $('tr.fila_evento');
+  var ids = $('input.employee_id');
+  $.each(filas,function(index, el) {
+    var fila_site = $(el).find('td.site').text();
+    var fila_id = $(el).find('input.employee_id').val()
+
+    if (fila_id == id && fila_site == site){
+      InputHorasHide();
+      swal({
+        title: 'Warning!',
+        text: 'This employee with the selected site is already on the list',
+        type: 'warning'
+      });
     }
-    if (evento.hours_day != "") {
-      eventos.push(evento);
-    }
+
+
   });
+}
+
+// Busca los empleados en la base de datos
+function BuscarEmpleadoBase(busqueda){
   $.ajax({
-    url: 'editar_timesheet.php',
+    url: 'actualizar_base.php',
     type: 'POST',
     dataType: 'json',
-    data: {data: eventos}
-  })
-  .done(function(respuesta) {
-    console.log("success");
-  })
-  .fail(function() {
-    console.log("error");
-  })
-  .always(function(respuesta) {
-    console.log("always");
-    location.reload(true);
-  });
+    data: {busqueda: busqueda,
+      type: 'name'}
+    })
+    .done(function(respuesta) {
+      ClearOcupationNewEmployee();
+      if (respuesta.length == 1) {
+        $('tr.nueva_fila td.ocupation').append(respuesta[0].ocupation);
+        var id_empleado = respuesta[0].id;
+        var site = $('tr.nueva_fila').find('select').val();
+        // Actaliza el id en input.employee_id
+        $('tr.nueva_fila td input.employee_id').attr('value',id_empleado);
+        // Vertifica si se busco un empleado que ya estaba en la lista
+        InputHorasShow();
+        BuscarEmpleadoLista(id_empleado, site);
+      }else InputHorasHide();
+    })
+    .fail(function() {
+      console.log("error al buscar empleados");
+    });
+}
 
+////////////////////////////////////////////////////////////////////////////////
+//LISTENERS
 
+////////////////////////////////////////////////////////////////////////////////
+
+// Selector de Site
+$(document).on('change', 'tr.nueva_fila select', function(event) {
+  event.preventDefault();
+  console.log("chambio");
+  var id_empleado = $('tr.nueva_fila td input.employee_id').val();
+  var site = $(this).val();
+  BuscarEmpleadoLista(id_empleado, site);
 });
 
+// Insertar nuevos empleados
+$(document).on('click','input#add_new',function(e){
+  e.preventDefault();
+  var fila = $(this).parent().parent();
+  var td_events = fila.children('td.event_edit');
+  var inputs = fila.find('input.edit_hours');
+  var id_empleado = fila.find('input.employee_id').val();
+  var site = fila.find('td.site select').val();
+  var eventos = [];
+  $.each(inputs,function(index, el) {
+    var date = $(el).attr('id');
+    var horas = $(el).val();
+    var evento = {
+      id: id_empleado,
+      site: site,
+      date: date,
+      hours_day: horas
+    }
+    eventos.push(evento);
+  });
+  var data = {
+    type:'edit',
+    id_empleado: id_empleado,
+    eventos: eventos
+  }
+  ActualizarBaseDatos(data);
+  
+});
 
 // Eliminar y Actualizar eventos
-$('.btn_edit').on('click',function(e) {
-  e.preventDefault();
-  if ($(this).html()== 'edit') {
-    // Editamos la informacion
-    $('.btn_edit').hide();
-    var btn_id = $(this).attr('id');
-    var btn_clicked = $('#'+btn_id);
-    btn_clicked.show();
-    btn_clicked.html('ok');
+$(document).on('click', 'input.update', function(event) {
+  event.preventDefault();
+  var fila = $(this).parent().parent();
+  var td_events = fila.children('td.event_edit');
+  var id_empleado = fila.find('input.employee_id').val();
+  var site = fila.find('td.site').text();
+  var eventos = [];
+  //console.log(td_events);
 
-    // Modificamos el site, permitiendo elegir uno
-    var event_edit = $(this).parent().parent().find('td.event_edit');
-    var site_edit = $(this).parent().parent().find('td#site');
-    var site = site_edit.text();
-    // $(site_edit).empty();
-    // $(site_edit).append('<select class="select" name="site" required id="new_site"></select>');
-    // $(site_edit).find('select').append('<option value='+site+' selected> '+site+' </option>');
-    // $.each(sites, function(index, el) {
-    //   $(site_edit).find('select').append('<option value='+el.site+'> '+el.site+' </option>');
-    // });
+  if ($(this).val()== 'update') {
+    // Editamos la informacion
+    $(this).attr('value', 'ok');
+    $('input.update').hide();
+    $(this).show();
+
     // agregamos los valores de las horas en un input
-    $.each(event_edit,function(index, el) {
-      var horas = $(el).text();
-      horas = Number(horas);
+    $.each(td_events,function(index, el) {
+      var horas = Number($(el).text());
       $(el).empty();
-      if (horas != '') {
-        $(el).append('<input class="edit_hours" type="number" value='+horas+' />');
-      }else {
-        $(el).append('<input class="edit_hours" type="number" value="" />');
-      }
+      if (horas > 0) $(el).append("<input class='edit_hours' type='number' value="+horas+" />");
+      else $(el).append("<input class='edit_hours' type='number' value='' />");
     });
   } // fin edit
-  else if ($(this).html()== 'ok') {
-    // Traemos la informacion para la creacion del arreglo de eventos
-    var employee_id = $(this).parent().find('input').val();
-    var inputs = $(this).parent().parent().find('input.edit_hours');
-    var site = $('select#new_site').val();
-    var eventos = [];
+  else {
+    var inputs = fila.find('input.edit_hours');
     // creamos el arreglo de eventos
     $.each(inputs,function(index, el) {
       var horas = $(el).val();
       var date = $(el).parent().attr('value');
       var evento = {
-        id: employee_id,
+        id: id_empleado,
         site: site,
         date: date,
-        hours_day: horas,
-        note: ""
+        hours_day: horas
       }
       eventos.push(evento);
     });
-    var obj = {
-      type: 'edit',
-      id_empleado: employee_id,
-      con: eventos
+    var data = {
+      type:'edit',
+      id_empleado: id_empleado,
+      eventos: eventos
     }
-    $.ajax({
-      url: 'buscar.php',
-      type: 'POST',
-      dataType: 'json',
-      data: {data: obj }
-    })
-    .done(function(respuesta) {
-      console.log("success");
-    })
-    .fail(function() {
-      console.log("error");
-    })
-    .always(function() {
-      console.log("complete");
-      location.reload(true);
-    });
+    ActualizarBaseDatos(data);
 
   }
-
-
 });
 
 // Muestra la fila para insertar nuevo empleado
-$('#btn_agregar_eventos').on('click', function(e) {
+$(document).on('click', 'input#agregar_eventos' ,function(e) {
   e.preventDefault();
-  $('#fila_new_event').show();
+  $('tr.nueva_fila').show();
+  InputHorasHide();
 });
 
 // Muestra los btns de editar en cada fila
-$('#btn_editar_eventos').on('click', function(event) {
-  event.preventDefault();
-  $('.btn_edit').show();
+$(document).on('click','input#editar_eventos',function(e) {
+  e.preventDefault();
+  EditBtnsShow();
   /* Act on the event */
+});
+
+// Buscar buscar_empleados
+$(document).on('keyup','input#search_employee', function(e) {
+  e.preventDefault();
+  var busqueda = $(this).val();
+  BuscarEmpleadoBase(busqueda);
+
 });

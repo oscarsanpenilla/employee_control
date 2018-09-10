@@ -1,6 +1,6 @@
 <?php
-include("../funtions.php");
-include("../employee.php");
+include("../../funtions.php");
+include("../../employee.php");
 
 $conexion = new ConexionDB();
 $id = $_GET['Id'];
@@ -26,7 +26,7 @@ $consulta[0]->admin);
 session_start();
 
 $_SESSION['employee'] = $employee;
-header("location:../crud_eventos/insertar_eventos_crud.php");
+header("location:../../crud_eventos/insertar_eventos_crud.php");
 
 
 ?>

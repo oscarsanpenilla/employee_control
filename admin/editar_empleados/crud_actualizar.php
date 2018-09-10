@@ -1,6 +1,6 @@
 <?php
-    include("../funtions.php");
-    include("../validar_inicio_sesion.php");
+    include("../../funtions.php");
+    include("../../validar_inicio_sesion.php");
     $conexion_db = new ConexionDB();
     $employee = $_SESSION['employee'];
     $id = $_POST["id"]; //

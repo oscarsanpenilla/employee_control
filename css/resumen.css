@@ -89,12 +89,14 @@ div.btn_center{
   text-align: center;
 }
 
+
+
 tbody td button{
   width: 40px;
   border-radius: 5px;
 }
 
-button#btn_agregar_eventos, button#btn_editar_eventos{
+input#agregar_eventos, input#editar_eventos ,input.update{
   display: inline-block;
   width: 50px;
   border-radius: 5px;
@@ -121,16 +123,32 @@ input[type="number"] {
     -moz-appearance: textfield;
 }
 
+table thead th,
 td.event_edit{
-  max-width: 50px;
+  width: 40px;
+  max-width: 40px;
+  min-width: 40px;
 }
 
-td#site{
+tr.nueva_fila td select{
+  width: 98%;
+}
+
+td.event_edit input[type="number"]{
+  width: 98%;
+}
+
+td.ocupation, th.ocupation{
   min-width: 100px;
 }
 
-tr#fila_new_event td input{
+td.site{
+  min-width: 100px;
+}
+
+tr.nueva_fila td input, tr.nueva_fila td{
   max-width: 40px;
+  text-align: center;
 }
 
 input#btn_submit{
@@ -142,6 +160,15 @@ input#btn_submit{
   display: none;
 }
 
+input#search_employee{
+  min-width: 195px;
+
+}
+
+td.employee_name{
+  min-width: 200px;
+}
+
 .clearFix::after,
 .clearFix::before {
   content: "";
@@ -150,4 +177,19 @@ input#btn_submit{
 
 .clearFix::after{
   clear: both;
+}
+
+
+@media print{
+  .btn_center{
+    display: none;
+  }
+
+  body div.contenedor{
+    margin: auto;
+    display: block;
+    padding-left: 0;
+    padding-right: 0;
+    border: solid 0px #ddd;
+  }
 }

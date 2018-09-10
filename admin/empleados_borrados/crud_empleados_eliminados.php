@@ -1,6 +1,6 @@
 <?php
-include("../funtions.php");
-include("../validar_inicio_sesion.php");
+include("../../funtions.php");
+include("../../validar_inicio_sesion.php");
 $conexion_db = new ConexionDB();
 $sql = "SELECT *
 FROM users
@@ -16,8 +16,8 @@ $array_usuarios = $conexion_db->ConsultaArray($sql);
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
 
   <title>Sanvan Employees</title>
-  <link rel="stylesheet" type="text/css" href="../css/events.css">
-  <link rel="shortcut icon" type="image/png" href="../img/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="../../css/events.css">
+  <link rel="shortcut icon" type="image/png" href="../../img/favicon.ico">
 </head>
 <body>
   <div class="contenedor">
@@ -45,8 +45,8 @@ $array_usuarios = $conexion_db->ConsultaArray($sql);
       </tfoot>
     </table>
     <div class="btn_inf">
-      <a href="../admin/main_admin.php"><input class="btn_principal" type='button' value='Main Menu'></a>
-      <a href="../cerrar_session.php"><input type='button'value='Log Out'></a>
+      <a href="../main_admin.php"><input class="btn_principal" type='button' value='Main Menu'></a>
+      <a href="../../cerrar_session.php"><input type='button'value='Log Out'></a>
     </div>
   </div>
 

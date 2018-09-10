@@ -1,6 +1,6 @@
 <?php
-include("../funtions.php");
-include("../validar_inicio_sesion.php");
+include("../../funtions.php");
+include("../../validar_inicio_sesion.php");
 $conexion_db = new ConexionDB();
 
 ?>
@@ -10,14 +10,14 @@ $conexion_db = new ConexionDB();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
-  <link rel="stylesheet" href="../css/events.css">
-  <link rel="shortcut icon" type="image/png" href="../img/favicon.ico">
+  <link rel="stylesheet" href="../../css/events.css">
+  <link rel="shortcut icon" type="image/png" href="../../img/favicon.ico">
   <title>New Employee</title>
 </head>
 <body>
   <div class="contenedor">
     <h3>Register of New Employee</h3>
-    <form action="../crud_employees/crud_insertar.php" method="post" >
+    <form action="../editar_empleados/crud_insertar.php" method="post" >
       <p class="p_form">Work for:</p>
       <select class="semana" name="work_for"  required>
         <option value='Sanvan' selected>Sanvan</option>
@@ -61,7 +61,7 @@ $conexion_db = new ConexionDB();
       <input class="btn_principal" type="submit"  value="Ok">
     </form>
     <div class="btn_inf">
-      <a href="main_admin.php"><input  type="button" value="Return"></a>
+      <a href="../main_admin.php"><input  type="button" value="Return"></a>
     </div>
   </div>
 </body>

@@ -1,7 +1,7 @@
 <?php
-include("../funtions.php");
-include("../employee.php");
-include("../validar_inicio_sesion.php");
+include("../../funtions.php");
+include("../../employee.php");
+include("../../validar_inicio_sesion.php");
 
 $conexion_db = new ConexionDB();
 $events = new Events();
@@ -24,14 +24,14 @@ $arreglo_ocupation = $conexion_db->ConsultaArray($sql);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
-  <link rel="stylesheet" href="../css/events.css">
-  <link rel="shortcut icon" type="image/png" href="../img/favicon.ico">
+  <link rel="stylesheet" href="../../css/events.css">
+  <link rel="shortcut icon" type="image/png" href="../../img/favicon.ico">
   <title>Sanvan</title>
 </head>
 <body>
   <div class="main">
-    <h1>Resume</h1>
-    <form action="resumen.php" method="post">
+    <h1>Timesheet</h1>
+    <form action="timesheet.php" method="post">
       <section id="form_date">
         <p  class="p_form">Desde:</p>
         <input type="date" required="required" name="fecha_inicio" value="<?php echo $start_date?>">
@@ -108,18 +108,15 @@ $arreglo_ocupation = $conexion_db->ConsultaArray($sql);
               <label for="<?php echo $elemento->ocupation; ?>"><?php echo $elemento->ocupation; ?></label>
             </div>
           <?php endforeach ?>
-        </div><br><br>
-      </section>
+        </div>
+      </section><br><br>
       <input class="btn_principal" type="submit" name="enviar" value="Enviar">
     </form>
     <div class="btn_inf">
-      <a href="main_admin.php"> <input type="button" value="Main Menu"> </a>
+      <a href="../main_admin.php"> <input type="button" value="Main Menu"> </a>
     </div>
   </div>
-  <script src="../js/jQuery.js"></script>
-  <script src="../js/script_resume.js"></script>
-
-
+  <script src="../../js/jQuery.js"></script>
+  <script src="../../js/script_resume.js"></script>
 </body>
-
 </html>
