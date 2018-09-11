@@ -1,6 +1,3 @@
-var empleado = {
-  id: ""
-};
 
 
 ActualizarTabla();
@@ -81,6 +78,16 @@ function InputHorasHide(){
   $('td.event_edit input[type="number"]').hide();
 }
 
+// Ocualta el btn de agregar eventos
+function AddNewBtnHide(){
+  $('input#add_new').hide();
+}
+
+// Muestra el btn de agregar eventos
+function AddNewBtnShow(){
+  $('input#add_new').show();
+}
+
 // Muestra los inputs de horas en la nueva filas
 function InputHorasShow(){
   $('td.event_edit input[type="number"]').show();
@@ -107,6 +114,7 @@ function BuscarEmpleadoLista(id,site){
 
     if (fila_id == id && fila_site == site){
       InputHorasHide();
+      AddNewBtnHide();
       swal({
         title: 'Warning!',
         text: 'This employee with the selected site is already on the list',
@@ -137,6 +145,7 @@ function BuscarEmpleadoBase(busqueda){
         $('tr.nueva_fila td input.employee_id').attr('value',id_empleado);
         // Vertifica si se busco un empleado que ya estaba en la lista
         InputHorasShow();
+        AddNewBtnShow();
         BuscarEmpleadoLista(id_empleado, site);
       }else InputHorasHide();
     })
@@ -185,7 +194,7 @@ $(document).on('click','input#add_new',function(e){
     eventos: eventos
   }
   ActualizarBaseDatos(data);
-  
+
 });
 
 // Eliminar y Actualizar eventos
@@ -241,6 +250,7 @@ $(document).on('click', 'input#agregar_eventos' ,function(e) {
   e.preventDefault();
   $('tr.nueva_fila').show();
   InputHorasHide();
+  AddNewBtnHide();
 });
 
 // Muestra los btns de editar en cada fila
@@ -256,4 +266,27 @@ $(document).on('keyup','input#search_employee', function(e) {
   var busqueda = $(this).val();
   BuscarEmpleadoBase(busqueda);
 
+});
+
+// Actualiza el Total de Horas al modificar una filas
+$(document).on('keyup', 'input.edit_hours', function(event) {
+  event.preventDefault();
+  var fila = $(this).parent().parent();
+  var td_total_horas = fila.find('td.total_horas');
+  var inputs = $('input.edit_hours');
+  var total_horas = 0;
+  $.each(inputs,function(index, el) {
+    total_horas += Number($(el).val());
+  });
+  td_total_horas.empty();
+  td_total_horas.append(total_horas);
+
+  // Actualizamos el valor total de la total_tabla
+  var col_total_horas = $('td.total_horas');
+  var total_tabla = 0;
+  $.each(col_total_horas,function(index, el) {
+    total_tabla += Number($(el).text());
+  });
+  $('td#total_tabla').empty();
+  $('td#total_tabla').append(total_tabla);
 });
