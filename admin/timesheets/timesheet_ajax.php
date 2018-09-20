@@ -101,7 +101,7 @@ $info_num = 1;
   <tfoot>
     <tr>
       <td colspan="<?php echo count($dates)+4; ?>">Total</td>
-      <td class="center"><?php echo $total_hrs; ?></td>
+      <td id="total_tabla" class="center"><?php echo $total_hrs; ?></td>
       <td></td>
     </tr>
   </tfoot>
