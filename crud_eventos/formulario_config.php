@@ -4,8 +4,14 @@
     include("../validar_inicio_sesion.php");
 
     $conexion_db = new ConexionDB();
-    $employee = $_SESSION['employee'];
-    $id = $_SESSION['employee']->id;
+
+    if($_SESSION['employee']->admin == 1){
+      $employee = $_SESSION['employee_admin_mode'];
+    }else{
+      $employee = $_SESSION['employee'];
+    }
+
+    $id = $employee->id;
 
     $sql = "SELECT * FROM users WHERE id = '$id'";
     $arreglo_usuarios = $conexion_db->ConsultaArray($sql);

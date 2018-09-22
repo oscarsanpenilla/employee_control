@@ -1,7 +1,7 @@
 <?php
 include("../../funtions.php");
 include("../../employee.php");
-include("../../validar_inicio_sesion.php");
+include("../../validar_inicio_sesion_admin.php");
 
 $conexion_db = new ConexionDB();
 $events = new Events();

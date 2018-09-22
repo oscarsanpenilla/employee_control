@@ -4,7 +4,16 @@
     include("../validar_inicio_sesion.php");
     $conexion_db = new ConexionDB();
     $events = new Events();
+
     $employee = $_SESSION['employee'];
+
+    if($_SESSION['employee']->admin == 1){
+      $employee = $_SESSION['employee_admin_mode'];
+    }else{
+      $employee = $_SESSION['employee'];
+    }
+
+
     $id = $employee->id;
     $sql= "SELECT site FROM sites ORDER by site";
     $arreglo_lugares = $conexion_db->ConsultaArray($sql);

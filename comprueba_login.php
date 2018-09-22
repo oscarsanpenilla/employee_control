@@ -11,20 +11,8 @@
 
     if($numero_registro){
         $consulta = $conexion->ConsultaSQL($sql);
-        $employee = new Employee($consulta->user,
-                                  $consulta->id,
-                                  $consulta->work_for,
-                                  $consulta->password,
-                                  $consulta->work_for_rate,
-                                  $consulta->name,
-                                  $consulta->employee_rate,
-                                  $consulta->ocupation,
-                                  $consulta->pay_week,
-                                  $consulta->active,
-                                  $consulta->bank_info,
-                                  $consulta->phone,
-                                  $consulta->paid_by,
-                                  $consulta->admin);
+        $employee = new Employee($consulta);
+
         setcookie("cookie","$consulta->user",time() + 86400);
         session_start();
         $_SESSION['cookie'] = $consulta->user;

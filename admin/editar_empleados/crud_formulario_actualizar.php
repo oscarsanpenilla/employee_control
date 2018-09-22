@@ -1,6 +1,6 @@
 <?php
 include("../../funtions.php");
-include("../../validar_inicio_sesion.php");
+include("../../validar_inicio_sesion_admin.php");
 $conexion_db = new ConexionDB();
 
 $id = $_GET["Id"];
@@ -100,6 +100,6 @@ $today = $events->getToday();
     </form>
   </div>
 </body>
-<script src="../js/jQuery.js"></script>
-<script src="../js/script_crud_formulario_actualizar.js"></script>
+<script src="../../js/jQuery.js"></script>
+<script src="../../js/script_crud_formulario_actualizar.js"></script>
 </html>

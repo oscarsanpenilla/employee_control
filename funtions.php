@@ -288,8 +288,7 @@ class ResumeTimesheet{
 	}
 
 
-	public function resume()
-	{
+	public function resume(){
 		$sql = "SELECT site,ocupation,SUM(hours_day) AS hours, SUM(hours_day*work_for_rate) AS total_ocupation
 		 				FROM events
 						WHERE date BETWEEN '$this->fecha_inicio' AND '$this->fecha_fin'";

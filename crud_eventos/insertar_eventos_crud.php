@@ -3,10 +3,24 @@ include("../funtions.php");
 include("../employee.php");
 include("../validar_inicio_sesion.php");
 
+
+
 $conexion_db = new ConexionDB();
 $events = new Events();
-$employee = $_SESSION['employee'];
-$user_id = $_SESSION['employee']->id;
+if($_SESSION['employee']->admin == 1){
+  if (isset($_GET['Id'])) {
+    $id = $_GET['Id'];
+    $sql= "SELECT * FROM users WHERE id='$id'";
+    $consulta = $conexion_db->ConsultaSQL($sql);
+  	$employee = new Employee($consulta);
+    $_SESSION['employee_admin_mode'] = $employee ;
+  }else{
+     $employee = $_SESSION['employee_admin_mode'];
+  }
+}else{
+  $employee = $_SESSION['employee'];
+  $user_id = $_SESSION['employee']->id;
+}
 
 if ($events->isFirstWeek()) {
   $arr_quin_pago = $events->QuincenaPago($employee,-1);

@@ -1,7 +1,7 @@
 <?php
 include("../../funtions.php");
 include("../../employee.php");
-include("../../validar_inicio_sesion.php");
+include("../../validar_inicio_sesion_admin.php");
 
 $fecha_inicio = $_POST['fecha_inicio'];
 $fecha_fin = $_POST['fecha_fin'];

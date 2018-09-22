@@ -25,15 +25,6 @@ div.contenedor{
   border: 1px solid rgba(0,0,0,0.2);
 }
 
-body {
-
-  background: #FFFFFF;
-  display: flex;
-  /* min-height: 100vh; */
-
-}
-
-
 
 
 div.main{
@@ -43,7 +34,10 @@ div.main{
   background: #F2F2F2;
   padding: 0px 10px;
   border: 1px solid rgba(0,0,0,0.2);
+
 }
+
+
 div.main h1{
   text-align: center;
   padding-top: 15px;
@@ -166,8 +160,9 @@ tr td {
 
 }
 td.btn-crud {
-    width: 50px;
-    padding: 0 1px;
+  position: relative;
+  width: 30px;
+  padding: 0 1px;
 
 }
 
@@ -281,13 +276,6 @@ h2.title{
  ================================================================================
  */@import url('https://fonts.googleapis.com/css?family=Bowlby+One+SC');
 
- * {
-
-     margin: 0;
-     padding: 0;
-     font-family: sans-serif;
-     box-sizing: border-box;
- }
 
  div.contenedor{
    margin: auto;
@@ -296,6 +284,7 @@ h2.title{
    background: #F2F2F2;
    padding: 0px 10px;
    border: 1px solid rgba(0,0,0,0.2);
+
  }
 
  body {
@@ -309,19 +298,13 @@ h2.title{
 
 
 
- div.main{
-   margin: auto;
-   width: 100%;
-   max-width: 400px;
-   background: #F2F2F2;
-   padding: 0px 10px;
-   border: 1px solid rgba(0,0,0,0.2);
- }
+
 
  div.checkbox{
    display: flex;
 
  }
+
 
  div.main div.checkbox input{
    width: 3%;
@@ -550,4 +533,77 @@ div.logo{
 
 img.logo {
   width: 100%;
+}
+/* =============================================================================
+Main admin
+
+   =============================================================================
+ */
+
+
+
+/* =============================================================================
+  Editar Empleados
+
+   =============================================================================
+ */
+
+
+
+div.busqueda{
+  margin-top: 20px;
+}
+
+
+div.main select.selector{
+  display: block;
+  width: 100%;
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+div.contenedor-btn{
+  width: 100%;
+  display: block;
+  margin-top: 10px;
+}
+/* ================================
+   menu-desplegable
+   ================================
+*/
+button.menu-options{
+  color: black;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+button.menu-options:hover{
+  cursor: pointer;
+}
+
+
+div.options ul{
+  list-style: none;
+}
+div.options ul li a{
+  display: inline-block;
+  text-decoration: none;
+  padding: 10px 0;
+  background-color: white;
+  width: 100px;
+  margin-top: 1px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 3px;
+  color: black;
+
+}
+
+td.btn-crud div{
+  display: none;
+  position: absolute;
+  left: -70px;
+  bottom: 10px;
+
 }

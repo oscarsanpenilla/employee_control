@@ -1,6 +1,6 @@
 <?php
     include("../../funtions.php");
-    include("../../validar_inicio_sesion.php");
+    include("../../validar_inicio_sesion_admin.php");
     $conexion_db = new ConexionDB();
     $id = $_GET["Id"];
     $sql= "SELECT * FROM users WHERE id= '$id'";
@@ -27,8 +27,10 @@
 
     $sql = "UPDATE users
             SET active=0
-            WHERE id=$id";
+            WHERE id='$id'";
     $conexion_db->Prepare($sql);
+
+
 
     header("Location:crud_empleados.php");
 ?>

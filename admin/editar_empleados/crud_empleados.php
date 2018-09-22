@@ -1,6 +1,6 @@
 <?php
 include("../../funtions.php");
-include("../../validar_inicio_sesion.php");
+include("../../validar_inicio_sesion_admin.php");
 $conexion_db = new ConexionDB();
 $sql = "SELECT *
 FROM users
@@ -27,42 +27,24 @@ $array_conteo = $conexion_db->ConsultaArray($sql);
 </head>
 <body>
   <div class="main">
-    <section>
-      <h3>Editar Empleados</h3>
-      <p class="p_header">
-        <strong>Total Empleados</strong><br>
-        <?php foreach ($array_conteo as $key => $value){
-          echo $value->work_for. ": ".$value->count."<br>";
-        } ?>
-      </p>
-    </section>
-    <table>
-      <thead>
-        <tr >
-          <th></th>
-          <th>Work for</th>
-          <th>Ocupation</th>
-          <th>Name</th>
-          <th>Work for Rate</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php foreach($array_usuarios as $elemento): ?>
-          <tr>
-            <td class="btn-crud"><a href="crud_borrar.php?Id=<?php echo $elemento->id ?>"><input type='button' name='borrar' value='Borrar'></td></a>
-            <td> <?php echo $elemento->work_for ?></td>
-            <td> <?php echo $elemento->ocupation ?></td>
-            <td> <?php echo $elemento->name ?></td>
-            <td> <?php echo $elemento->work_for_rate ?></td>
-            <td class="btn-crud"><a href="crud_formulario_actualizar.php?Id=<?php echo $elemento->id ?>"><input type='button' name='Actualizar' value='Update'></td></a>
-            <td class="btn-crud"><a href="agregar_eventos.php?Id=<?php echo $elemento->id ?>" target="_blank"><input type='button' name='add' value='Add'></td></a>
-          </tr>
-        <?php endforeach ?>
-      </tbody>
-      <tfoot>
-      </tfoot>
-    </table>
-    <div class="contenedor-btn">
+    <div class="top">
+      <h1>Employees</h1>
+      <select class="selector" name="" id="filtro">
+        <option value="last_periods">Last Periods</option>
+        <option value="Sanvan">Sanvan</option>
+        <option value="Tolin">Tolin</option>
+        <option value="Global Contact">Global Contact</option>
+      </select>
+      <div class="busqueda">
+        <input id="busqueda" type="text" name="" value="" placeholder="Search...">
+        <div class="" id="resultado_busqueda">
+
+        </div>
+      </div>
+    </div>
+    <div class="middle table" id="tabla_empleados">
+    </div>
+    <div class="bottom contenedor-btn">
       <a href="../nuevo_empleado/formulario_nuevo_empleado.php"><input class="btn_principal" type='button' value='New Employee'></a>
       <a href="../main_admin.php"><input type='button' value='Main Menu'></a>
       <a href="../../cerrar_session.php"><input type='button'value='Log Out'></a>
@@ -71,4 +53,8 @@ $array_conteo = $conexion_db->ConsultaArray($sql);
 
 
 </body>
+<script src="../../js/jQuery.js"> </script>
+<script src="../../js/script_editar_empleados.js">
+
+</script>
 </html>
